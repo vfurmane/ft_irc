@@ -24,6 +24,7 @@ TEST_CASE("parse_port_number")
 		REQUIRE_THROWS_AS( Configuration::parse_port_number("22a"), Configuration::NotAPortNumber );
 		REQUIRE_THROWS_AS( Configuration::parse_port_number("a22"), Configuration::NotAPortNumber );
 		REQUIRE_THROWS_AS( Configuration::parse_port_number("2a2"), Configuration::NotAPortNumber );
+		REQUIRE_THROWS_AS( Configuration::parse_port_number("65536"), Configuration::NotAPortNumber );
 	}
 }
 
