@@ -8,8 +8,9 @@
 # include <netdb.h>
 # include <stdint.h>
 # include <string>
-# include <sys/types.h>
+# include <sys/epoll.h>
 # include <sys/socket.h>
+# include <sys/types.h>
 # include <unistd.h>
 
 
@@ -21,6 +22,8 @@ class TCPServer
 		~TCPServer(void);
 	
 		TCPServer	&operator=(const TCPServer &rhs);
+
+		void		listen(void);
 
 		struct noBindableAddress : public std::exception {
 			virtual const char* what() const throw()

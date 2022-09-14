@@ -1,5 +1,4 @@
 #include "TCPServer.hpp"
-#include <sys/types.h>
 
 TCPServer::TCPServer(char *port)
 {
@@ -64,6 +63,23 @@ void		TCPServer::_bindNewSocketToPort(char *port)
 	if (p == NULL)
 		throw noBindableAddress();
 
-	if (listen(_sockfd, BACKLOG))
+	if (::listen(_sockfd, BACKLOG))
 		throw sysCallError("listen", strerror(errno));
+}
+
+void	TCPServer::listen(void)
+{
+	int epoll_fd = epoll_create1(0);
+
+	if (epoll_fd == -1)
+	{
+		// Debug Log eventually
+		throw sysCallError("epoll_create1", "failed to create epoll file descriptor");
+	}
+
+	if (close(epoll_fd) == -1)
+	{
+		// Debug Log eventually
+		throw sysCallError("close", strerror(errno));
+	}
 }
