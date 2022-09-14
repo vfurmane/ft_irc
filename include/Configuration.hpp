@@ -15,21 +15,21 @@ class Configuration
 
 		Configuration	&operator=(const Configuration &rhs);
 
-		class NotEnoughArguments : std::exception {
+		class NotEnoughArguments : public std::exception {
 			virtual const char* what() const throw()
 			{
 				return "not enough arguments";
 			}
 		};
 
-		class AlreadyParsed : std::exception {
+		class AlreadyParsed : public std::exception {
 			virtual const char* what() const throw()
 			{
 				return "already parsed";
 			}
 		};
 
-		class NotAPortNumber : std::exception {
+		class NotAPortNumber : public std::exception {
 			virtual const char* what() const throw()
 			{
 				return "not a port number";
