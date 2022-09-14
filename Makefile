@@ -16,7 +16,7 @@ all: $(NAME)
 -include $(DEPS)
 
 $(NAME): $(OBJS)
-	$(CXX) $(CXXFLAGS) $^ -o $@
+	$(CXX) $(CXXFLAGS) $(CPPFLAGS) $^ -o $@
 
 clean:
 	$(RM) -r $(OBJS)
