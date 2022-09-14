@@ -26,6 +26,12 @@
 *.a
 *.lib
 
+# Cache
+.cache
+
+# Editor config
+compile_commands.json
+
 # Executables
 *.exe
 *.out
