@@ -6,9 +6,12 @@ int	main(int argc, char **argv)
 {
 	Configuration conf;
 
-	try {
+	try 
+	{
 		conf.parse_arguments(argc, argv);
-	} catch (std::exception &e) {
+	}
+	catch (std::exception &e) 
+	{
 		std::cerr << "error: " << e.what() << std::endl;
 		return 1;
 	}
