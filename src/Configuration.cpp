@@ -53,10 +53,16 @@ void	Configuration::parse_arguments(int argc, char **argv)
 		throw NotEnoughArguments();
 
 	_port = parse_port_number(argv[1]);
+	_str_port = argv[1];
 }
 
 
 uint16_t		Configuration::getPort(void) const
 {
 	return this->_port;
+}
+
+char			*Configuration::getStrPort(void) const
+{
+	return this->_str_port;
 }

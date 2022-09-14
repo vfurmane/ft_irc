@@ -1,3 +1,4 @@
+#include <cstring>
 #include "catch.hpp"
 
 #define private public
@@ -58,5 +59,6 @@ TEST_CASE("Configuration::parse_arguments()")
 		conf.parse_arguments(3, argv);
 
 		REQUIRE( conf.getPort() == 6667 );
+		REQUIRE( strcmp(conf.getStrPort(), "6667") == 0 );
 	}
 }

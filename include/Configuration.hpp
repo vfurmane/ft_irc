@@ -40,10 +40,12 @@ class Configuration
 		void			parse_arguments(int argc, char **argv);
 
 		uint16_t		getPort(void) const;
+		char			*getStrPort(void) const;
 
 	private:
 		bool		_parsed;
 		uint16_t	_port;
+		char		*_str_port;
 		std::string	_password;
 };
 
