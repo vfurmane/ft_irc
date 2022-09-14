@@ -1,11 +1,9 @@
-NAME = ircserv
-SRCS = $(addprefix src/, main.cpp Configuration.cpp)
+NAME = test.out
+SRCS = main.cpp Configuration.test.cpp ../src/Configuration.cpp
 OBJS = $(SRCS:.cpp=.o)
-DEPS = $(SRCS:.cpp=.d)
-INCLDIR = include
 CXX = c++
-CPPFLAGS += -MMD $(addprefix -I, $(INCLDIR))
-CXXFLAGS += -Wall -Wextra -Werror --std=c++98
+CPPFLAGS += $(addprefix -I, ../include)
+CXXFLAGS += -Wall -Wextra -Werror --std=c++11
 RM = rm -f
 
 %.o: %.cpp
@@ -13,14 +11,11 @@ RM = rm -f
 
 all: $(NAME)
 
--include $(DEPS)
-
 $(NAME): $(OBJS)
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) $^ -o $@
 
 clean:
 	$(RM) -r $(OBJS)
-	$(RM) -r $(DEPS)
 
 fclean: clean
 	$(RM) $(NAME)
