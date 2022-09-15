@@ -1,7 +1,7 @@
 #include <iostream>
 #include <exception>
 #include "Configuration.hpp"
-#include "TCPServer.hpp"
+#include "TCP/Server.hpp"
 
 int	main(int argc, char **argv)
 {
