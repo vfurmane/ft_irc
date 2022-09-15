@@ -18,6 +18,6 @@ int	main(int argc, char **argv)
 	}
 
 	TCPServer serv(conf.getStrPort());
-
+	serv.listen();
 	return 0;
 }

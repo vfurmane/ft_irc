@@ -2,10 +2,15 @@
 # define TCPSERVER_HPP
 
 # define BACKLOG 256
+# define MAX_EVENTS 256
+# define TIMEOUT 1000
+# define MAX_READ 63
 
+# include <arpa/inet.h>
 # include <cstring>
 # include <errno.h>
 # include <netdb.h>
+# include <netinet/in.h>
 # include <stdint.h>
 # include <string>
 # include <sys/epoll.h>
@@ -44,8 +49,11 @@ class TCPServer
 
 	private:
 		void		_bindNewSocketToPort(char *port);
+		void		_addFdToEpoll(int new_fd) const;
+		void		_handleReadyFds(int event_count, struct epoll_event *events) const;
 
 		int			_sockfd;
+		int			_epollfd;
 };
 
 #endif
