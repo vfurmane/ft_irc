@@ -2,7 +2,7 @@ NAME = test.out
 SRCS = main.cpp Configuration.test.cpp ../src/Configuration.cpp
 OBJS = $(SRCS:.cpp=.o)
 CXX = c++
-CPPFLAGS += $(addprefix -I, ../include)
+CPPFLAGS += $(addprefix -I, . ../include)
 CXXFLAGS += -Wall -Wextra -Werror --std=c++11
 RM = rm -f
 
