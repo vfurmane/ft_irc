@@ -132,7 +132,6 @@ void	TCPServer::listen(void)
 		throw sysCallError("listen", strerror(errno));
 
 	this->_epollfd = epoll_create1(0);
-
 	if (this->_epollfd == -1)
 	{
 		// Debug Log eventually
