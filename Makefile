@@ -2,7 +2,7 @@ NAME = ircserv
 SRCS = $(addprefix src/, main.cpp Configuration.cpp $(addprefix TCP/, Server.cpp))
 OBJS = $(SRCS:.cpp=.o)
 DEPS = $(SRCS:.cpp=.d)
-INCLDIR = include
+INCLDIR = include include/TCP
 CXX = c++
 CPPFLAGS += -MMD $(addprefix -I, $(INCLDIR))
 CXXFLAGS += -Wall -Wextra -Werror --std=c++98
