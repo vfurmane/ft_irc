@@ -63,9 +63,6 @@ void		TCPServer::_bindNewSocketToPort(char *port)
 
 	if (p == NULL)
 		throw noBindableAddress();
-
-	if (::listen(_sockfd, BACKLOG))
-		throw sysCallError("listen", strerror(errno));
 }
 
 void	TCPServer::_addFdToEpoll(int new_fd) const
@@ -130,6 +127,10 @@ void	TCPServer::_handleReadyFds(int event_count, struct epoll_event *events) con
 void	TCPServer::listen(void)
 {
 	struct epoll_event	events[MAX_EVENTS];
+
+	if (::listen(_sockfd, BACKLOG))
+		throw sysCallError("listen", strerror(errno));
+
 	this->_epollfd = epoll_create1(0);
 
 	if (this->_epollfd == -1)
