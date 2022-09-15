@@ -135,7 +135,7 @@ void	TCPServer::listen(void)
 	if (this->_epollfd == -1)
 	{
 		// Debug Log eventually
-		throw sysCallError("epoll_create1", "failed to create epoll file descriptor");
+		throw sysCallError("epoll_create1", strerror(errno));
 	}
 	this->_addFdToEpoll(this->_sockfd);
 
