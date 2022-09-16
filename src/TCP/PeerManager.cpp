@@ -21,6 +21,11 @@ PeerManager::~PeerManager(void)
 	
 }
 
+Peer	&PeerManager::operator[](int fd)
+{
+	return this->get(fd);
+}
+
 void PeerManager::addPeer(Peer peer)
 {
 	this->_peerMap.insert(std::make_pair(peer.getFd(), peer));
@@ -29,4 +34,9 @@ void PeerManager::addPeer(Peer peer)
 void PeerManager::removePeer(int fd)
 {
 	this->_peerMap.erase(fd);
+}
+
+Peer	&PeerManager::get(int fd)
+{
+	return this->_peerMap.at(fd);
 }
