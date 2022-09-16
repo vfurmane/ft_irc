@@ -17,7 +17,7 @@ int	main(int argc, char **argv)
 		return 1;
 	}
 
-	TCPServer serv(conf.getStrPort());
+	TCP::Server serv(conf.getStrPort());
 	serv.listen();
 	return 0;
 }

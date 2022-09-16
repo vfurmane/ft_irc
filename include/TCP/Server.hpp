@@ -19,41 +19,45 @@
 # include <unistd.h>
 
 
-class TCPServer
-{
-	public:
-		TCPServer(char *port);
-		TCPServer(const TCPServer &obj);
-		~TCPServer(void);
+namespace TCP {
+
+	class Server
+	{
+		public:
+			Server(char *port);
+			Server(const Server &obj);
+			~Server(void);
+		
+			Server		&operator=(const Server &rhs);
 	
-		TCPServer	&operator=(const TCPServer &rhs);
+			void		listen(void);
+	
+			struct noBindableAddress : public std::exception {
+				virtual const char* what() const throw()
+				{
+					return "no bindable address";
+				}
+			};
+	
+			struct sysCallError : public std::exception {
+				std::string _str;
+				sysCallError(const std::string &syscall, const std::string &str) : _str(syscall + ": " + str) {}
+				~sysCallError(void) throw() {}
+				virtual const char* what() const throw()
+				{
+					return this->_str.c_str();
+				}
+			};
+	
+		private:
+			void		_bindNewSocketToPort(char *port);
+			void		_addFdToEpoll(int new_fd) const;
+			void		_handleReadyFds(int event_count, struct epoll_event *events) const;
+	
+			int			_sockfd;
+			int			_epollfd;
+	};
 
-		void		listen(void);
-
-		struct noBindableAddress : public std::exception {
-			virtual const char* what() const throw()
-			{
-				return "no bindable address";
-			}
-		};
-
-		struct sysCallError : public std::exception {
-			std::string _str;
-			sysCallError(const std::string &syscall, const std::string &str) : _str(syscall + ": " + str) {}
-			~sysCallError(void) throw() {}
-			virtual const char* what() const throw()
-			{
-				return this->_str.c_str();
-			}
-		};
-
-	private:
-		void		_bindNewSocketToPort(char *port);
-		void		_addFdToEpoll(int new_fd) const;
-		void		_handleReadyFds(int event_count, struct epoll_event *events) const;
-
-		int			_sockfd;
-		int			_epollfd;
-};
+}
 
 #endif
