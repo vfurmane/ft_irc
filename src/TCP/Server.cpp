@@ -82,10 +82,10 @@ namespace TCP {
 		}
 	}
 	
-	void	Server::_registerNewPeer(int new_fd)
+	void	Server::_registerNewPeer(int new_fd, struct sockaddr &addr)
 	{
 		this->_addFdToEpoll(new_fd);
-		this->_peer_managers.addPeer(Peer(new_fd));
+		this->_peer_managers.addPeer(Peer(new_fd, addr));
 	}
 	
 	void	Server::_handleReadyFds(int event_count, struct epoll_event *events)
@@ -108,7 +108,7 @@ namespace TCP {
 	
 				printf("New connection from %s\n", inet_ntoa(((struct sockaddr_in *)(&their_addr))->sin_addr)); // DEBUG
 	
-				this->_registerNewPeer(new_fd);
+				this->_registerNewPeer(new_fd, their_addr);
 			}
 			else
 			{

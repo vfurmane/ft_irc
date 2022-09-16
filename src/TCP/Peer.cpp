@@ -1,10 +1,10 @@
 #include "TCP/Peer.hpp"
 
-Peer::Peer(int fd): _fd(fd)
+Peer::Peer(int fd, struct sockaddr &addr): _fd(fd), _addr(addr)
 {
 }
 
-Peer::Peer(const Peer &obj): _fd(obj.getFd())
+Peer::Peer(const Peer &obj): _fd(obj.getFd()), _addr(obj._addr)
 {
 }
 
