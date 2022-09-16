@@ -16,12 +16,12 @@
 # include <sys/socket.h>
 # include <sys/types.h>
 # include <unistd.h>
+# include "TCP/PeerManager.hpp"
 
 typedef enum handler_type
 {
 	HDL_MESSAGE
 } e_handler_type;
-
 
 namespace TCP {
 
@@ -58,10 +58,12 @@ namespace TCP {
 		private:
 			void		_bindNewSocketToPort(char *port);
 			void		_addFdToEpoll(int new_fd) const;
-			void		_handleReadyFds(int event_count, struct epoll_event *events) const;
+			void		_registerNewPeer(int new_fd);
+			void		_handleReadyFds(int event_count, struct epoll_event *events);
 	
 			int			_sockfd;
 			int			_epollfd;
+			PeerManager	_peer_managers;
 			void		(*_handlers[1])(epoll_event *);
 	};
 
