@@ -3,12 +3,12 @@
 
 namespace TCP {
 
-	Server::Server(char *port) : _sockfd(-1), _epollfd(-1), _peer_managers(), _handlers()
+	Server::Server(char *port) : _sockfd(-1), _epollfd(-1), _peers(), _handlers()
 	{
 		this->_bindNewSocketToPort(port);
 	}
 	
-	Server::Server(const Server &obj) : _sockfd(-1), _epollfd(-1), _peer_managers(), _handlers()
+	Server::Server(const Server &obj) : _sockfd(-1), _epollfd(-1), _peers(), _handlers()
 	{
 		*this = obj;
 	}
@@ -85,7 +85,7 @@ namespace TCP {
 	void	Server::_registerNewPeer(int new_fd, struct sockaddr &addr)
 	{
 		this->_addFdToEpoll(new_fd);
-		this->_peer_managers.addPeer(Peer(new_fd, addr));
+		this->_peers.addPeer(Peer(new_fd, addr));
 	}
 	
 	void	Server::_handleReadyFds(int event_count, struct epoll_event *events)
@@ -114,9 +114,9 @@ namespace TCP {
 			{
 				if (this->_handlers[HDL_MESSAGE](&events[i]) == -1)
 				{
-					printf("Closing connection from %s\n", this->_peer_managers[events[i].data.fd].getStrAddr()); // DEBUG
+					printf("Closing connection from %s\n", this->_peers[events[i].data.fd].getStrAddr()); // DEBUG
 					close(events[i].data.fd);
-					this->_peer_managers.removePeer(events[i].data.fd);
+					this->_peers.removePeer(events[i].data.fd);
 				}
 			}
 		}

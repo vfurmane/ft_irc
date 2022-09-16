@@ -20,7 +20,7 @@ class PeerManager
 		Peer	&get(int fd);
 
 	private:
-		std::map<int, Peer> _peerMap;
+		std::map<int, Peer> _peers;
 };
 
 #endif
