@@ -1,5 +1,5 @@
-#ifndef PEERMANAGER_HPP
-# define PEERMANAGER_HPP
+#ifndef TCP_PEERMANAGER_HPP
+# define TCP_PEERMANAGER_HPP
 
 # include <map>
 # include <algorithm>

@@ -1,5 +1,5 @@
-#ifndef PEER_HPP
-# define PEER_HPP
+#ifndef TCP_PEER_HPP
+# define TCP_PEER_HPP
 # include <stdint.h>
 # include <unistd.h>
 
