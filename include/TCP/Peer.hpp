@@ -1,5 +1,6 @@
 #ifndef TCP_PEER_HPP
 # define TCP_PEER_HPP
+
 # include <arpa/inet.h>
 # include <netinet/in.h>
 # include <stdint.h>
