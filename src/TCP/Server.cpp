@@ -106,22 +106,7 @@ namespace TCP {
 			}
 			else
 			{
-				char	buffer[MAX_READ + 1];
-				int bytes_read = recv(events[i].data.fd, buffer, MAX_READ, 0);
-	
-				if (bytes_read == 0)
-				{
-					struct sockaddr their_addr;
-					socklen_t sin_size = sizeof their_addr;
-					getpeername(events[i].data.fd, &their_addr, &sin_size);
-					printf("Closed connection from %s\n", inet_ntoa(((struct sockaddr_in *)(&their_addr))->sin_addr)); // DEBUG
-					close(events[i].data.fd);
-				}
-				else
-				{
-					buffer[bytes_read] = '\0';
-					printf("%s", buffer); // DEBUG
-				}
+				this->_handlers[HDL_MESSAGE](&events[i]);
 			}
 		}
 	}
@@ -151,6 +136,11 @@ namespace TCP {
 			// Debug Log eventually
 			throw sysCallError("close", strerror(errno));
 		}
+	}
+
+	void	Server::setHandler(e_handler_type type, void (*handler)(epoll_event *))
+	{
+		this->_handlers[type] = handler;
 	}
 
 }

@@ -4,7 +4,6 @@
 # define BACKLOG 256
 # define MAX_EVENTS 256
 # define TIMEOUT 1000
-# define MAX_READ 63
 
 # include <arpa/inet.h>
 # include <cstring>
@@ -17,6 +16,11 @@
 # include <sys/socket.h>
 # include <sys/types.h>
 # include <unistd.h>
+
+typedef enum handler_type
+{
+	HDL_MESSAGE
+} e_handler_type;
 
 
 namespace TCP {
@@ -31,6 +35,8 @@ namespace TCP {
 			Server		&operator=(const Server &rhs);
 	
 			void		listen(void);
+	
+			void		setHandler(e_handler_type type, void (*handler)(epoll_event *));
 	
 			struct noBindableAddress : public std::exception {
 				virtual const char* what() const throw()
@@ -56,8 +62,9 @@ namespace TCP {
 	
 			int			_sockfd;
 			int			_epollfd;
+			void		(*_handlers[1])(epoll_event *);
 	};
 
-}
+};
 
 #endif

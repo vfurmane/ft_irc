@@ -2,6 +2,7 @@
 #include <exception>
 #include "Configuration.hpp"
 #include "TCP/Server.hpp"
+#include "handlers.hpp"
 
 int	main(int argc, char **argv)
 {
@@ -18,6 +19,7 @@ int	main(int argc, char **argv)
 	}
 
 	TCP::Server serv(conf.getStrPort());
+	serv.setHandler(HDL_MESSAGE, handleTCPMessage);
 	serv.listen();
 	return 0;
 }
