@@ -16,7 +16,6 @@ Peer &Peer::operator=(const Peer &rhs)
 
 Peer::~Peer(void)
 {
-	close(this->_fd);
 }
 
 int Peer::getFd(void) const
