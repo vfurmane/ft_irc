@@ -58,7 +58,7 @@ namespace TCP {
 		private:
 			void		_bindNewSocketToPort(char *port);
 			void		_addFdToEpoll(int new_fd) const;
-			void		_registerNewPeer(int new_fd);
+			void		_registerNewPeer(int new_fd, struct sockaddr &addr);
 			void		_handleReadyFds(int event_count, struct epoll_event *events);
 	
 			int			_sockfd;
