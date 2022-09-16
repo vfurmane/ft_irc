@@ -63,7 +63,7 @@ namespace TCP {
 	
 			int			_sockfd;
 			int			_epollfd;
-			PeerManager	_peer_managers;
+			PeerManager	_peers;
 			int			(*_handlers[1])(epoll_event *);
 	};
 

@@ -7,12 +7,12 @@ PeerManager::PeerManager(void)
 
 PeerManager::PeerManager(const PeerManager &obj)
 {
-	this->_peerMap = obj._peerMap;
+	this->_peers = obj._peers;
 }
 
 PeerManager &PeerManager::operator=(const PeerManager &rhs)
 {
-	this->_peerMap = rhs._peerMap;
+	this->_peers = rhs._peers;
 	return (*this);
 }
 
@@ -28,15 +28,15 @@ Peer	&PeerManager::operator[](int fd)
 
 void PeerManager::addPeer(Peer peer)
 {
-	this->_peerMap.insert(std::make_pair(peer.getFd(), peer));
+	this->_peers.insert(std::make_pair(peer.getFd(), peer));
 }
 
 void PeerManager::removePeer(int fd)
 {
-	this->_peerMap.erase(fd);
+	this->_peers.erase(fd);
 }
 
 Peer	&PeerManager::get(int fd)
 {
-	return this->_peerMap.at(fd);
+	return this->_peers.at(fd);
 }
