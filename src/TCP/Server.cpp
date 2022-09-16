@@ -114,7 +114,7 @@ namespace TCP {
 			{
 				if (this->_handlers[HDL_MESSAGE](&events[i]) == -1)
 				{
-					printf("Closing connection\n");
+					printf("Closing connection from %s\n", this->_peer_managers[events[i].data.fd].getStrAddr()); // DEBUG
 					close(events[i].data.fd);
 					this->_peer_managers.removePeer(events[i].data.fd);
 				}

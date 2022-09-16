@@ -13,8 +13,11 @@ class PeerManager
 		PeerManager &operator=(const PeerManager &rhs);
 		~PeerManager(void);
 
+		Peer	&operator[](int fd);
+
 		void	addPeer(Peer peer);
 		void	removePeer(int fd);
+		Peer	&get(int fd);
 
 	private:
 		std::map<int, Peer> _peerMap;
