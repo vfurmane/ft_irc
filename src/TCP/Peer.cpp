@@ -1,4 +1,4 @@
-#include "Peer.hpp"
+#include "TCP/Peer.hpp"
 
 Peer::Peer(int fd, uint16_t address): _fd(fd), _address(address)
 {
