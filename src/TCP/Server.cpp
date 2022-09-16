@@ -116,6 +116,7 @@ namespace TCP {
 				{
 					printf("Closing connection\n");
 					close(events[i].data.fd);
+					this->_peer_managers.removePeer(events[i].data.fd);
 				}
 			}
 		}
