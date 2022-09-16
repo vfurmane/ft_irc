@@ -26,7 +26,7 @@ void PeerManager::addPeer(Peer peer)
 	this->_peerMap.insert(std::make_pair(peer.getFd(), peer));
 }
 
-void PeerManager::removePeer(Peer peer)
+void PeerManager::removePeer(int fd)
 {
-	this->_peerMap.erase(peer.getFd());
+	this->_peerMap.erase(fd);
 }
