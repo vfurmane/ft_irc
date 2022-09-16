@@ -3,12 +3,12 @@
 
 namespace TCP {
 
-	Server::Server(char *port)
+	Server::Server(char *port) : _sockfd(-1), _epollfd(-1), _peer_managers(), _handlers()
 	{
 		this->_bindNewSocketToPort(port);
 	}
 	
-	Server::Server(const Server &obj)
+	Server::Server(const Server &obj) : _sockfd(-1), _epollfd(-1), _peer_managers(), _handlers()
 	{
 		*this = obj;
 	}
