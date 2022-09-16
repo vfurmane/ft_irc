@@ -17,7 +17,7 @@ class PeerManager
 		void	removePeer(Peer peer);
 
 	private:
-		std::map<int, uint16_t> _peerMap;
+		std::map<int, Peer> _peerMap;
 };
 
 #endif

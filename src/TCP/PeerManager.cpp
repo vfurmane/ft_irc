@@ -23,7 +23,7 @@ PeerManager::~PeerManager(void)
 
 void PeerManager::addPeer(Peer peer)
 {
-	this->_peerMap.insert(std::make_pair(peer.getFd(), peer.getAddress()));
+	this->_peerMap.insert(std::make_pair(peer.getFd(), peer));
 }
 
 void PeerManager::removePeer(Peer peer)
