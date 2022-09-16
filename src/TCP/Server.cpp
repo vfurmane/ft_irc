@@ -112,7 +112,11 @@ namespace TCP {
 			}
 			else
 			{
-				this->_handlers[HDL_MESSAGE](&events[i]);
+				if (this->_handlers[HDL_MESSAGE](&events[i]) == -1)
+				{
+					printf("Closing connection\n");
+					close(events[i].data.fd);
+				}
 			}
 		}
 	}
@@ -144,7 +148,7 @@ namespace TCP {
 		}
 	}
 
-	void	Server::setHandler(e_handler_type type, void (*handler)(epoll_event *))
+	void	Server::setHandler(e_handler_type type, int (*handler)(epoll_event *))
 	{
 		this->_handlers[type] = handler;
 	}

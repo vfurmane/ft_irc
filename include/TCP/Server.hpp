@@ -36,7 +36,7 @@ namespace TCP {
 	
 			void		listen(void);
 	
-			void		setHandler(e_handler_type type, void (*handler)(epoll_event *));
+			void		setHandler(e_handler_type type, int (*handler)(epoll_event *));
 	
 			struct noBindableAddress : public std::exception {
 				virtual const char* what() const throw()
@@ -64,7 +64,7 @@ namespace TCP {
 			int			_sockfd;
 			int			_epollfd;
 			PeerManager	_peer_managers;
-			void		(*_handlers[1])(epoll_event *);
+			int			(*_handlers[1])(epoll_event *);
 	};
 
 };

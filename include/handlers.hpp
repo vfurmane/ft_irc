@@ -6,6 +6,6 @@
 
 # define MAX_READ 63
 
-void	handleTCPMessage(epoll_event *event);
+int	handleTCPMessage(epoll_event *event);
 
 #endif
