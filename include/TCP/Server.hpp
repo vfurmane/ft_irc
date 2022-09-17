@@ -8,6 +8,7 @@
 # include <arpa/inet.h>
 # include <cstring>
 # include <errno.h>
+# include <iostream>
 # include <netdb.h>
 # include <netinet/in.h>
 # include <stdint.h>
