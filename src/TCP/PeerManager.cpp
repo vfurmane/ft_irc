@@ -26,12 +26,12 @@ Peer	&PeerManager::operator[](int fd)
 	return this->get(fd);
 }
 
-void PeerManager::addPeer(Peer peer)
+void PeerManager::add(Peer peer)
 {
 	this->_peers.insert(std::make_pair(peer.getFd(), peer));
 }
 
-void PeerManager::removePeer(int fd)
+void PeerManager::remove(int fd)
 {
 	this->_peers.erase(fd);
 }

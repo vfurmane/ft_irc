@@ -15,8 +15,8 @@ class PeerManager
 
 		Peer	&operator[](int fd);
 
-		void	addPeer(Peer peer);
-		void	removePeer(int fd);
+		void	add(Peer peer);
+		void	remove(int fd);
 		Peer	&get(int fd);
 
 	private:
