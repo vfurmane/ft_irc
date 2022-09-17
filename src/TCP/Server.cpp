@@ -87,7 +87,7 @@ namespace TCP {
 		this->_addFdToEpoll(new_fd);
 		this->_peers.add(Peer(new_fd, addr));
 	}
-	
+
 	void	Server::_handleReadyFds(int event_count, struct epoll_event *events)
 	{
 		for (int i = 0; i < event_count; i++)
