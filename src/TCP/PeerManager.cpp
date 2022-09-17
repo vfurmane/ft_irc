@@ -36,13 +36,7 @@ void PeerManager::add(int fd, struct sockaddr &addr)
 // TODO should only remove, should add a closeConnection() method
 void PeerManager::remove(int fd)
 {
-	std::map<int, Peer>::iterator peer_it = this->_peers.find(fd);
-#ifndef NDEBUG
-	std::cerr << "Closing connection on fd no " << fd << "..." << std::endl;
-	std::cerr << "IP address -> " << this->get(fd).getStrAddr() << std::endl;
-#endif
-	peer_it->second.close();
-	this->_peers.erase(peer_it);
+	this->_peers.erase(fd);
 }
 
 Peer	&PeerManager::get(int fd)
