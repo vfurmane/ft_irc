@@ -18,6 +18,11 @@ Peer::~Peer(void)
 {
 }
 
+int	Peer::close(void) const
+{
+	return ::close(this->_fd);
+}
+
 int Peer::getFd(void) const
 {
 	return this->_fd;

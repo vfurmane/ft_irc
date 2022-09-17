@@ -15,6 +15,8 @@ class Peer
 		Peer &operator=(const Peer &rhs);
 		~Peer(void);
 
+		int				close(void) const;
+
 		char			*getStrAddr(void) const;
 
 		int				getFd(void) const;
