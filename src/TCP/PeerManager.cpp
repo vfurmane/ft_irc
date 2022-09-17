@@ -1,11 +1,11 @@
 #include "TCP/PeerManager.hpp"
 
-PeerManager::PeerManager(void)
+PeerManager::PeerManager(void) : _peers()
 {
 
 }
 
-PeerManager::PeerManager(const PeerManager &obj)
+PeerManager::PeerManager(const PeerManager &obj) : _peers()
 {
 	this->_peers = obj._peers;
 }
