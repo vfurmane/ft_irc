@@ -35,15 +35,10 @@ void PeerManager::add(int fd, struct sockaddr &addr)
 #endif
 }
 
+// TODO should only remove, should add a closeConnection() method
 void PeerManager::remove(int fd)
 {
-	std::map<int, Peer>::iterator peer_it = this->_peers.find(fd);
-#ifndef NDEBUG
-	std::cerr << "Closing connection on fd no " << fd << "..." << std::endl;
-	std::cerr << "IP address -> " << this->get(fd).getStrAddr() << std::endl;
-#endif
-	peer_it->second.close();
-	this->_peers.erase(peer_it);
+	this->_peers.erase(fd);
 }
 
 Peer	&PeerManager::get(int fd)
@@ -51,7 +46,7 @@ Peer	&PeerManager::get(int fd)
 	return this->_peers.at(fd);
 }
 
-int	PeerManager::acceptNewConnection(void)
+int	PeerManager::acceptConnection(void)
 {
 	struct sockaddr their_addr;
 	socklen_t sin_size = sizeof their_addr;
@@ -69,4 +64,14 @@ int	PeerManager::acceptNewConnection(void)
 #endif
 	this->add(new_fd, their_addr);
 	return new_fd;
+}
+
+void	PeerManager::closeConnection(int fd)
+{
+#ifndef NDEBUG
+	std::cerr << "Closing connection on fd no " << fd << "..." << std::endl;
+	std::cerr << "IP address -> " << this->get(fd).getStrAddr() << std::endl;
+#endif
+	this->_peers.at(fd).close();
+	this->remove(fd);
 }
