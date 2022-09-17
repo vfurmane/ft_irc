@@ -121,7 +121,7 @@ namespace TCP {
 #ifndef NDEBUG
 				std::cerr << "New connection..." << std::endl;
 #endif
-				this->_addFdToEpoll(this->_peers.acceptNewConnection());
+				this->_addFdToEpoll(this->_peers.acceptConnection());
 			}
 			else
 			{
@@ -130,7 +130,7 @@ namespace TCP {
 #endif
 				if (this->_handlers[HDL_MESSAGE](&events[i]) == -1)
 				{
-					this->_peers.remove(events[i].data.fd);
+					this->_peers.closeConnection(events[i].data.fd);
 				}
 			}
 		}

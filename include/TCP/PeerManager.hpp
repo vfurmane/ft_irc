@@ -22,7 +22,8 @@ class PeerManager
 		void	add(int fd, struct sockaddr &addr);
 		void	remove(int fd);
 		Peer	&get(int fd);
-		int		acceptNewConnection(void);
+		int		acceptConnection(void);
+		void	closeConnection(int fd);
 
 	private:
 		TCP::Server			&_server;
