@@ -85,7 +85,7 @@ namespace TCP {
 	void	Server::_registerNewPeer(int new_fd, struct sockaddr &addr)
 	{
 		this->_addFdToEpoll(new_fd);
-		this->_peers.addPeer(Peer(new_fd, addr));
+		this->_peers.add(Peer(new_fd, addr));
 	}
 	
 	void	Server::_handleReadyFds(int event_count, struct epoll_event *events)
@@ -116,7 +116,7 @@ namespace TCP {
 				{
 					printf("Closing connection from %s\n", this->_peers[events[i].data.fd].getStrAddr()); // DEBUG
 					close(events[i].data.fd);
-					this->_peers.removePeer(events[i].data.fd);
+					this->_peers.remove(events[i].data.fd);
 				}
 			}
 		}
