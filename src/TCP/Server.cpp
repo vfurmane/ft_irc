@@ -110,15 +110,6 @@ namespace TCP {
 		std::cerr << "Added fd " << new_fd << " to epoll!" << std::endl;
 #endif
 	}
-	
-	void	Server::_registerNewPeer(int new_fd, struct sockaddr &addr)
-	{
-		this->_addFdToEpoll(new_fd);
-		this->_peers.add(new_fd, addr);
-#ifndef NDEBUG
-		std::cerr << "New peer has been registered!" << std::endl;
-#endif
-	}
 
 	void	Server::_handleReadyFds(int event_count, struct epoll_event *events)
 	{
