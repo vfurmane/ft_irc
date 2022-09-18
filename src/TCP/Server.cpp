@@ -16,20 +16,9 @@ namespace TCP {
 #endif
 	}
 	
-	Server::Server(const Server &obj) : _sockfd(-1), _epollfd(-1), _peers(*this), _handlers()
-	{
-		*this = obj;
-	}
-	
 	Server::~Server(void)
 	{
 		close(this->_sockfd);
-	}
-	
-	Server	&Server::operator=(const Server &rhs)
-	{
-		(void)rhs;
-		return *this;
 	}
 	
 	void		Server::_bindNewSocketToPort(char *port)

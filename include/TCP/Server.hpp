@@ -37,10 +37,7 @@ namespace TCP {
 	{
 		public:
 			Server(char *port);
-			Server(const Server &obj);
 			~Server(void);
-		
-			Server		&operator=(const Server &rhs);
 	
 			void		listen(void);
 	
