@@ -17,6 +17,7 @@
 # include <sys/socket.h>
 # include <sys/types.h>
 # include <unistd.h>
+# include "exception.hpp"
 
 class PeerManager;
 # include "TCP/PeerManager.hpp"
@@ -51,16 +52,6 @@ namespace TCP {
 				virtual const char* what() const throw()
 				{
 					return "no bindable address";
-				}
-			};
-	
-			struct sysCallError : public std::exception {
-				std::string _str;
-				sysCallError(const std::string &syscall, const std::string &str) : _str(syscall + ": " + str) {}
-				~sysCallError(void) throw() {}
-				virtual const char* what() const throw()
-				{
-					return this->_str.c_str();
 				}
 			};
 	

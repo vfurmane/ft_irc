@@ -54,7 +54,7 @@ int	PeerManager::acceptConnection(void)
 	{
 		close(this->_server.getEpollFd());
 		close(this->_server.getSocketFd());
-		throw TCP::Server::sysCallError("accept", strerror(errno));
+		throw sysCallError("accept", strerror(errno));
 	}
 #ifndef NDEBUG
 	std::cerr << "Accepted connection on fd no " << new_fd << "!" << std::endl;
