@@ -90,7 +90,6 @@ namespace TCP {
 		event.data.fd = new_fd;
 		if (epoll_ctl(this->_epollfd, EPOLL_CTL_ADD, new_fd, &event) == -1)
 		{
-			// TODO close all the fds given to epoll inside another function
 			close(this->_epollfd);
 			close(this->_sockfd);
 			throw sysCallError("epoll_ctl", strerror(errno));

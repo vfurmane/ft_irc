@@ -20,6 +20,14 @@ int	main(int argc, char **argv)
 
 	TCP::Server serv(conf.getStrPort());
 	serv.setHandler(HDL_MESSAGE, handleTCPMessage);
-	serv.listen();
+	try
+	{
+		serv.listen();
+	}
+	catch (std::exception &e)
+	{
+		std::cerr << e.what() << std::endl;
+		return 1;
+	}
 	return 0;
 }
