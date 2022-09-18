@@ -7,13 +7,13 @@
 # include <sys/socket.h>
 # include <unistd.h>
 
-class Peer
+class TCPPeer
 {
 	public:
-		Peer(const int fd, struct sockaddr &addr);
-		Peer(const Peer &obj);
-		Peer &operator=(const Peer &rhs);
-		~Peer(void);
+		TCPPeer(const int fd, struct sockaddr &addr);
+		TCPPeer(const TCPPeer &obj);
+		TCPPeer &operator=(const TCPPeer &rhs);
+		~TCPPeer(void);
 
 		int				close(void) const;
 
