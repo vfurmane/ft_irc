@@ -17,6 +17,8 @@
 # include <sys/socket.h>
 # include <sys/types.h>
 # include <unistd.h>
+
+class PeerManager;
 # include "TCP/PeerManager.hpp"
 
 # ifndef NDEBUG
@@ -68,7 +70,6 @@ namespace TCP {
 		private:
 			void		_bindNewSocketToPort(char *port);
 			void		_addFdToEpoll(int new_fd) const;
-			void		_registerNewPeer(int new_fd, struct sockaddr &addr);
 			void		_handleReadyFds(int event_count, struct epoll_event *events);
 	
 			int			_sockfd;
