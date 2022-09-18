@@ -5,7 +5,7 @@ static const char	*g_handler_type_str[] = {"HDL_MESSAGE"};
 
 namespace TCP {
 
-	Server::Server(char *port) : _sockfd(-1), _epollfd(-1), _peers(), _handlers()
+	Server::Server(char *port) : _sockfd(-1), _epollfd(-1), _peers(*this), _handlers()
 	{
 #ifndef NDEBUG
 		std::cerr << "Creating a TCP server..." << std::endl;
@@ -16,7 +16,7 @@ namespace TCP {
 #endif
 	}
 	
-	Server::Server(const Server &obj) : _sockfd(-1), _epollfd(-1), _peers(), _handlers()
+	Server::Server(const Server &obj) : _sockfd(-1), _epollfd(-1), _peers(*this), _handlers()
 	{
 		*this = obj;
 	}
@@ -42,7 +42,7 @@ namespace TCP {
 		hints.ai_socktype = SOCK_STREAM;
 		hints.ai_flags = AI_PASSIVE;
 	
-		if ((status = getaddrinfo(NULL, port, &hints, &servinfo)) != 0)
+		if ((st<<<<<<< peers-handle-fdsatus = getaddrinfo(NULL, port, &hints, &servinfo)) != 0)
 			throw sysCallError("getaddrinfo", gai_strerror(status));
 	
 #ifndef NDEBUG
@@ -130,23 +130,7 @@ namespace TCP {
 #ifndef NDEBUG
 				std::cerr << "New connection..." << std::endl;
 #endif
-				struct sockaddr their_addr;
-				socklen_t sin_size = sizeof their_addr;
-	
-				int new_fd;
-				if ((new_fd = accept(this->_sockfd, &their_addr, &sin_size)) == -1)
-				{
-					// TODO close all the fds given to epoll inside another function
-					close(this->_epollfd);
-					close(this->_sockfd);
-					throw Server::sysCallError("accept", strerror(errno));
-				}
-#ifndef NDEBUG
-				std::cerr << "Accepted connection on fd no " << new_fd << "!" << std::endl;
-				std::cerr << "IP address -> " << inet_ntoa(((struct sockaddr_in *)(&their_addr))->sin_addr) << std::endl;
-#endif
-	
-				this->_registerNewPeer(new_fd, their_addr);
+				this->_addFdToEpoll(this->_peers.acceptConnection());
 			}
 			else
 			{
@@ -155,12 +139,7 @@ namespace TCP {
 #endif
 				if (this->_handlers[HDL_MESSAGE](&events[i]) == -1)
 				{
-					close(events[i].data.fd);
-#ifndef NDEBUG
-					std::cerr << "Closing connection on fd no " << events[i].data.fd << "..." << std::endl;
-					std::cerr << "IP address -> " << this->_peers[events[i].data.fd].getStrAddr() << std::endl;
-#endif
-					this->_peers.remove(events[i].data.fd);
+					this->_peers.closeConnection(events[i].data.fd);
 				}
 			}
 		}
@@ -214,4 +193,14 @@ namespace TCP {
 #endif
 	}
 
+}
+
+int	TCP::Server::getEpollFd(void) const
+{
+	return this->_epollfd;
+}
+
+int	TCP::Server::getSocketFd(void) const
+{
+	return this->_sockfd;
 }

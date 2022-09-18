@@ -8,6 +8,7 @@
 # include <arpa/inet.h>
 # include <cstring>
 # include <errno.h>
+# include <iostream>
 # include <netdb.h>
 # include <netinet/in.h>
 # include <stdint.h>
@@ -21,6 +22,9 @@
 # ifndef NDEBUG
 #  include <iostream>
 # endif
+
+class PeerManager;
+# include "TCP/PeerManager.hpp"
 
 typedef enum handler_type
 {
@@ -41,6 +45,8 @@ namespace TCP {
 			void		listen(void);
 	
 			void		setHandler(e_handler_type type, int (*handler)(epoll_event *));
+			int			getEpollFd(void) const;
+			int			getSocketFd(void) const;
 	
 			struct noBindableAddress : public std::exception {
 				virtual const char* what() const throw()
