@@ -1,5 +1,5 @@
 NAME = ircserv
-SRCS = $(addprefix src/, main.cpp)
+SRCS = $(addprefix src/, main.cpp Configuration.cpp TCPPeer.cpp TCPPeerManager.cpp TCPServer.cpp handlers.cpp)
 OBJS = $(SRCS:.cpp=.o)
 DEPS = $(SRCS:.cpp=.d)
 INCLDIR = include
