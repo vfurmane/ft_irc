@@ -13,7 +13,13 @@ int	handleTCPMessage(epoll_event *event)
 	else
 	{
 		buffer[bytes_read] = '\0';
-		printf("%s", buffer); // DEBUG
+#ifndef NDEBUG
+		std::cerr << "vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv" << std::endl;
+		std::cerr << buffer;
+		if (buffer[bytes_read - 1] != '\n')
+			std::cerr << "%" << std::endl;
+		std::cerr << "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^" << std::endl;
+#endif
 	}
 	return 0;
 }

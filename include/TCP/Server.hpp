@@ -18,6 +18,10 @@
 # include <unistd.h>
 # include "TCP/PeerManager.hpp"
 
+# ifndef NDEBUG
+#  include <iostream>
+# endif
+
 typedef enum handler_type
 {
 	HDL_MESSAGE
