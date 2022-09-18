@@ -1,6 +1,8 @@
 #include "TCPServer.hpp"
 
+#ifndef NDEBUG
 static const char	*g_handler_type_str[] = {"HDL_MESSAGE"};
+#endif
 
 TCPServer::TCPServer(char *port) : _sockfd(-1), _epollfd(-1), _peers(*this), _handlers()
 {
