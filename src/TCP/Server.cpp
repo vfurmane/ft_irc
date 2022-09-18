@@ -11,10 +11,7 @@ namespace TCP {
 		std::cerr << "Creating a TCP server..." << std::endl;
 #endif
 		this->_bindNewSocketToPort(port);
-		for(size_t i = 0; i < this->_handlers_nb; i++)
-		{
-			std::memset(&this->_handlers[i], 0, sizeof(this->_handlers));
-		}
+		std::memset(&this->_handlers, 0, sizeof(this->_handlers));
 #ifndef NDEBUG
 		std::cerr << "Done creating the TCP server!" << std::endl;
 #endif
