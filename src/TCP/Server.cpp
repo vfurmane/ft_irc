@@ -42,7 +42,7 @@ namespace TCP {
 		hints.ai_socktype = SOCK_STREAM;
 		hints.ai_flags = AI_PASSIVE;
 	
-		if ((status = getaddrinfo(NULL, port, &hints, &servinfo)) != 0)
+		if ((st<<<<<<< peers-handle-fdsatus = getaddrinfo(NULL, port, &hints, &servinfo)) != 0)
 			throw sysCallError("getaddrinfo", gai_strerror(status));
 	
 #ifndef NDEBUG
@@ -106,6 +106,15 @@ namespace TCP {
 		}
 #ifndef NDEBUG
 		std::cerr << "Added fd " << new_fd << " to epoll!" << std::endl;
+#endif
+	}
+	
+	void	Server::_registerNewPeer(int new_fd, struct sockaddr &addr)
+	{
+		this->_addFdToEpoll(new_fd);
+		this->_peers.add(Peer(new_fd, addr));
+#ifndef NDEBUG
+		std::cerr << "New peer has been registered!" << std::endl;
 #endif
 	}
 

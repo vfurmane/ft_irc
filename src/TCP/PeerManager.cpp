@@ -3,7 +3,6 @@
 
 PeerManager::PeerManager(TCP::Server &server) : _server(server), _peers()
 {
-
 }
 
 PeerManager::PeerManager(const PeerManager &obj) : _server(obj._server), _peers()
@@ -19,7 +18,6 @@ PeerManager &PeerManager::operator=(const PeerManager &rhs)
 
 PeerManager::~PeerManager(void)
 {
-	
 }
 
 Peer	&PeerManager::operator[](int fd)

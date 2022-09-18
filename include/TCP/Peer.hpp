@@ -16,9 +16,7 @@ class Peer
 		~Peer(void);
 
 		int				close(void) const;
-
 		char			*getStrAddr(void) const;
-
 		int				getFd(void) const;
 
 	private:
