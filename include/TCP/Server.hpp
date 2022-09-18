@@ -8,7 +8,6 @@
 # include <arpa/inet.h>
 # include <cstring>
 # include <errno.h>
-# include <iostream>
 # include <netdb.h>
 # include <netinet/in.h>
 # include <stdint.h>
@@ -18,6 +17,10 @@
 # include <sys/types.h>
 # include <unistd.h>
 # include "TCP/PeerManager.hpp"
+
+# ifndef NDEBUG
+#  include <iostream>
+# endif
 
 typedef enum handler_type
 {
