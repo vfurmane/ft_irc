@@ -1,7 +1,5 @@
 #include "handlers.hpp"
 
-#include <stdio.h> // TODO Remove le header
-
 int	handleTCPMessage(epoll_event *event)
 {
 	int		bytes_read;

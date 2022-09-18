@@ -1,5 +1,4 @@
 #include "TCP/PeerManager.hpp"
-#include <cstdio> // DELETE
 
 PeerManager::PeerManager(TCP::Server &server) : _server(server), _peers()
 {
@@ -33,7 +32,6 @@ void PeerManager::add(int fd, struct sockaddr &addr)
 #endif
 }
 
-// TODO should only remove, should add a closeConnection() method
 void PeerManager::remove(int fd)
 {
 	this->_peers.erase(fd);

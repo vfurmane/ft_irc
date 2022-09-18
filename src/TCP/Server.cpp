@@ -1,5 +1,4 @@
 #include "TCP/Server.hpp"
-#include <stdio.h> // TODO Remove le header
 
 static const char	*g_handler_type_str[] = {"HDL_MESSAGE"};
 
@@ -146,7 +145,6 @@ namespace TCP {
 		this->_epollfd = epoll_create1(0);
 		if (this->_epollfd == -1)
 		{
-			// Debug Log eventually
 			throw sysCallError("epoll_create1", strerror(errno));
 		}
 		this->_addFdToEpoll(this->_sockfd);
@@ -168,7 +166,6 @@ namespace TCP {
 	
 		if (close(this->_epollfd) == -1)
 		{
-			// Debug Log eventually
 			throw sysCallError("close", strerror(errno));
 		}
 	}

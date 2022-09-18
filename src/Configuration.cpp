@@ -3,7 +3,6 @@
 
 Configuration::Configuration() : _parsed(false), _port(), _password()
 {
-	(void)this->_port; // DELETE
 }
 
 Configuration::Configuration(const Configuration &obj)
