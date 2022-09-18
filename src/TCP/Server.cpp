@@ -11,6 +11,10 @@ namespace TCP {
 		std::cerr << "Creating a TCP server..." << std::endl;
 #endif
 		this->_bindNewSocketToPort(port);
+		for(size_t i = 0; i < this->_handlers_nb; i++)
+		{
+			std::memset(&this->_handlers[i], 0, sizeof(this->_handlers));
+		}
 #ifndef NDEBUG
 		std::cerr << "Done creating the TCP server!" << std::endl;
 #endif
@@ -131,6 +135,11 @@ namespace TCP {
 	{
 		struct epoll_event	events[MAX_EVENTS];
 	
+		for(size_t i = 0; i < this->_handlers_nb; i++)
+		{
+			if (this->_handlers[i] == 0)
+				throw handlersNotSet();
+		}
 		if (::listen(_sockfd, BACKLOG))
 			throw sysCallError("listen", strerror(errno));
 #ifndef NDEBUG
