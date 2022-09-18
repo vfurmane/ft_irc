@@ -1,8 +1,8 @@
 NAME = test.out
-SRCS = main.cpp Configuration.test.cpp ../src/Configuration.cpp
+SRCS = main.cpp Configuration.test.cpp ../src/Configuration.cpp $(addprefix TCP/, Server.test.cpp ) ../src/TCP/Server.cpp
 OBJS = $(SRCS:.cpp=.o)
 CXX = c++
-CPPFLAGS += $(addprefix -I, ../include)
+CPPFLAGS += $(addprefix -I, . ../include)
 CXXFLAGS += -Wall -Wextra -Werror --std=c++11
 RM = rm -f
 

@@ -3,12 +3,11 @@
 
 Configuration::Configuration() : _parsed(false), _port(), _password()
 {
-	(void)this->_port; // DELETE
 }
 
 Configuration::Configuration(const Configuration &obj)
 {
-	(void)obj;
+	*this = obj;
 }
 
 Configuration::~Configuration(void)
@@ -18,7 +17,10 @@ Configuration::~Configuration(void)
 
 Configuration	&Configuration::operator=(const Configuration &rhs)
 {
-	(void)rhs; // DELETE
+	this->_parsed = rhs._parsed;
+	this->_port = rhs._port;
+	this->_str_port = rhs._str_port;
+	this->_password = rhs._password;
 	return *this;
 }
 
