@@ -55,6 +55,13 @@ namespace TCP {
 				}
 			};
 	
+			struct handlersNotSet : public std::exception {
+				virtual const char* what() const throw()
+				{
+					return "handlers have not been set";
+				}
+			};
+	
 		private:
 			void		_bindNewSocketToPort(char *port);
 			void		_addFdToEpoll(int new_fd) const;
@@ -63,7 +70,8 @@ namespace TCP {
 			int			_sockfd;
 			int			_epollfd;
 			PeerManager	_peers;
-			int			(*_handlers[1])(epoll_event *);
+			static const size_t _handlers_nb = 1;
+			int			(*_handlers[_handlers_nb])(epoll_event *);
 	};
 
 };
