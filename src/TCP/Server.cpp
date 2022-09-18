@@ -23,7 +23,8 @@ namespace TCP {
 	
 	Server::~Server(void)
 	{
-		close(this->_sockfd);
+		if (close(this->_sockfd) == -1)
+			throw sysCallError("close", strerror(errno));
 	}
 	
 	Server	&Server::operator=(const Server &rhs)
@@ -73,7 +74,8 @@ namespace TCP {
 	
 			if (bind(this->_sockfd, p->ai_addr, p->ai_addrlen))
 			{
-				close(this->_sockfd);
+				if (close(this->_sockfd) == -1)
+					throw sysCallError("close", strerror(errno));
 #ifndef NDEBUG
 				std::cerr << "bind: " << strerror(errno) << std::endl;
 #endif

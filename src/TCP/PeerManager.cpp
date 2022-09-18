@@ -70,6 +70,7 @@ void	PeerManager::closeConnection(int fd)
 	std::cerr << "Closing connection on fd no " << fd << "..." << std::endl;
 	std::cerr << "IP address -> " << this->get(fd).getStrAddr() << std::endl;
 #endif
-	this->_peers.at(fd).close();
+	if (this->_peers.at(fd).close() == -1)
+		throw TCP::Server::sysCallError("close", strerror(errno));
 	this->remove(fd);
 }
