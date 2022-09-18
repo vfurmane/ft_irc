@@ -102,7 +102,7 @@ namespace TCP {
 			// TODO close all the fds given to epoll inside another function
 			close(this->_epollfd);
 			close(this->_sockfd);
-			throw Server::sysCallError("epoll_ctl", strerror(errno));
+			throw sysCallError("epoll_ctl", strerror(errno));
 		}
 #ifndef NDEBUG
 		std::cerr << "Added fd " << new_fd << " to epoll!" << std::endl;

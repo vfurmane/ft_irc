@@ -4,6 +4,7 @@
 # include <map>
 # include <algorithm>
 # include "Peer.hpp"
+# include "exception.hpp"
 
 namespace TCP {
 	class Server;
