@@ -7,12 +7,13 @@ void	parseInput(const std::string &input)
 
 int	handleIRCMessage(TCPPeer *peer, epoll_event *event)
 {
+	(void)peer;
 	int		bytes_read;
 	char	buffer[MAX_READ + 1];
 	IRCPeer	*irc_peer = static_cast<IRCPeer *>(peer);
-	
+
 	bytes_read = recv(event->data.fd, buffer, MAX_READ, 0);
-	if (bytes_read <= 0)
+	if (bytes_read == 0)
 		return -1;
 	else
 	{
