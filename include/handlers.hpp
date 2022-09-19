@@ -3,6 +3,8 @@
 
 # include <sys/epoll.h>
 # include <sys/socket.h>
+# include "IRCPeer.hpp"
+# include "TCPPeer.hpp"
 
 # ifndef NDEBUG
 #  include <iostream>
@@ -10,7 +12,7 @@
 
 # define MAX_READ 63
 
-int	handleTCPMessage(epoll_event *event);
-int	handleIRCMessage(epoll_event *event);
+int	handleIRCMessage(IRCPeer &peer, epoll_event *event);
+int	handleTCPMessage(TCPPeer &peer, epoll_event *event);
 
 #endif
