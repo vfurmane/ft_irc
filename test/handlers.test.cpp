@@ -17,6 +17,12 @@ ssize_t	recv(int fd, void *buf, size_t n, int flags)
 	return g_recv_return;
 }
 
+const std::string	*g_parseInput_arg_input;
+void	parseInput(const std::string &input)
+{
+	g_parseInput_arg_input = &input;
+}
+
 TEST_CASE("handleIRCMessage")
 {
 	g_recv_return = 10;
