@@ -2,11 +2,9 @@
 # define IRCSERVER_HPP
 
 # include <exception>
-# include <iostream>
 
 # include "TCPServer.hpp"
-
-int	handleIRCMessage(epoll_event *event); // REMOVE
+# include "handlers.hpp"
 
 class IRCServer: public TCPServer
 {
@@ -21,10 +19,7 @@ class IRCServer: public TCPServer
 			{
 				return "cannot set commands handler inside IRCServer";
 			};
-		};
-	
-	private:
-		
+		};	
 };
 
 #endif
