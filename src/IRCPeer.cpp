@@ -23,3 +23,14 @@ void	IRCPeer::appendMessage(const char *buffer)
 {
 	this->_message += buffer;
 }
+
+bool	IRCPeer::hasCompleteMessage(void) const
+{
+	return (*(this->_message.end() - 2) == '\r'
+			&& *(this->_message.end() - 1) == '\n');
+}
+
+const std::string	&IRCPeer::getMessage(void) const
+{
+	return this->_message;
+}

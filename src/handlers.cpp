@@ -1,5 +1,9 @@
 #include "handlers.hpp"
 
+void	parseInput(const std::string &input)
+{
+	(void)input;
+}
 
 int	handleIRCMessage(IRCPeer &peer, epoll_event *event)
 {
@@ -13,6 +17,8 @@ int	handleIRCMessage(IRCPeer &peer, epoll_event *event)
 	{
 		buffer[bytes_read] = '\0';
 		peer.appendMessage(buffer);
+		if (peer.hasCompleteMessage())
+			parseInput(peer.getMessage());
 	}
 	return 0;
 }
