@@ -1,5 +1,5 @@
 NAME = test.out
-SRCS = main.cpp Configuration.test.cpp ../src/Configuration.cpp $(addprefix TCP/, Server.test.cpp ) ../src/TCP/Server.cpp
+SRCS = main.cpp Configuration.test.cpp ../src/Configuration.cpp
 OBJS = $(SRCS:.cpp=.o)
 CXX = c++
 CPPFLAGS += $(addprefix -I, . ../include)
