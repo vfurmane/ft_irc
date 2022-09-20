@@ -13,7 +13,7 @@ class IRCMessage
 
 	private:
 
-	void	parseArguments(std::string::const_iterator &it);
+	void	_parseArguments(std::string::const_iterator &it);
 
 	std::string		_input;
 	std::string		*_prefix;
