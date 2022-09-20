@@ -7,29 +7,21 @@ IRCMessage::IRCMessage(const std::string &input): _input(input), _prefix(NULL), 
 void	IRCMessage::parseArguments(std::string::const_iterator &it)
 {
 	int		j;
-	bool	trailingArg = false;
 	
 	while (it != this->_input.end() && *it != '\r' && *it != '\n' && this->_argCount < 15)
 	{
 		j = 0;
-		if (*it == ':' && *(it - 1) == ' ')
+		if (*it == ':')
 		{
-			trailingArg = true;
-			break ;
+			it++;
+			while (it != this->_input.end() && it[j] != '\r')
+				j++;
+			this->_arguments[_argCount] = this->_input.substr(it - this->_input.begin(), j);
 		}
 		while (it != this->_input.end() && it[j] != ' ' && it[j] != '\r')
 			j++;
 		this->_arguments[_argCount] = this->_input.substr(it - this->_input.begin(), j);
 		it += j + 1;
-		_argCount++;
-	}
-	j = 0;
-	if (trailingArg == true && _argCount < 15)
-	{
-		it++;
-		while (it != this->_input.end() && it[j] != '\r')
-			j++;
-		this->_arguments[_argCount] = this->_input.substr(it - this->_input.begin(), j);
 		_argCount++;
 	}
 }
