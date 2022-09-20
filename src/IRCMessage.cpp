@@ -4,7 +4,7 @@ IRCMessage::IRCMessage(const std::string &input): _input(input), _prefix(NULL), 
 {
 }
 
-void	IRCMessage::parseArguments(std::string::const_iterator &it)
+void	IRCMessage::_parseArguments(std::string::const_iterator &it)
 {
 	int		j;
 	
@@ -44,5 +44,5 @@ void	IRCMessage::parse()
 		j++;
 	this->_command = this->_input.substr(it - this->_input.begin(), j);
 	it += j + 1;
-	parseArguments(it);
+	_parseArguments(it);
 }
