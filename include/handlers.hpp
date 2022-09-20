@@ -14,7 +14,7 @@
 int	handleTCPMessage(epoll_event *event);
 int	handleIRCMessage(epoll_event *event);
 struct inputLexer	lexer(const std::string &input);
-	
+
 typedef struct inputLexer
 {
 	std::string		*prefix;
