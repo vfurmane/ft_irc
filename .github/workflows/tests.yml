@@ -4,8 +4,8 @@ on:
     types: [opened, reopened]
   push:
     branches:
-      - '*'
-      - '!*WIP'
+      - 'dev'
+      - 'main'
 jobs:
   make-tests:
     runs-on: ubuntu-latest
