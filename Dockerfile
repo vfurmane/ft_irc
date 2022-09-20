@@ -6,5 +6,7 @@ RUN set -eux; \
 		make \
 		gcc \
 		clang \
+		gdb \
+		valgrind \
 	; \
 	rm -r /var/lib/apt/lists/*;
