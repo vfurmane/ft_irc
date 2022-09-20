@@ -28,21 +28,21 @@ int	handleTCPMessage(epoll_event *event)
 	return 0;
 }
 
-void	argumentLexer(std::string::iterator &it, struct inputLexer &lexer, const std::string &input)
+void	argumentLexer(std::string::const_iterator &it, struct inputLexer &lexer, const std::string &input)
 {
 	int		argNumber = 0;
-	int		j = 0;
+	int		j;
 	bool	trailingArg = false;
 	
-	while (*it != '\r' && *it != '\n' && argNumber < 15)
+	while (it != input.end() && *it != '\r' && *it != '\n' && argNumber < 15)
 	{
 		j = 0;
-		if (*it == ':' && it[1] == ' ')
+		if (*it == ':' && *(it - 1) == ' ')
 		{
 			trailingArg = true;
 			break ;
 		}
-		while (it[j] != ' ' && it[j] != '\r')
+		while (it != input.end() && it[j] != ' ' && it[j] != '\r')
 			j++;
 		lexer.arguments[argNumber] = input.substr(it - input.begin(), j);
 		it += j + 1;
@@ -51,7 +51,7 @@ void	argumentLexer(std::string::iterator &it, struct inputLexer &lexer, const st
 	j = 0;
 	if (trailingArg == true && argNumber < 15)
 	{
-		while (it[j] != '\r')
+		while (it != input.end() && it[j] != '\r')
 			j++;
 		lexer.arguments[argNumber] = input.substr(it - input.begin(), j);
 	}
@@ -60,21 +60,21 @@ void	argumentLexer(std::string::iterator &it, struct inputLexer &lexer, const st
 struct inputLexer lexer(const std::string &input)
 {
 	struct inputLexer		lexer;
-	std::string::iterator	it;
+	std::string::const_iterator	it = input.begin();
 	int						j = 0;
 	
 	if (input[0] == ':')
 	{
 		it++;
 		lexer.prefix = new std::string;
-		while (*it != ' ')
+		while (it != input.end() && *it != ' ')
 			it++;
 		*lexer.prefix = input.substr(1, it - input.begin() - 1);
 		it++;
 	}
 	else
 		lexer.prefix = NULL;
-	while (it[j] != ' ')
+	while (it != input.end() && it[j] != ' ')
 		j++;
 	lexer.command = input.substr(it - input.begin(), j);
 	it += j + 1;
