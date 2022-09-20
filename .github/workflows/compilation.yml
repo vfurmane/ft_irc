@@ -1,0 +1,17 @@
+name: Compilation
+on:
+  pull_request:
+    types: [opened, reopened]
+  push:
+    branches:
+      - '*'
+      - '!*WIP'
+jobs:
+  compilation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: recursive
+      - name: Compile
+        run: make
