@@ -18,6 +18,7 @@ class IRCPeer : public TCPPeer
 		~IRCPeer(void);
 
 		void				appendMessage(const char *buffer);
+		void				clearMessage(void);
 		bool				hasCompleteMessage(void) const;
 		const std::string	&getMessage(void) const;
 

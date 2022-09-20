@@ -12,7 +12,7 @@
 
 # define MAX_READ 63
 
-int	handleIRCMessage(IRCPeer &peer, epoll_event *event);
-int	handleTCPMessage(TCPPeer &peer, epoll_event *event);
+int	handleIRCMessage(TCPPeer *peer, epoll_event *event);
+int	handleTCPMessage(TCPPeer *peer, epoll_event *event);
 
 #endif

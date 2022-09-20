@@ -40,7 +40,7 @@ class TCPServer
 
 		void		listen(void);
 
-		void		setHandler(e_handler_type type, int (*handler)(TCPPeer &, epoll_event *));
+		void		setHandler(e_handler_type type, int (*handler)(TCPPeer *, epoll_event *));
 		int			getEpollFd(void) const;
 		int			getSocketFd(void) const;
 
@@ -67,7 +67,7 @@ class TCPServer
 		int			_epollfd;
 		TCPPeerManager	_peers;
 		static const size_t _handlers_nb = 1;
-		int			(*_handlers[_handlers_nb])(TCPPeer &, epoll_event *);
+		int			(*_handlers[_handlers_nb])(TCPPeer *, epoll_event *);
 };
 
 #endif

@@ -31,7 +31,7 @@ TEST_CASE("handleIRCMessage")
 
 		g_recv_return = -1;
 
-		ssize_t ret = handleIRCMessage(peer, &event);
+		ssize_t ret = handleIRCMessage(&peer, &event);
 		REQUIRE( ret == -1 );
 	};
 
@@ -44,7 +44,7 @@ TEST_CASE("handleIRCMessage")
 
 		g_recv_return = 0;
 
-		ssize_t ret = handleIRCMessage(peer, &event);
+		ssize_t ret = handleIRCMessage(&peer, &event);
 		REQUIRE( ret == -1 );
 	};
 
@@ -55,9 +55,23 @@ TEST_CASE("handleIRCMessage")
 		epoll_event		event;
 		event.data.fd = 3;
 
-		handleIRCMessage(peer, &event);
+		handleIRCMessage(&peer, &event);
 		REQUIRE( peer._message == "HELLOWORLD" );
-		handleIRCMessage(peer, &event);
+		handleIRCMessage(&peer, &event);
 		REQUIRE( peer._message == "HELLOWORLDHELLOWORLD" );
+	};
+
+	SECTION("should clear the message after parsing")
+	{
+		struct sockaddr	addr;
+		IRCPeer			peer(3, addr);
+		epoll_event		event;
+		event.data.fd = 3;
+
+		handleIRCMessage(&peer, &event);
+		handleIRCMessage(&peer, &event);
+		g_recv_buf = "DONE\r\n";
+		handleIRCMessage(&peer, &event);
+		REQUIRE( peer._message.empty() );
 	};
 };

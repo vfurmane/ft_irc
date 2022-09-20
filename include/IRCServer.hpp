@@ -3,6 +3,7 @@
 
 # include <exception>
 
+# include "TCPPeer.hpp"
 # include "TCPServer.hpp"
 # include "handlers.hpp"
 
@@ -12,7 +13,7 @@ class IRCServer: public TCPServer
 		IRCServer(char *port);
 		~IRCServer(void);
 
-		virtual void		setHandler(e_handler_type type, int (*handler)(epoll_event *));
+		virtual void		setHandler(e_handler_type type, int (*handler)(TCPPeer *, epoll_event *));
 		
 		struct cannotSetHandler: public std::exception {
 			virtual const char* what() const throw()

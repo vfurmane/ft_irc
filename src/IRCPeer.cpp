@@ -24,6 +24,11 @@ void	IRCPeer::appendMessage(const char *buffer)
 	this->_message += buffer;
 }
 
+void	IRCPeer::clearMessage(void)
+{
+	this->_message.clear();
+}
+
 bool	IRCPeer::hasCompleteMessage(void) const
 {
 	return (*(this->_message.end() - 2) == '\r'
