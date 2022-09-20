@@ -17,7 +17,6 @@ class IRCMessage
 
 	void		parse();
 	void		execute();
-	
 	private:
 
 	void	_parseArguments(std::string::const_iterator &it);

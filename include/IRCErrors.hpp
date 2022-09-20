@@ -41,6 +41,6 @@ struct ERR_UMODEUNKNOWNFLAG : public std::exception
 	{
 		return ":Unknown MODE flag";
 	}
-}
+};
 
 #endif
