@@ -1,10 +1,10 @@
-#include "IRCMessageStream.hpp"
+#include "IRCMessage.hpp"
 
-IRCMessageStream::IRCMessageStream(const std::string &input): _input(input), _prefix(NULL), _command(), _arguments(), _argCount(0)
+IRCMessage::IRCMessage(const std::string &input): _input(input), _prefix(NULL), _command(), _arguments(), _argCount(0)
 {
 }
 
-void	IRCMessageStream::parseArguments(std::string::const_iterator &it)
+void	IRCMessage::parseArguments(std::string::const_iterator &it)
 {
 	int		j;
 	bool	trailingArg = false;
@@ -34,7 +34,7 @@ void	IRCMessageStream::parseArguments(std::string::const_iterator &it)
 	}
 }
 
-void	IRCMessageStream::parse()
+void	IRCMessage::parse()
 {
 	std::string::const_iterator	it = this->_input.begin();
 	int							j = 0;

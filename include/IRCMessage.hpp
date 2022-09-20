@@ -1,13 +1,13 @@
-#ifndef IRCMESSAGESTREAM_HPP
-# define IRCMESSAGESTREAM_HPP
+#ifndef IRCMESSAGE_HPP
+# define IRCMESSAGE_HPP
 
 #include <string>
 
-class IRCMessageStream
+class IRCMessage
 {
 	public:
 
-	IRCMessageStream(const std::string &input);
+	IRCMessage(const std::string &input);
 	
 	void	parse();
 
@@ -19,7 +19,7 @@ class IRCMessageStream
 	std::string		*_prefix;
 	std::string		_command;
 	std::string		_arguments[15];
-	int				_argCount;
+	size_t			_argCount;
 };
 
 #endif
