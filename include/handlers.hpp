@@ -11,5 +11,6 @@
 # define MAX_READ 63
 
 int	handleTCPMessage(epoll_event *event);
+int	handleIRCMessage(epoll_event *event);
 
 #endif

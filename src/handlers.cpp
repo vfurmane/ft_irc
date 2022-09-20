@@ -1,5 +1,11 @@
 #include "handlers.hpp"
 
+int handleIRCMessage(epoll_event *event)
+{
+	(void)event;
+	return 0;
+}
+
 int	handleTCPMessage(epoll_event *event)
 {
 	int		bytes_read;
