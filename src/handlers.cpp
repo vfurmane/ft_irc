@@ -74,7 +74,7 @@ struct inputLexer lexer(const std::string &input)
 	}
 	else
 		lexer.prefix = NULL;
-	while (it != input.end() && it[j] != ' ')
+	while (it != input.end() && it[j] != ' ' && it[j] != '\r' && it[j] != '\n')
 		j++;
 	lexer.command = input.substr(it - input.begin(), j);
 	it += j + 1;
