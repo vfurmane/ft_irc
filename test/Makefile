@@ -1,5 +1,5 @@
 NAME = test.out
-SRCS = main.cpp Configuration.test.cpp ../src/Configuration.cpp ../src/handlers.cpp IRCMessage.test.cpp ../src/IRCMessage.cpp
+SRCS = main.cpp Configuration.test.cpp ../src/Configuration.cpp handlers.test.cpp ../src/handlers.cpp ../src/IRCPeer.cpp ../src/TCPPeer.cpp IRCMessage.test.cpp ../src/IRCMessage.cpp
 OBJS = $(SRCS:.cpp=.o)
 CXX = c++
 CPPFLAGS += $(addprefix -I, . ../include)

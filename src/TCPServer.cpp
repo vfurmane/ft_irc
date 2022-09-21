@@ -118,7 +118,7 @@ void	TCPServer::_handleReadyFds(int event_count, struct epoll_event *events)
 #ifndef NDEBUG
 			std::cerr << "New message..." << std::endl;
 #endif
-			if (this->_handlers[HDL_MESSAGE](&events[i]) == -1)
+			if (this->_handlers[HDL_MESSAGE](&this->_peers.get(events[i].data.fd), &events[i]) == -1)
 			{
 				this->_peers.closeConnection(events[i].data.fd);
 			}
@@ -169,7 +169,7 @@ void	TCPServer::listen(void)
 	}
 }
 
-void	TCPServer::setHandler(e_handler_type type, int (*handler)(epoll_event *))
+void	TCPServer::setHandler(e_handler_type type, int (*handler)(TCPPeer *, epoll_event *))
 {
 	this->_handlers[type] = handler;
 #ifndef NDEBUG
