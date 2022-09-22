@@ -8,9 +8,13 @@ class IRCMessage
 	public:
 
 	IRCMessage(const std::string &input);
-	
-	void	parse();
 
+	static const std::string commands_name[];
+	static void(*const commands[])(void); 
+
+	void		parse();
+	void		execute();
+	
 	private:
 
 	void	_parseArguments(std::string::const_iterator &it);
