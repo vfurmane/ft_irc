@@ -1,7 +1,8 @@
 #include "IRCMessage.hpp"
 
-const std::string IRCMessage::commands_name[] = {};
-void (*const IRCMessage::commands[])(void) = {}; 
+static const size_t commands_count = 0;
+const std::string IRCMessage::commands_name[commands_count] = {};
+void (*const IRCMessage::commands[commands_count])(void) = {};
 
 IRCMessage::IRCMessage(const std::string &input): _input(input), _prefix(NULL), _command(), _arguments(), _argCount(0)
 {
@@ -52,12 +53,7 @@ void	IRCMessage::parse()
 
 void	IRCMessage::execute()
 {
-	std::string		commands_name[] = {};
-	typedef void	(*t_command)(void);
-
-	t_command commands[] = {};
-
-	for (int i = 0; i < 4; i++) {
+	for (size_t i = 0; i < commands_count; i++) {
 		if (commands_name[i] == this->_command) {
 			commands[i]();
 		}
