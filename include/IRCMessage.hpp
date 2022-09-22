@@ -8,6 +8,9 @@ class IRCMessage
 	public:
 
 	IRCMessage(const std::string &input);
+	IRCMessage(const IRCMessage &obj);
+	IRCMessage &operator=(const IRCMessage &rhs);
+	~IRCMessage(void);
 
 	static const std::string commands_name[];
 	static void(*const commands[])(void); 
