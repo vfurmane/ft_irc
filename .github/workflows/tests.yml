@@ -2,6 +2,9 @@ name: Tests
 on:
   pull_request:
     types: [opened, reopened, edited, synchronize]
+    branches:
+      - 'dev'
+      - 'main'
   push:
     branches:
       - 'dev'

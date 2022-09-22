@@ -2,6 +2,9 @@ name: Compilation
 on:
   pull_request:
     types: [opened, reopened, synchronize, edited]
+    branches:
+      - 'dev'
+      - 'main'
   push:
     branches:
       - 'dev'
