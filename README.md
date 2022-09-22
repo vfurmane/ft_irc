@@ -1,4 +1,4 @@
-[![Compilation](https://github.com/vfurmane/ft_irc/actions/workflows/compilation.yml/badge.svg)](https://github.com/vfurmane/ft_irc/actions/workflows/compilation.yml) [![Tests](https://github.com/vfurmane/ft_irc/actions/workflows/tests.yml/badge.svg)](https://github.com/vfurmane/ft_irc/actions/workflows/tests.yml)
+[![Compilation](https://github.com/vfurmane/ft_irc/actions/workflows/compilation.yml/badge.svg)](https://github.com/vfurmane/ft_irc/actions/workflows/compilation.yml) [![Tests](https://github.com/vfurmane/ft_irc/actions/workflows/tests.yml/badge.svg)](https://github.com/vfurmane/ft_irc/actions/workflows/tests.yml) ![License](https://img.shields.io/github/license/vfurmane/ft_irc) ![Version](https://img.shields.io/github/v/release/vfurmane/ft_irc?display_name=tag&sort=semver)
 
 # ft_irc
 
