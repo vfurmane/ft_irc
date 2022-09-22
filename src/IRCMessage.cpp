@@ -8,6 +8,27 @@ IRCMessage::IRCMessage(const std::string &input): _input(input), _prefix(NULL), 
 {
 }
 
+IRCMessage::IRCMessage(const IRCMessage &obj)
+{
+	(*this) = obj;
+}
+
+IRCMessage &IRCMessage::operator=(const IRCMessage &rhs)
+{
+	this->_input = rhs._input;
+	this->_prefix = rhs._prefix;
+	this->_command = rhs._command;
+	for (int i = 0; i < 15; i++)
+		this->_arguments[i] = rhs._arguments[i];
+	this->_argCount = rhs._argCount;
+	return (*this);
+}
+
+IRCMessage::~IRCMessage()
+{
+	delete this->_prefix;
+}
+
 void	IRCMessage::_parseArguments(std::string::const_iterator &it)
 {
 	int		j;
