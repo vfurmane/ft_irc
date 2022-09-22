@@ -3,11 +3,13 @@
 
 #include <string>
 
+class IRCPeer;
+
 class IRCMessage
 {
 	public:
 
-	IRCMessage(const std::string &input);
+	IRCMessage(IRCPeer &peer, const std::string &input);
 	IRCMessage(const IRCMessage &obj);
 	IRCMessage &operator=(const IRCMessage &rhs);
 	~IRCMessage(void);
@@ -18,8 +20,17 @@ class IRCMessage
 	void		parse();
 	void		execute();
 	private:
+	
+	size_t	getArgsCount(void) const;
+	const std::string	*getArguments(void) const;
+	const std::string	&getInput(void) const;
 
-	void	_parseArguments(std::string::const_iterator &it);
+	IRCPeer	&peer;
+
+	protected:
+
+	void				_parseArguments(std::string::const_iterator &it);
+	const std::string	&_updateInputFromFields(void);
 
 	std::string		_input;
 	std::string		*_prefix;
@@ -27,5 +38,7 @@ class IRCMessage
 	std::string		_arguments[15];
 	size_t			_argCount;
 };
+
+# include "IRCPeer.hpp"
 
 #endif

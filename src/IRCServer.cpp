@@ -1,6 +1,6 @@
 #include "IRCServer.hpp"
 
-IRCServer::IRCServer(char *port): TCPServer(port)
+IRCServer::IRCServer(char *port): TCPServer(port), _peers(*this)
 {
 	TCPServer::setHandler(HDL_MESSAGE, handleIRCMessage);
 }

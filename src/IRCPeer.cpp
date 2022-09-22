@@ -1,17 +1,18 @@
 #include "IRCPeer.hpp"
 #include "TCPPeer.hpp"
 
-IRCPeer::IRCPeer(int fd, struct sockaddr &addr): TCPPeer(fd, addr), _message(), _user(), _realname(), _mode(), _registered(false)
+IRCPeer::IRCPeer(int fd, struct sockaddr &addr): TCPPeer(fd, addr), _message(), _nickname(), _user(), _realname(), _mode(), _registered(false)
 {
 }
 
-IRCPeer::IRCPeer(const IRCPeer &obj): TCPPeer(obj), _message()
+IRCPeer::IRCPeer(const IRCPeer &obj): TCPPeer(obj), _message(), _nickname()
 {
 }
 
 IRCPeer &IRCPeer::operator=(const IRCPeer &rhs)
 {
 	this->_message = rhs._message;
+	this->_nickname = rhs._nickname;
 	return (*this);
 }
 
@@ -51,4 +52,14 @@ void	IRCPeer::registration(const std::string &user, const std::string &mode, con
 	this->_user = user;
 	this->_mode = mode;
 	this->_realname = realname;
+}
+
+void	IRCPeer::setNickname(const std::string &new_nick)
+{
+	this->_nickname = new_nick;
+}
+
+void	IRCPeer::sendMessage(const IRCMessage &message) const
+{
+	send(this->getFd(), message.getInput().c_str(), message.getInput().length(), 0);
 }

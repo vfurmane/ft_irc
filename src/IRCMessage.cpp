@@ -4,7 +4,7 @@ static const size_t commands_count = 0;
 const std::string IRCMessage::commands_name[commands_count] = {};
 void (*const IRCMessage::commands[commands_count])(void) = {};
 
-IRCMessage::IRCMessage(const std::string &input): _input(input), _prefix(NULL), _command(), _arguments(), _argCount(0)
+IRCMessage::IRCMessage(IRCPeer &peer, const std::string &input): peer(peer), _input(input), _prefix(NULL), _command(), _arguments(), _argCount(0)
 {
 }
 
@@ -79,4 +79,35 @@ void	IRCMessage::execute()
 			commands[i]();
 		}
 	}
+}
+
+size_t	IRCMessage::getArgsCount(void) const
+{
+	return this->_argCount;
+}
+
+const std::string	*IRCMessage::getArguments(void) const
+{
+	return this->_arguments;
+}
+
+const std::string	&IRCMessage::getInput(void) const
+{
+	return this->_input;
+}
+
+const std::string	&IRCMessage::_updateInputFromFields(void)
+{
+	this->_input.clear();
+	if (this->_prefix != NULL)
+		this->_input += ":" + *this->_prefix + " ";
+	this->_input += this->_command;
+	for (size_t i = 0; i < _argCount; i++)
+	{
+		this->_input += " ";
+		if (this->_arguments[i].find(" ") != std::string::npos)
+			this->_input += ":";
+		this->_input += this->_arguments[i];
+	}
+	return this->_input;
 }

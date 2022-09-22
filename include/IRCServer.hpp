@@ -7,6 +7,9 @@
 # include "TCPServer.hpp"
 # include "handlers.hpp"
 
+class IRCPeerManager;
+# include "IRCPeerManager.hpp"
+
 class IRCServer: public TCPServer
 {
 	public:
@@ -21,6 +24,9 @@ class IRCServer: public TCPServer
 				return "cannot set commands handler inside IRCServer";
 			};
 		};	
+
+	private:
+		IRCPeerManager	_peers;
 };
 
 #endif

@@ -6,9 +6,12 @@
 # include <stdint.h>
 # include <string>
 # include <sys/socket.h>
+# include <sys/types.h>
 # include <unistd.h>
 # include "TCPPeer.hpp"
 # include "commands.hpp"
+
+class IRCMessage;
 
 class IRCPeer : public TCPPeer
 {
@@ -24,13 +27,18 @@ class IRCPeer : public TCPPeer
 		const std::string	&getMessage(void) const;
 		bool				isRegistered(void) const;
 		void				registration(const std::string &user, const std::string &mode, const std::string &realname);
+		void				setNickname(const std::string &new_nick);
+		void				sendMessage(const IRCMessage &message) const;
 
 	private:
 		std::string		_message;
+		std::string		_nickname;
 		std::string		_user;
 		std::string		_realname;
 		std::string		_mode;
 		bool			_registered;
 };
+
+# include "IRCMessage.hpp"
 
 #endif
