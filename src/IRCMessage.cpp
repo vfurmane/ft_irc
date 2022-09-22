@@ -1,6 +1,5 @@
 #include "IRCMessage.hpp"
 
-
 const std::string IRCMessage::commands_name[] = {};
 void (*const IRCMessage::commands[])(void) = {}; 
 
@@ -50,7 +49,6 @@ void	IRCMessage::parse()
 	it += j + 1;
 	_parseArguments(it);
 }
-
 
 void	IRCMessage::execute()
 {
