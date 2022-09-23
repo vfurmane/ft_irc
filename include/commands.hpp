@@ -4,7 +4,7 @@
 # include "IRCMessage.hpp"
 # include "IRCPeer.hpp"
 
-struct QuitMessage : public IRCMessage
+struct ErrorMessage : public IRCMessage
 {
 	ErrorMessage(IRCPeer &peer, const std::string &quit_message);
 };
