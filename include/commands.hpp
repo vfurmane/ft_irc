@@ -6,7 +6,7 @@
 
 struct QuitMessage : public IRCMessage
 {
-	QuitMessage(IRCPeer &peer, const std::string &quit_message);
+	ErrorMessage(IRCPeer &peer, const std::string &quit_message);
 };
 
 #endif

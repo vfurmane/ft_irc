@@ -2,5 +2,6 @@
 
 void	command_quit(IRCMessage &message, Dependencies &deps)
 {
-	IRCPeerManager.closeConnection(message.peer.getFd());
+	deps.peers.closeConnection(message.peer.getFd());
+	message.peer.sendMessage(ErrorMessage(message.peer, message.getArguments()[]));
 }
