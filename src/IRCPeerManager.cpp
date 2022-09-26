@@ -42,37 +42,6 @@ IRCPeer	&IRCPeerManager::get(int fd)
 	return this->_peers.at(fd);
 }
 
-int	IRCPeerManager::acceptConnection(void)
-{
-	struct sockaddr their_addr;
-	socklen_t sin_size = sizeof their_addr;
-	
-	int new_fd;
-	if ((new_fd = accept(this->_server.getSocketFd(), &their_addr, &sin_size)) == -1)
-	{
-		close(this->_server.getEpollFd());
-		close(this->_server.getSocketFd());
-		throw sysCallError("accept", strerror(errno));
-	}
-#ifndef NDEBUG
-	std::cerr << "Accepted connection on fd no " << new_fd << "!" << std::endl;
-	std::cerr << "IP address -> " << inet_ntoa(((struct sockaddr_in *)(&their_addr))->sin_addr) << std::endl;
-#endif
-	this->add(new_fd, their_addr);
-	return new_fd;
-}
-
-void	IRCPeerManager::closeConnection(int fd)
-{
-#ifndef NDEBUG
-	std::cerr << "Closing connection on fd no " << fd << "..." << std::endl;
-	std::cerr << "IP address -> " << this->get(fd).getStrAddr() << std::endl;
-#endif
-	if (this->_peers.at(fd).close() == -1)
-		throw sysCallError("close", strerror(errno));
-	this->remove(fd);
-}
-
 IRCPeerManager::const_iterator	IRCPeerManager::begin() const
 {
 	return this->_peers.begin();

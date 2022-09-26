@@ -22,8 +22,6 @@ class IRCPeerManager : public TCPPeerManager
 		void			add(int fd, struct sockaddr &addr);
 		void			remove(int fd);
 		IRCPeer			&get(int fd);
-		int				acceptConnection(void);
-		void			closeConnection(int fd);
 		const_iterator	begin() const;
 		const_iterator	end() const;
 
