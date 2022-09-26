@@ -1,7 +1,7 @@
 #include "IRCPeer.hpp"
 #include "TCPPeer.hpp"
 
-IRCPeer::IRCPeer(int fd, struct sockaddr &addr): TCPPeer(fd, addr), _message()
+IRCPeer::IRCPeer(int fd, struct sockaddr &addr): TCPPeer(fd, addr), _message(), _user(), _realname(), _mode(), _registered(false)
 {
 }
 
@@ -38,4 +38,17 @@ bool	IRCPeer::hasCompleteMessage(void) const
 const std::string	&IRCPeer::getMessage(void) const
 {
 	return this->_message;
+}
+
+bool	IRCPeer::isRegistered(void) const
+{
+	return (this->_registered);
+}
+
+void	IRCPeer::registration(const std::string &user, const std::string &mode, const std::string &realname)
+{
+	this->_registered = true;
+	this->_user = user;
+	this->_mode = mode;
+	this->_realname = realname;
 }
