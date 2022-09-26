@@ -3,10 +3,8 @@
 
 #include <string>
 
-class IRCMessage
+struct IRCMessage
 {
-	public:
-
 	IRCMessage(const std::string &input);
 	IRCMessage(const IRCMessage &obj);
 	IRCMessage &operator=(const IRCMessage &rhs);
@@ -18,15 +16,11 @@ class IRCMessage
 	void		parse();
 	void		execute();
 	
-	private:
-
-	void	_parseArguments(std::string::const_iterator &it);
-
-	std::string		_input;
-	std::string		*_prefix;
-	std::string		_command;
-	std::string		_arguments[15];
-	size_t			_argCount;
+	std::string		input;
+	std::string		*prefix;
+	std::string		command;
+	std::string		arguments[15];
+	size_t			argCount;
 };
 
 #endif
