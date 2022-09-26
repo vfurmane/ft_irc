@@ -26,7 +26,7 @@ IRCMessage &IRCMessage::operator=(const IRCMessage &rhs)
 
 IRCMessage::~IRCMessage()
 {
-	delete this->_prefix;
+	delete this->prefix;
 }
 
 static void	parseArguments(IRCMessage &message, std::string::const_iterator &it)
