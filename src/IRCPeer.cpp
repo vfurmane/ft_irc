@@ -45,7 +45,7 @@ bool	IRCPeer::isRegistered(void) const
 	return (this->_registered);
 }
 
-void	IRCPeer::registeration(const std::string &user, int mode, const std::string &realname)
+void	IRCPeer::registration(const std::string &user, const std::string &mode, const std::string &realname)
 {
 	this->_registered = true;
 	this->_user = user;

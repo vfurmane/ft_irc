@@ -34,4 +34,13 @@ struct ERR_ALREADYREGISTERED : public std::exception
 	}
 };
 
+struct ERR_UMODEUNKNOWNFLAG : public std::exception
+{
+	static const int code = 501;
+	virtual const char* what() const throw()
+	{
+		return ":Unknown MODE flag";
+	}
+}
+
 #endif

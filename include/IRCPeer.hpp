@@ -10,8 +10,6 @@
 # include "TCPPeer.hpp"
 # include "commands.hpp"
 
-class IRCMessage;
-
 class IRCPeer : public TCPPeer
 {
 	public:
@@ -25,13 +23,13 @@ class IRCPeer : public TCPPeer
 		bool				hasCompleteMessage(void) const;
 		const std::string	&getMessage(void) const;
 		bool				isRegistered(void) const;
-		void				registeration(const std::string &user, int mode, const std::string &realname);
+		void				registration(const std::string &user, const std::string &mode, const std::string &realname);
 
 	private:
 		std::string		_message;
 		std::string		_user;
 		std::string		_realname;
-		int				_mode;
+		std::string		_mode;
 		bool			_registered;
 };
 

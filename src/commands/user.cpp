@@ -7,7 +7,7 @@ void	command_user(IRCMessage &message, Dependencies &deps)
 		throw ERR_NEEDMOREPARAMS(message.getCommand());
 	if (message.peer.isRegistered())
 		  throw ERR_ALREADYREGISTERED();
-	std::size_t pos;
-	int mode = stoi(message.getArguments[1], &pos, 10);
-	message.peer.registeration(message.getArguments()[0], mode, message.getArguments()[3]);
+	if (message.peer.getArguments()[1].length() != 1)
+		throw ERR_UMODEUNKNOWNFLAG(); // DELETE
+	message.peer.registeration(message.getArguments()[0], message.getArguments()[1], message.getArguments()[3]);
 }
