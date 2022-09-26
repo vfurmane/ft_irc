@@ -8,7 +8,7 @@ IRCMessage::IRCMessage(const std::string &input): input(input), prefix(NULL), co
 {
 }
 
-IRCMessage::IRCMessage(const IRCMessage &obj)
+IRCMessage::IRCMessage(const IRCMessage &obj): input(obj.input), prefix(NULL), command(), arguments(), argCount(0)
 {
 	(*this) = obj;
 }
