@@ -21,6 +21,8 @@ class Peer
 		void				clearMessage(void);
 		bool				hasCompleteMessage(void) const;
 		const std::string	&getMessage(void) const;
+		bool				isRegistered(void) const;
+		void				registration(const std::string &user, const std::string &mode, const std::string &realname);
 
 		char			*getStrAddr(void) const;
 		int				getFd(void) const;
@@ -29,6 +31,10 @@ class Peer
 		int				_fd;
 		struct sockaddr	_addr;
 		std::string		_message;
+		std::string		_user;
+		std::string		_realname;
+		std::string		_mode;
+		bool			_registered;
 };
 
 #endif
