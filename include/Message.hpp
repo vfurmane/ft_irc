@@ -20,7 +20,12 @@ struct Message
 
 	void		parse();
 	void		execute();
-	
+
+	size_t				getArgsCount(void) const;
+	const std::string	*getArguments(void) const;
+	const std::string	&getInput(void) const;
+	const std::string	&updateInputFromFields(void);
+
 	std::string		input;
 	std::string		*prefix;
 	std::string		command;

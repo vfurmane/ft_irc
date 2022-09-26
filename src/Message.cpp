@@ -89,3 +89,34 @@ void	Message::execute()
 		throw ERR_UNKNOWNCOMMAND(this->command);
 	}
 }
+
+size_t	Message::getArgsCount(void) const
+{
+	return this->argCount;
+}
+
+const std::string	*Message::getArguments(void) const
+{
+	return this->arguments;
+}
+
+const std::string	&Message::getInput(void) const
+{
+	return this->input;
+}
+
+const std::string	&Message::updateInputFromFields(void)
+{
+	this->input.clear();
+	if (this->prefix != NULL)
+		this->input += ":" + *this->prefix + " ";
+	this->input += this->command;
+	for (size_t i = 0; i < this->argCount; i++)
+	{
+		this->input += " ";
+		if (this->arguments[i].find(" ") != std::string::npos)
+			this->input += ":";
+		this->input += this->arguments[i];
+	}
+	return this->input;
+}
