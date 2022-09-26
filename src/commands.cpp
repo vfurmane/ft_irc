@@ -4,13 +4,13 @@
 
 ErrorMessage::ErrorMessage(IRCPeer &peer, const std::string &quit_message) : IRCMessage(peer, std::string())
 {
-	
+	(void)quit_message;
 }
 
 NickMessage::NickMessage(IRCPeer &peer, const std::string &new_nick) : IRCMessage(peer, std::string())
 {
-	this->_command = "NICK";
-	this->_arguments[0] = new_nick;
-	this->_argCount = 1;
-	this->_input = _updateInputFromFields();
+	this->command = "NICK";
+	this->arguments[0] = new_nick;
+	this->argCount = 1;
+	this->input = updateInputFromFields();
 }
