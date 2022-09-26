@@ -12,7 +12,7 @@ int	handleIRCMessage(TCPPeer *peer, epoll_event *event)
 	IRCPeer	*irc_peer = static_cast<IRCPeer *>(peer);
 
 	bytes_read = recv(event->data.fd, buffer, MAX_READ, 0);
-	if (bytes_read == 0)
+	if (bytes_read <= 0)
 		return -1;
 	else
 	{
