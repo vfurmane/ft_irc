@@ -1,48 +1,48 @@
-#include "TCPPeerManager.hpp"
+#include "PeerManager.hpp"
 
-TCPPeerManager::TCPPeerManager(TCPServer &server) : _server(server), _peers()
+PeerManager::PeerManager(Server &server) : _server(server), _peers()
 {
 }
 
-TCPPeerManager::TCPPeerManager(const TCPPeerManager &obj) : _server(obj._server), _peers()
+PeerManager::PeerManager(const PeerManager &obj) : _server(obj._server), _peers()
 {
 	this->_peers = obj._peers;
 }
 
-TCPPeerManager &TCPPeerManager::operator=(const TCPPeerManager &rhs)
+PeerManager &PeerManager::operator=(const PeerManager &rhs)
 {
 	this->_peers = rhs._peers;
 	return (*this);
 }
 
-TCPPeerManager::~TCPPeerManager(void)
+PeerManager::~PeerManager(void)
 {
 }
 
-TCPPeer	&TCPPeerManager::operator[](int fd)
+Peer	&PeerManager::operator[](int fd)
 {
 	return this->get(fd);
 }
 
-void TCPPeerManager::add(int fd, struct sockaddr &addr)
+void PeerManager::add(int fd, struct sockaddr &addr)
 {
-	this->_peers.insert(std::make_pair(fd, TCPPeer(fd, addr)));
+	this->_peers.insert(std::make_pair(fd, Peer(fd, addr)));
 #ifndef NDEBUG
 	std::cerr << "New peer has been added!" << std::endl;
 #endif
 }
 
-void TCPPeerManager::remove(int fd)
+void PeerManager::remove(int fd)
 {
 	this->_peers.erase(fd);
 }
 
-TCPPeer	&TCPPeerManager::get(int fd)
+Peer	&PeerManager::get(int fd)
 {
 	return this->_peers.at(fd);
 }
 
-int	TCPPeerManager::acceptConnection(void)
+int	PeerManager::acceptConnection(void)
 {
 	struct sockaddr their_addr;
 	socklen_t sin_size = sizeof their_addr;
@@ -62,7 +62,7 @@ int	TCPPeerManager::acceptConnection(void)
 	return new_fd;
 }
 
-void	TCPPeerManager::closeConnection(int fd)
+void	PeerManager::closeConnection(int fd)
 {
 #ifndef NDEBUG
 	std::cerr << "Closing connection on fd no " << fd << "..." << std::endl;

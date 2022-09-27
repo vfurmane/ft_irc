@@ -1,9 +1,11 @@
-#ifndef TCPSERVER_HPP
-# define TCPSERVER_HPP
+#ifndef SERVER_HPP
+# define SERVER_HPP
 
 # define BACKLOG 256
 # define MAX_EVENTS 256
 # define TIMEOUT 1000
+
+# define MAX_READ 63
 
 # include <arpa/inet.h>
 # include <cstring>
@@ -18,31 +20,24 @@
 # include <sys/types.h>
 # include <unistd.h>
 # include "exception.hpp"
-# include "TCPPeer.hpp"
-
-class PeerManager;
-# include "TCPPeerManager.hpp"
+# include "Message.hpp"
+# include "Peer.hpp"
+# include "PeerManager.hpp"
 
 # ifndef NDEBUG
 #  include <iostream>
 # endif
 
-typedef enum handler_type
-{
-	HDL_MESSAGE
-} e_handler_type;
-
-class TCPServer
+class Server
 {
 	public:
-		TCPServer(char *port);
-		~TCPServer(void);
+		Server(char *port);
+		~Server(void);
 
 		void		listen(void);
 
-		void		setHandler(e_handler_type type, int (*handler)(TCPPeer *, epoll_event *));
-		int			getEpollFd(void) const;
-		int			getSocketFd(void) const;
+		int			getEpollFd(void) const; // DELETE
+		int			getSocketFd(void) const; // DELETE
 
 		struct noBindableAddress : public std::exception {
 			virtual const char* what() const throw()
@@ -61,13 +56,12 @@ class TCPServer
 	private:
 		void		_bindNewSocketToPort(char *port);
 		void		_addFdToEpoll(int new_fd) const;
+		int			_handle_message(epoll_event &event);
 		void		_handleReadyFds(int event_count, struct epoll_event *events);
 
+		PeerManager	_peers;
 		int			_sockfd;
 		int			_epollfd;
-		TCPPeerManager	_peers;
-		static const size_t _handlers_nb = 1;
-		int			(*_handlers[_handlers_nb])(TCPPeer *, epoll_event *);
 };
 
 #endif

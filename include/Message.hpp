@@ -1,14 +1,14 @@
-#ifndef IRCMESSAGE_HPP
-# define IRCMESSAGE_HPP
+#ifndef MESSAGE_HPP
+# define MESSAGE_HPP
 
 #include <string>
 
-struct IRCMessage
+struct Message
 {
-	IRCMessage(const std::string &input);
-	IRCMessage(const IRCMessage &obj);
-	IRCMessage &operator=(const IRCMessage &rhs);
-	~IRCMessage(void);
+	Message(const std::string &input);
+	Message(const Message &obj);
+	Message &operator=(const Message &rhs);
+	~Message(void);
 
 	static const std::string commands_name[];
 	static void(*const commands[])(void); 
