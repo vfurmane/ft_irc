@@ -2,6 +2,8 @@
 # define MESSAGE_HPP
 
 #include <string>
+#include "IRCErrors.hpp"
+
 
 struct Message
 {

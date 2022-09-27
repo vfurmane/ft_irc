@@ -74,9 +74,15 @@ void	Message::parse()
 
 void	Message::execute()
 {
-	for (size_t i = 0; i < commands_count; i++) {
+	size_t	i;
+
+	for (i = 0; i < commands_count; i++) {
 		if (commands_name[i] == this->command) {
 			commands[i]();
 		}
+	}
+	if (i == commands_count)
+	{
+		throw ERR_UNKNOWNCOMMAND(this->command);
 	}
 }

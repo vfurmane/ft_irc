@@ -17,9 +17,9 @@ int	main(int argc, char **argv)
 		return 1;
 	}
 
-	Server serv(conf.getStrPort());
 	try
 	{
+		Server serv(conf.getStrPort());
 		serv.listen();
 	}
 	catch (std::exception &e)

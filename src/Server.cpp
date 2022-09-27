@@ -112,7 +112,13 @@ int	Server::_handle_message(epoll_event &event)
 		{
 			Message	message = Message(peer.getMessage());
 			message.parse();
-			message.execute();
+			try
+			{
+				message.execute();
+			}
+			catch (std::exception &e)
+			{
+			}
 			peer.clearMessage();
 		}
 	}
