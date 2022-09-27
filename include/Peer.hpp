@@ -1,5 +1,5 @@
-#ifndef IRC_PEER_HPP
-# define IRC_PEER_HPP
+#ifndef PEER_HPP
+# define PEER_HPP
 
 # include <arpa/inet.h>
 # include <netinet/in.h>
@@ -7,22 +7,27 @@
 # include <string>
 # include <sys/socket.h>
 # include <unistd.h>
-# include "TCPPeer.hpp"
 
-class IRCPeer : public TCPPeer
+class Peer
 {
 	public:
-		IRCPeer(const int fd, struct sockaddr &addr);
-		IRCPeer(const IRCPeer &obj);
-		IRCPeer &operator=(const IRCPeer &rhs);
-		~IRCPeer(void);
+		Peer(const int fd, struct sockaddr &addr);
+		Peer(const Peer &obj);
+		Peer &operator=(const Peer &rhs);
+		~Peer(void);
 
+		int					close(void) const;
 		void				appendMessage(const char *buffer);
 		void				clearMessage(void);
 		bool				hasCompleteMessage(void) const;
 		const std::string	&getMessage(void) const;
 
+		char			*getStrAddr(void) const;
+		int				getFd(void) const;
+
 	private:
+		int				_fd;
+		struct sockaddr	_addr;
 		std::string		_message;
 };
 

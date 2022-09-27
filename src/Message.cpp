@@ -1,19 +1,19 @@
-#include "IRCMessage.hpp"
+#include "Message.hpp"
 
 static const size_t commands_count = 0;
-const std::string IRCMessage::commands_name[commands_count] = {};
-void (*const IRCMessage::commands[commands_count])(void) = {};
+const std::string Message::commands_name[commands_count] = {};
+void (*const Message::commands[commands_count])(void) = {};
 
-IRCMessage::IRCMessage(const std::string &input): input(input), prefix(NULL), command(), arguments(), argCount(0)
+Message::Message(const std::string &input): input(input), prefix(NULL), command(), arguments(), argCount(0)
 {
 }
 
-IRCMessage::IRCMessage(const IRCMessage &obj): input(obj.input), prefix(NULL), command(), arguments(), argCount(0)
+Message::Message(const Message &obj): input(obj.input), prefix(NULL), command(), arguments(), argCount(0)
 {
 	(*this) = obj;
 }
 
-IRCMessage &IRCMessage::operator=(const IRCMessage &rhs)
+Message &Message::operator=(const Message &rhs)
 {
 	this->input = rhs.input;
 	this->prefix = rhs.prefix;
@@ -24,12 +24,12 @@ IRCMessage &IRCMessage::operator=(const IRCMessage &rhs)
 	return (*this);
 }
 
-IRCMessage::~IRCMessage()
+Message::~Message()
 {
 	delete this->prefix;
 }
 
-static void	parseArguments(IRCMessage &message, std::string::const_iterator &it)
+static void	parseArguments(Message &message, std::string::const_iterator &it)
 {
 	int		j;
 	
@@ -51,7 +51,7 @@ static void	parseArguments(IRCMessage &message, std::string::const_iterator &it)
 	}
 }
 
-void	IRCMessage::parse()
+void	Message::parse()
 {
 	std::string::const_iterator	it = this->input.begin();
 	int							j = 0;
@@ -72,11 +72,20 @@ void	IRCMessage::parse()
 	parseArguments(*this, it);
 }
 
-void	IRCMessage::execute()
+void	Message::execute()
 {
-	for (size_t i = 0; i < commands_count; i++) {
+	size_t	i;
+
+	for (i = 0; i < commands_count; i++) {
 		if (commands_name[i] == this->command) {
+#ifndef NDEBUG
+			std::cerr << "Found command " << this->command << std::endl;
+#endif
 			commands[i]();
 		}
+	}
+	if (i == commands_count)
+	{
+		throw ERR_UNKNOWNCOMMAND(this->command);
 	}
 }
