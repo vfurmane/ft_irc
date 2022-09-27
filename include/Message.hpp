@@ -4,6 +4,9 @@
 #include <string>
 #include "IRCErrors.hpp"
 
+# ifndef NDEBUG
+#  include <iostream>
+# endif
 
 struct Message
 {

@@ -78,6 +78,9 @@ void	Message::execute()
 
 	for (i = 0; i < commands_count; i++) {
 		if (commands_name[i] == this->command) {
+#ifndef NDEBUG
+			std::cerr << "Found command " << this->command << std::endl;
+#endif
 			commands[i]();
 		}
 	}

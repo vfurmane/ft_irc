@@ -110,14 +110,29 @@ int	Server::_handle_message(epoll_event &event)
 		peer.appendMessage(buffer);
 		if (peer.hasCompleteMessage())
 		{
+#ifndef NDEBUG
+			std::cerr << "Complete message" << std::endl;
+#endif
 			Message	message = Message(peer.getMessage());
 			message.parse();
+#ifndef NDEBUG
+			std::cerr << "PREFIX: " << (message.prefix ? *message.prefix : "(null)") << std::endl;
+			std::cerr << "COMMAND: " << message.command << std::endl;
+			std::cerr << "ARGS:" << std::endl;
+			for (size_t i = 0; i < message.argCount; i++)
+			{
+				std::cerr << i << ". " << message.arguments[i] << std::endl;
+			}
+#endif
 			try
 			{
 				message.execute();
 			}
 			catch (std::exception &e)
 			{
+#ifndef NDEBUG
+				std::cerr << "Did not find command " << message.command << std::endl;
+#endif
 			}
 			peer.clearMessage();
 		}
