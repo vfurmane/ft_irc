@@ -4,11 +4,11 @@
 Server::Server(char *port) : _peers(*this), _sockfd(-1), _epollfd(-1)
 {
 #ifndef NDEBUG
-	std::cerr << "Creating a  server..." << std::endl;
+	std::cerr << "Creating a server..." << std::endl;
 #endif
 	this->_bindNewSocketToPort(port);
 #ifndef NDEBUG
-	std::cerr << "Done creating the  server!" << std::endl;
+	std::cerr << "Done creating the server!" << std::endl;
 #endif
 }
 
