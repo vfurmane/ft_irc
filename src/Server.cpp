@@ -66,7 +66,7 @@ void		Server::_bindNewSocketToPort(char *port)
 #endif
 			continue;
 		}
-#ifndef NDEBUGregistration
+#ifndef NDEBUG
 		std::cerr << "Bound socket to port " << port << "!" << std::endl;
 #endif
 
