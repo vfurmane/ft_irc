@@ -49,7 +49,35 @@ int Peer::getFd(void) const
 	return this->_fd;
 }
 
+bool	Peer::isRegistered(void) const
+{
+	return this->_registered;
+}
+
+void	Peer::registration(const std::string &user, const std::string &mode, const std::string &realname)
+{
+	this->_registered = true;
+	this->_user = user;
+	this->_mode = mode;
+	this->_realname = realname;
+}
+
+void	Peer::setNickname(const std::string &new_nick)
+{
+	this->_nickname = new_nick;
+}
+
+void    Peer::sendMessage(const Message &message) const
+{
+    send(this->getFd(), message.input.c_str(), message.input.length(), 0);
+}
+
 char	*Peer::getStrAddr(void) const
 {
 	return inet_ntoa(((struct sockaddr_in *)(&this->_addr))->sin_addr);
+}
+
+const std::string	&Peer::getUsername(void) const
+{
+	return this->_user;
 }

@@ -1,5 +1,5 @@
 NAME = test.out
-SRCS = main.cpp Configuration.test.cpp ../src/Configuration.cpp Message.test.cpp ../src/Message.cpp
+SRCS = main.cpp Configuration.test.cpp ../src/Configuration.cpp Message.test.cpp ../src/Message.cpp ../src/Peer.cpp
 OBJS = $(SRCS:.cpp=.o)
 CXX = c++
 CPPFLAGS += $(addprefix -I, . ../include)

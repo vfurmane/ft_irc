@@ -6,7 +6,6 @@
 # include <stdint.h>
 # include <string>
 # include <sys/socket.h>
-# include <sys/types.h>
 # include <unistd.h>
 
 struct Message;
@@ -31,6 +30,7 @@ class Peer
 
 		char			*getStrAddr(void) const;
 		int				getFd(void) const;
+		const std::string		&getUsername(void) const;
 
 	private:
 		int				_fd;

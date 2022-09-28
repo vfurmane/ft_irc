@@ -66,7 +66,7 @@ void		Server::_bindNewSocketToPort(char *port)
 #endif
 			continue;
 		}
-#ifndef NDEBUG
+#ifndef NDEBUGregistration
 		std::cerr << "Bound socket to port " << port << "!" << std::endl;
 #endif
 
@@ -113,7 +113,7 @@ int	Server::_handle_message(epoll_event &event)
 #ifndef NDEBUG
 			std::cerr << "Complete message" << std::endl;
 #endif
-			Message	message = Message(peer.getMessage());
+			Message	message = Message(peer, peer.getMessage());
 			message.parse();
 #ifndef NDEBUG
 			std::cerr << "PREFIX: " << (message.prefix ? *message.prefix : "(null)") << std::endl;

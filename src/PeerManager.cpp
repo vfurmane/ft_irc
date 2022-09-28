@@ -24,6 +24,16 @@ Peer	&PeerManager::operator[](int fd)
 	return this->get(fd);
 }
 
+PeerManager::const_iterator	PeerManager::begin(void) const
+{
+	return this->_peers.begin();
+}
+
+PeerManager::const_iterator	PeerManager::end(void) const
+{
+	return this->_peers.end();
+}
+
 void PeerManager::add(int fd, struct sockaddr &addr)
 {
 	this->_peers.insert(std::make_pair(fd, Peer(fd, addr)));

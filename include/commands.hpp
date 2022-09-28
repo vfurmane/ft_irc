@@ -2,25 +2,27 @@
 # define COMMANDS_HPP
 
 # include "IRCErrors.hpp"
-# include "IRCMessage.hpp"
-# include "IRCPeer.hpp"
-# include "IRCPeerManager.hpp"
+# include "Message.hpp"
+# include "Peer.hpp"
+# include "PeerManager.hpp"
 
-struct ErrorMessage : public IRCMessage
+struct ErrorMessage : public Message
 {
-	ErrorMessage(IRCPeer &peer, const std::string &quit_message);
+	ErrorMessage(Peer &peer, const std::string &quit_message);
 };
 
 struct Dependencies
 {
-	IRCPeerManager	&peers;
+	PeerManager	&peers;
 };
 
-struct NickMessage : public IRCMessage
+struct NickMessage : public Message
 {
-	NickMessage(IRCPeer &peer, const std::string &new_nick);
+	NickMessage(Peer &peer, const std::string &new_nick);
 };
 
-void	command_nick(IRCMessage &message, Dependencies &deps);
+void	command_nick(Message &message, Dependencies &deps);
+void	command_quit(Message &message, Dependencies &deps);
+void	command_user(Message &message, Dependencies &deps);
 
 #endif

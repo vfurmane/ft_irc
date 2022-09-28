@@ -1,13 +1,14 @@
 #include "commands.hpp"
 #include "IRCErrors.hpp"
 
-void	command_user(IRCMessage &message, Dependencies &deps)
+void	command_user(Message &message, Dependencies &deps)
 {
-	if (message.getArgsCount() < 4)
-		throw ERR_NEEDMOREPARAMS(message.getCommand());
+	(void)deps;
+	if (message.argCount < 4)
+		throw ERR_NEEDMOREPARAMS(message.command);
 	if (message.peer.isRegistered())
 		  throw ERR_ALREADYREGISTERED();
-	if (message.peer.getArguments()[1].length() != 1)
+	if (message.arguments[1].length() != 1)
 		throw ERR_UMODEUNKNOWNFLAG(); // DELETE
-	message.peer.registeration(message.getArguments()[0], message.getArguments()[1], message.getArguments()[3]);
+	message.peer.registration(message.arguments[0], message.arguments[1], message.arguments[3]);
 }

@@ -28,13 +28,16 @@ struct ERR_NONICKNAMEGIVEN : public std::exception
 	}
 };
 
-struct ERR_NEEDMOREPARAMS : public std::exception
+class ERR_NEEDMOREPARAMS : public std::exception
 {
-	std::string _str;
-	ERR_NEEDMOREPARAMS(const std::string &command) : _str(command + " :Not enough parameters") {}
-	~ERR_NEEDMOREPARAMS(void) throw() {}
-	static const int code = 461;
-	virtual const char* what() const throw()
+	private:
+		const std::string	_str;
+
+	public:
+		static const int code = 461;
+		ERR_NEEDMOREPARAMS(const std::string &command) : _str(command + " :Not enough parameters") {}
+		~ERR_NEEDMOREPARAMS(void) throw() {}
+		virtual const char* what() const throw()
 	{
 		return this->_str.c_str();
 	}

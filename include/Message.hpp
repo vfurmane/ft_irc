@@ -8,9 +8,11 @@
 #  include <iostream>
 # endif
 
+class Peer;
+
 struct Message
 {
-	Message(const std::string &input);
+	Message(Peer &peer, const std::string &input);
 	Message(const Message &obj);
 	Message &operator=(const Message &rhs);
 	~Message(void);
@@ -21,16 +23,16 @@ struct Message
 	void		parse();
 	void		execute();
 
-	size_t				getArgsCount(void) const;
-	const std::string	*getArguments(void) const;
-	const std::string	&getInput(void) const;
 	const std::string	&updateInputFromFields(void);
-
+	
+	Peer			&peer;
 	std::string		input;
 	std::string		*prefix;
 	std::string		command;
 	std::string		arguments[15];
 	size_t			argCount;
 };
+
+#include "Peer.hpp"
 
 #endif

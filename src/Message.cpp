@@ -4,11 +4,11 @@ static const size_t commands_count = 0;
 const std::string Message::commands_name[commands_count] = {};
 void (*const Message::commands[commands_count])(void) = {};
 
-Message::Message(const std::string &input): input(input), prefix(NULL), command(), arguments(), argCount(0)
+Message::Message(Peer &peer, const std::string &input): peer(peer), input(input), prefix(NULL), command(), arguments(), argCount(0)
 {
 }
 
-Message::Message(const Message &obj): input(obj.input), prefix(NULL), command(), arguments(), argCount(0)
+Message::Message(const Message &obj): peer(obj.peer), input(obj.input), prefix(NULL), command(), arguments(), argCount(0)
 {
 	(*this) = obj;
 }
@@ -88,21 +88,6 @@ void	Message::execute()
 	{
 		throw ERR_UNKNOWNCOMMAND(this->command);
 	}
-}
-
-size_t	Message::getArgsCount(void) const
-{
-	return this->argCount;
-}
-
-const std::string	*Message::getArguments(void) const
-{
-	return this->arguments;
-}
-
-const std::string	&Message::getInput(void) const
-{
-	return this->input;
 }
 
 const std::string	&Message::updateInputFromFields(void)
