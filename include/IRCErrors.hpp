@@ -15,7 +15,7 @@ class ERR_UNKNOWNCOMMAND : public AIRCError
 		const std::string	_str;
 
 	public:
-		ERR_UNKNOWNCOMMAND(const std::string &command) : _str("421" + command + " :Unknown command") {}
+		ERR_UNKNOWNCOMMAND(const std::string &command) : _str("421 " + command + " :Unknown command") {}
 		~ERR_UNKNOWNCOMMAND(void) throw() {}
 		virtual const char* what() const throw()
 		{
@@ -37,7 +37,7 @@ class ERR_NEEDMOREPARAMS : public AIRCError
 		const std::string	_str;
 
 	public:
-		ERR_NEEDMOREPARAMS(const std::string &command) : _str("461" + command + " :Not enough parameters") {}
+		ERR_NEEDMOREPARAMS(const std::string &command) : _str("461 " + command + " :Not enough parameters") {}
 		~ERR_NEEDMOREPARAMS(void) throw() {}
 		virtual const char* what() const throw()
 	{

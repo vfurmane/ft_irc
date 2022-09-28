@@ -5,7 +5,7 @@
 ErrorMessage::ErrorMessage(Peer &peer, const std::string &message) : Message(peer, std::string())
 {
 	this->command = "ERROR";
-	this->arguments[0] = ":Closing link: (" + peer.getUsername() + "@" + peer.getStrAddr() + ") " + message;
+	this->arguments[0] = "Closing link: (" + peer.getUsername() + "@" + peer.getStrAddr() + ") " + message;
 	this->argCount = 1;
 	this->input = this->updateInputFromFields();
 }

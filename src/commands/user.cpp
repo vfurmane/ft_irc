@@ -1,7 +1,7 @@
 #include "commands.hpp"
 #include "IRCErrors.hpp"
 
-void	command_user(Message &message, Dependencies &deps)
+int	command_user(Message &message, Dependencies &deps)
 {
 	(void)deps;
 	if (message.argCount < 4)
@@ -11,4 +11,5 @@ void	command_user(Message &message, Dependencies &deps)
 	if (message.arguments[1].length() != 1)
 		throw ERR_UMODEUNKNOWNFLAG(); // DELETE
 	message.peer.registration(message.arguments[0], message.arguments[1], message.arguments[3]);
+	return 1;
 }

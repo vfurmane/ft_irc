@@ -2,7 +2,7 @@
 
 static const size_t commands_count = 3;
 const std::string Message::commands_name[commands_count] = {"NICK", "QUIT", "USER"};
-void (*const Message::commands[commands_count])(Message&, Dependencies&) = {command_nick, command_quit, command_user};
+int (*const Message::commands[commands_count])(Message&, Dependencies&) = {command_nick, command_quit, command_user};
 
 Message::Message(Peer &peer, const std::string &input): peer(peer), input(input), prefix(NULL), command(), arguments(), argCount(0)
 {
@@ -72,7 +72,7 @@ void	Message::parse()
 	parseArguments(*this, it);
 }
 
-void	Message::execute(PeerManager &peers)
+int	Message::execute(PeerManager &peers)
 {
 	Dependencies	deps = {peers};
 	size_t	i;
@@ -82,14 +82,14 @@ void	Message::execute(PeerManager &peers)
 #ifndef NDEBUG
 			std::cerr << "Found command " << this->command << std::endl;
 #endif
-			commands[i](*this, deps);
-			break ;
+			return commands[i](*this, deps);
 		}
 	}
 	if (i == commands_count)
 	{
 		throw ERR_UNKNOWNCOMMAND(this->command);
 	}
+	return 1;
 }
 
 const std::string	&Message::updateInputFromFields(void)

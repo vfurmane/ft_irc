@@ -22,9 +22,9 @@ struct NickMessage : public Message
 	NickMessage(Peer &peer, const std::string &new_nick);
 };
 
-void	command_nick(Message &message, Dependencies &deps);
-void	command_quit(Message &message, Dependencies &deps);
-void	command_user(Message &message, Dependencies &deps);
+int	command_nick(Message &message, Dependencies &deps);
+int	command_quit(Message &message, Dependencies &deps);
+int	command_user(Message &message, Dependencies &deps);
 
 # include "PeerManager.hpp"
 

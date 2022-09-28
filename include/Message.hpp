@@ -20,10 +20,10 @@ struct Message
 	~Message(void);
 
 	static const std::string commands_name[];
-	static void(*const commands[])(Message&, Dependencies&);
+	static int(*const commands[])(Message&, Dependencies&);
 
 	void		parse();
-	void		execute(PeerManager &peers);
+	int			execute(PeerManager &peers);
 
 	const std::string	&updateInputFromFields(void);
 	

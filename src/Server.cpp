@@ -125,7 +125,13 @@ int	Server::_handle_message(epoll_event &event)
 #endif
 			try
 			{
-				message.execute(this->_peers);
+				if (message.execute(this->_peers) > 0)
+				{
+					peer.clearMessage();	
+#ifndef NDEBUG
+					std::cerr << "Cleared the message" << std::endl;
+#endif
+				}
 			}
 			catch (AIRCError &e)
 			{
@@ -135,7 +141,6 @@ int	Server::_handle_message(epoll_event &event)
 #endif
 				message.peer.sendMessage(error);
 			}
-			peer.clearMessage();
 		}
 	}
 	return 0;
