@@ -9,6 +9,8 @@
 # endif
 
 class Peer;
+class PeerManager;
+struct Dependencies;
 
 struct Message
 {
@@ -18,10 +20,10 @@ struct Message
 	~Message(void);
 
 	static const std::string commands_name[];
-	static void(*const commands[])(void); 
+	static void(*const commands[])(Message&, Dependencies&);
 
 	void		parse();
-	void		execute();
+	void		execute(PeerManager &peers);
 
 	const std::string	&updateInputFromFields(void);
 	
@@ -34,5 +36,7 @@ struct Message
 };
 
 #include "Peer.hpp"
+#include "PeerManager.hpp"
+#include "commands.hpp"
 
 #endif

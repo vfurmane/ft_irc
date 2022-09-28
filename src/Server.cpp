@@ -14,8 +14,7 @@ Server::Server(char *port) : _peers(*this), _sockfd(-1), _epollfd(-1)
 
 Server::~Server(void)
 {
-	if (close(this->_sockfd) == -1)
-		throw sysCallError("close", strerror(errno));
+	close(this->_sockfd);
 }
 
 void		Server::_bindNewSocketToPort(char *port)
@@ -126,13 +125,15 @@ int	Server::_handle_message(epoll_event &event)
 #endif
 			try
 			{
-				message.execute();
+				message.execute(this->_peers);
 			}
-			catch (std::exception &e)
+			catch (AIRCError &e)
 			{
+				Message	error(message.peer, e.what());
 #ifndef NDEBUG
-				std::cerr << "Did not find command " << message.command << std::endl;
+				std::cerr << error.input << std::endl;
 #endif
+				message.peer.sendMessage(error);
 			}
 			peer.clearMessage();
 		}

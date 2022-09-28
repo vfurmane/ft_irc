@@ -1,5 +1,7 @@
 #include "Peer.hpp"
 
+static const char	*CRLF = "\r\n";
+
 Peer::Peer(int fd, struct sockaddr &addr): _fd(fd), _addr(addr)
 {
 }
@@ -69,7 +71,7 @@ void	Peer::setNickname(const std::string &new_nick)
 
 void    Peer::sendMessage(const Message &message) const
 {
-    send(this->getFd(), message.input.c_str(), message.input.length(), 0);
+    send(this->getFd(), (message.input + CRLF).c_str(), (message.input + CRLF).length(), 0);
 }
 
 char	*Peer::getStrAddr(void) const

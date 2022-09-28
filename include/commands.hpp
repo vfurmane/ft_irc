@@ -4,7 +4,8 @@
 # include "IRCErrors.hpp"
 # include "Message.hpp"
 # include "Peer.hpp"
-# include "PeerManager.hpp"
+
+class	PeerManager;
 
 struct ErrorMessage : public Message
 {
@@ -24,5 +25,7 @@ struct NickMessage : public Message
 void	command_nick(Message &message, Dependencies &deps);
 void	command_quit(Message &message, Dependencies &deps);
 void	command_user(Message &message, Dependencies &deps);
+
+# include "PeerManager.hpp"
 
 #endif
