@@ -37,21 +37,12 @@ PeerManager::const_iterator	PeerManager::end(void) const
 
 void PeerManager::add(int fd, struct sockaddr &addr)
 {
-	std::pair<std::map<int, Peer>::iterator, bool>	ret = this->_peers.insert(std::make_pair(fd, Peer(fd, addr)));
-#ifndef NDEBUG
-	if (ret.second)
-		std::cerr << "New peer has been added!" << std::endl;
-	else
-		std::cerr << "No peer has been added!" << std::endl;
-#endif
+	this->_peers.insert(std::make_pair(fd, Peer(fd, addr)));
 }
 
 void PeerManager::remove(int fd)
 {
-	int ret = this->_peers.erase(fd);
-#ifndef NDEBUG
-	std::cerr << "Deleted " << ret << " element" << std::endl;
-#endif
+	this->_peers.erase(fd);
 }
 
 Peer	&PeerManager::get(int fd)
