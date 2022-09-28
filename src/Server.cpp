@@ -14,8 +14,7 @@ Server::Server(char *port) : _peers(*this), _sockfd(-1), _epollfd(-1)
 
 Server::~Server(void)
 {
-	if (close(this->_sockfd) == -1)
-		throw sysCallError("close", strerror(errno));
+	close(this->_sockfd);
 }
 
 void		Server::_bindNewSocketToPort(char *port)
@@ -113,7 +112,7 @@ int	Server::_handle_message(epoll_event &event)
 #ifndef NDEBUG
 			std::cerr << "Complete message" << std::endl;
 #endif
-			Message	message = Message(peer.getMessage());
+			Message	message = Message(peer, peer.getMessage());
 			message.parse();
 #ifndef NDEBUG
 			std::cerr << "PREFIX: " << (message.prefix ? *message.prefix : "(null)") << std::endl;
@@ -126,15 +125,22 @@ int	Server::_handle_message(epoll_event &event)
 #endif
 			try
 			{
-				message.execute();
-			}
-			catch (std::exception &e)
-			{
+				if (message.execute(this->_peers) > 0)
+				{
+					peer.clearMessage();	
 #ifndef NDEBUG
-				std::cerr << "Did not find command " << message.command << std::endl;
+					std::cerr << "Cleared the message" << std::endl;
 #endif
+				}
 			}
-			peer.clearMessage();
+			catch (AIRCError &e)
+			{
+				Message	error(message.peer, e.what());
+#ifndef NDEBUG
+				std::cerr << error.input << std::endl;
+#endif
+				message.peer.sendMessage(error);
+			}
 		}
 	}
 	return 0;

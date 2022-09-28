@@ -46,13 +46,6 @@ class Server
 			}
 		};
 
-		struct handlersNotSet : public std::exception {
-			virtual const char* what() const throw()
-			{
-				return "handlers have not been set";
-			}
-		};
-
 	private:
 		void		_bindNewSocketToPort(char *port);
 		void		_addFdToEpoll(int new_fd) const;

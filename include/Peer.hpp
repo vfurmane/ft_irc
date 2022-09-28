@@ -8,6 +8,8 @@
 # include <sys/socket.h>
 # include <unistd.h>
 
+struct Message;
+
 class Peer
 {
 	public:
@@ -21,14 +23,26 @@ class Peer
 		void				clearMessage(void);
 		bool				hasCompleteMessage(void) const;
 		const std::string	&getMessage(void) const;
+		bool				isRegistered(void) const;
+		void				registration(const std::string &user, const std::string &mode, const std::string &realname);
+		void				setNickname(const std::string &new_nick);
+		void				sendMessage(const Message &message) const;
 
 		char			*getStrAddr(void) const;
 		int				getFd(void) const;
+		const std::string		&getUsername(void) const;
 
 	private:
 		int				_fd;
 		struct sockaddr	_addr;
 		std::string		_message;
+		std::string		_nickname;
+		std::string		_user;
+		std::string		_realname;
+		std::string		_mode;
+		bool			_registered;
 };
+
+# include "Message.hpp"
 
 #endif

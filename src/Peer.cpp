@@ -1,10 +1,12 @@
 #include "Peer.hpp"
 
-Peer::Peer(int fd, struct sockaddr &addr): _fd(fd), _addr(addr)
+static const char	*CRLF = "\r\n";
+
+Peer::Peer(int fd, struct sockaddr &addr): _fd(fd), _addr(addr), _message(), _nickname(), _user(), _realname(), _mode(), _registered(false)
 {
 }
 
-Peer::Peer(const Peer &obj): _fd(obj.getFd()), _addr(obj._addr)
+Peer::Peer(const Peer &obj): _fd(obj.getFd()), _addr(obj._addr), _message(), _nickname(), _user(), _realname(), _mode(), _registered(false)
 {
 }
 
@@ -49,7 +51,35 @@ int Peer::getFd(void) const
 	return this->_fd;
 }
 
+bool	Peer::isRegistered(void) const
+{
+	return this->_registered;
+}
+
+void	Peer::registration(const std::string &user, const std::string &mode, const std::string &realname)
+{
+	this->_registered = true;
+	this->_user = user;
+	this->_mode = mode;
+	this->_realname = realname;
+}
+
+void	Peer::setNickname(const std::string &new_nick)
+{
+	this->_nickname = new_nick;
+}
+
+void    Peer::sendMessage(const Message &message) const
+{
+    send(this->getFd(), (message.input + CRLF).c_str(), (message.input + CRLF).length(), 0);
+}
+
 char	*Peer::getStrAddr(void) const
 {
 	return inet_ntoa(((struct sockaddr_in *)(&this->_addr))->sin_addr);
+}
+
+const std::string	&Peer::getUsername(void) const
+{
+	return this->_user;
 }

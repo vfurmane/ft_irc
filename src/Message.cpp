@@ -1,14 +1,14 @@
 #include "Message.hpp"
 
-static const size_t commands_count = 0;
-const std::string Message::commands_name[commands_count] = {};
-void (*const Message::commands[commands_count])(void) = {};
+static const size_t commands_count = 3;
+const std::string Message::commands_name[commands_count] = {"NICK", "QUIT", "USER"};
+int (*const Message::commands[commands_count])(Message&, Dependencies&) = {command_nick, command_quit, command_user};
 
-Message::Message(const std::string &input): input(input), prefix(NULL), command(), arguments(), argCount(0)
+Message::Message(Peer &peer, const std::string &input): peer(peer), input(input), prefix(NULL), command(), arguments(), argCount(0)
 {
 }
 
-Message::Message(const Message &obj): input(obj.input), prefix(NULL), command(), arguments(), argCount(0)
+Message::Message(const Message &obj): peer(obj.peer), input(obj.input), prefix(NULL), command(), arguments(), argCount(0)
 {
 	(*this) = obj;
 }
@@ -72,8 +72,9 @@ void	Message::parse()
 	parseArguments(*this, it);
 }
 
-void	Message::execute()
+int	Message::execute(PeerManager &peers)
 {
+	Dependencies	deps = {peers};
 	size_t	i;
 
 	for (i = 0; i < commands_count; i++) {
@@ -81,11 +82,28 @@ void	Message::execute()
 #ifndef NDEBUG
 			std::cerr << "Found command " << this->command << std::endl;
 #endif
-			commands[i]();
+			return commands[i](*this, deps);
 		}
 	}
 	if (i == commands_count)
 	{
 		throw ERR_UNKNOWNCOMMAND(this->command);
 	}
+	return 1;
+}
+
+const std::string	&Message::updateInputFromFields(void)
+{
+	this->input.clear();
+	if (this->prefix != NULL)
+		this->input += ":" + *this->prefix + " ";
+	this->input += this->command;
+	for (size_t i = 0; i < this->argCount; i++)
+	{
+		this->input += " ";
+		if (this->arguments[i].find(" ") != std::string::npos)
+			this->input += ":";
+		this->input += this->arguments[i];
+	}
+	return this->input;
 }
