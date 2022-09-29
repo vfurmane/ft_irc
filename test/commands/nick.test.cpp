@@ -14,6 +14,8 @@
 #include "../src/PeerManager.cpp"
 #include "../src/Server.cpp"
 
+bool	isValidNickname(const std::string &nick);
+
 TEST_CASE("isValidNickname")
 {
 	SECTION("when nick is empty")
@@ -72,6 +74,21 @@ TEST_CASE("NICK")
 		message.arguments[0] = "";
 		message.argCount = 1;
 		REQUIRE_THROWS_AS( command_nick(message, deps), ERR_NONICKNAMEGIVEN );
+	};
+	SECTION("should throw ERR_ERRONEUSNICKNAME if the nicname is erroneous")
+	{
+		struct sockaddr	addr;
+		Peer			peer(3, addr);
+		Message			message(peer, std::string());
+		Server			server((char *)"8080");
+		PeerManager		peers(server);
+		Dependencies	deps = {peers};
+
+		message.arguments[0] = "j@de@hi";
+		message.argCount = 1;
+		REQUIRE_THROWS_AS( command_nick(message, deps), ERR_ERRONEUSNICKNAME );
+		message.arguments[0] = "123john";
+		REQUIRE_THROWS_AS( command_nick(message, deps), ERR_ERRONEUSNICKNAME );
 	};
 	SECTION("should set the nickname of the user")
 	{
