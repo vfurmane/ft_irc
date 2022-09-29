@@ -101,7 +101,10 @@ TEST_CASE("Message::parse()")
 		peer.setNickname("nickTest");	
 		Message IM(peer, "command arg0");
 		IM.updatePrefixFromPeer();
-		REQUIRE(IM.prefix[0] == "nickTest@0.0.0.0");
+
+		std::string prefixReference = "nickTest@";
+		prefixReference += peer.getStrAddr();
+		REQUIRE(IM.prefix[0] == prefixReference);
 	}
 	SECTION("Should set the prefix with registration")
 	{
@@ -111,6 +114,9 @@ TEST_CASE("Message::parse()")
 		peer.setNickname("nickTest");	
 		Message IM(peer, "command arg0");
 		IM.updatePrefixFromPeer();
-		REQUIRE(IM.prefix[0] == "nickTest!testUser@0.0.0.0");
+
+		std::string prefixReference = "nickTest!testUser@";
+		prefixReference += peer.getStrAddr();
+		REQUIRE(IM.prefix[0] == prefixReference);
 	}
 }
