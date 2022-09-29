@@ -26,7 +26,8 @@ struct Message
 	int			execute(PeerManager &peers);
 
 	const std::string	&updateInputFromFields(void);
-	
+	std::string			*updatePrefixFromPeer(void);
+
 	Peer			&peer;
 	std::string		input;
 	std::string		*prefix;

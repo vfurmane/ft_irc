@@ -107,3 +107,16 @@ const std::string	&Message::updateInputFromFields(void)
 	}
 	return this->input;
 }
+
+std::string	*Message::updatePrefixFromPeer(void)
+{
+	if (this->prefix != NULL)
+		this->prefix->clear();
+	else
+		this->prefix = new std::string;
+	if (this->peer.getUsername().empty())
+		*this->prefix = this->peer.getNickname() + "@" + this->peer.getStrAddr(); 
+	else
+		*this->prefix = this->peer.getNickname() + "!" + this->peer.getUsername() + "@" + this->peer.getStrAddr(); 
+	return this->prefix;
+}

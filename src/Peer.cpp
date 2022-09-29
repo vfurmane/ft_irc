@@ -1,4 +1,5 @@
 #include "Peer.hpp"
+#include <memory>
 
 static const char	*CRLF = "\r\n";
 
@@ -87,4 +88,9 @@ char	*Peer::getStrAddr(void) const
 const std::string	&Peer::getUsername(void) const
 {
 	return this->_user;
+}
+
+const std::string 	&Peer::getNickname(void) const
+{
+	return this->_nickname;
 }
