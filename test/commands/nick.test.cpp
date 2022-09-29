@@ -1,60 +1,61 @@
 #include "catch.hpp"
+#include "mocks.cpp"
 #include <vector>
 
 #define private public
 #define protected public
 #include "commands.hpp"
 #include "IRCErrors.hpp"
-#include "IRCMessage.hpp"
-#include "IRCPeer.hpp"
+#include "Message.hpp"
+#include "Peer.hpp"
 
-ssize_t 			g_send_return = 0;
-std::vector<int>	g_send_arg_sockfd;
-ssize_t send(int sockfd, const void *buf, size_t len, int flags)
-{
-	(void)buf;
-	(void)len;
-	(void)flags;
-	g_send_arg_sockfd.push_back(sockfd);
-	return g_send_return;
-}
 
 TEST_CASE("NICK")
 {
 	SECTION("should throw ERR_NONICKNAMEGIVEN if the no nickname was given")
 	{
 		struct sockaddr	addr;
-		IRCPeer			peer(3, addr);
-		IRCMessage		message(peer, std::string());
-		Dependencies	deps;
+		Peer			peer(3, addr);
+		Message			message(peer, std::string());
+		Server			server((char *)"8080");
+		PeerManager		peers(server);
+		Dependencies	deps = {peers};
 
-		message._argCount = 0;
+		message.argCount = 0;
 		REQUIRE_THROWS_AS( command_nick(message, deps), ERR_NONICKNAMEGIVEN );
-		message._arguments[0] = "";
-		message._argCount = 1;
+		message.arguments[0] = "";
+		message.argCount = 1;
 		REQUIRE_THROWS_AS( command_nick(message, deps), ERR_NONICKNAMEGIVEN );
 	};
 	SECTION("should set the nickname of the user")
 	{
 		struct sockaddr	addr;
-		IRCPeer			peer(3, addr);
-		IRCMessage		message(peer, std::string());
-		Dependencies	deps;
+		Peer			peer(3, addr);
+		Message			message(peer, std::string());
+		Server			server((char *)"8080");
+		PeerManager		peers(server);
+		Dependencies	deps = {peers};
 
-		message._arguments[0] = "nickname";
-		message._argCount = 1;
+		message.arguments[0] = "nickname";
+		message.argCount = 1;
+		command_nick(message, deps);
 		REQUIRE( peer._nickname == "nickname" );
 	};
 	SECTION("should send a NICK message to all users")
 	{
 		struct sockaddr	addr;
-		IRCPeer			peer(3, addr);
-		IRCMessage		message(peer, std::string());
-		Dependencies	deps;
+		Peer			peer(3, addr);
+		Message			message(peer, std::string());
+		Server			server((char *)"8080");
+		PeerManager		peers(server);
+		Dependencies	deps = {peers};
 
+		message.arguments[0] = "nickname";
+		message.argCount = 1;
 		deps.peers.add(4, addr);
 		deps.peers.add(5, addr);
 		deps.peers.add(6, addr);
+		command_nick(message, deps);
 		REQUIRE( g_send_arg_sockfd[0] == 4 );
 		REQUIRE( g_send_arg_sockfd[1] == 5 );
 		REQUIRE( g_send_arg_sockfd[2] == 6 );
