@@ -106,6 +106,11 @@ int	Server::_handle_message(epoll_event &event)
 	else
 	{
 		buffer[bytes_read] = '\0';
+		if (peer.getMessage().length() + bytes_read > 512)
+		{
+			peer.clearMessage();
+			return 1;
+		}
 		peer.appendMessage(buffer);
 		if (peer.hasCompleteMessage())
 		{
