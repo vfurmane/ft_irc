@@ -1,5 +1,5 @@
 #include "catch.hpp"
-#include "mocks.cpp"
+#include "mocks.hpp"
 #include <vector>
 
 #define private public

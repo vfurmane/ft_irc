@@ -1,10 +1,7 @@
 #ifndef TEST_MOCKS_CPP
 # define TEST_MOCKS_CPP
 
-# include <sys/types.h>
-# include <sys/socket.h>
-# include <netdb.h>
-# include <vector>
+# include "mocks.hpp"
 
 int g_bind_return = 0;
 int	bind(int fd, const struct sockaddr *addr, socklen_t len)
