@@ -1,5 +1,4 @@
 #include "Peer.hpp"
-#include <memory>
 
 static const char	*CRLF = "\r\n";
 
