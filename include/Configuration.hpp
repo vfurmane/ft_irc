@@ -4,6 +4,7 @@
 # include <exception>
 # include <iostream>
 # include <string>
+# include <sstream>
 # include <stdint.h>
 
 class Configuration
