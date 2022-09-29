@@ -25,6 +25,16 @@ Peer	&PeerManager::operator[](int fd)
 	return this->get(fd);
 }
 
+PeerManager::iterator	PeerManager::begin(void)
+{
+	return this->_peers.begin();
+}
+
+PeerManager::iterator	PeerManager::end(void)
+{
+	return this->_peers.end();
+}
+
 PeerManager::const_iterator	PeerManager::begin(void) const
 {
 	return this->_peers.begin();
@@ -48,6 +58,16 @@ void PeerManager::remove(int fd)
 Peer	&PeerManager::get(int fd)
 {
 	return this->_peers.at(fd);
+}
+
+Peer	&PeerManager::get(const std::string &nick)
+{
+	for (std::map<int, Peer>::iterator it = this->begin(); it != this->end(); ++it)
+	{
+		if (it->second.getNickname() == nick)
+			return it->second;
+	}
+	throw std::out_of_range("PeerManager::get");
 }
 
 int	PeerManager::acceptConnection(void)

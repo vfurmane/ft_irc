@@ -39,10 +39,18 @@ int		command_nick(Message &message, Dependencies &deps)
 {
 	if (message.argCount < 1 || message.arguments[0].empty())
 		throw ERR_NONICKNAMEGIVEN();
-	if (!isValidNickname(message.arguments[0]))
-		throw ERR_ERRONEUSNICKNAME(message.arguments[0]);
-	message.peer.setNickname(message.arguments[0]);
-	for (PeerManager::const_iterator it = deps.peers.begin(); it != deps.peers.end(); ++it)
-		it->second.sendMessage(NickMessage(message.peer, message.arguments[0]));
-	return 1;
+	try
+	{
+		deps.peers.get(message.arguments[0]);
+	}
+	catch (std::out_of_range &e)
+	{
+		if (!isValidNickname(message.arguments[0]))
+			throw ERR_ERRONEUSNICKNAME(message.arguments[0]);
+		message.peer.setNickname(message.arguments[0]);
+		for (PeerManager::const_iterator it = deps.peers.begin(); it != deps.peers.end(); ++it)
+			it->second.sendMessage(NickMessage(message.peer, message.arguments[0]));
+		return 1;
+	}
+	throw ERR_NICKNAMEINUSE(message.arguments[0]);
 }

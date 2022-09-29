@@ -57,6 +57,8 @@ TEST_CASE("isValidNickname")
 
 TEST_CASE("NICK")
 {
+	g_send_arg_sockfd.clear();
+
 	SECTION("should throw ERR_NONICKNAMEGIVEN if the no nickname was given")
 	{
 		struct sockaddr	addr;
@@ -86,6 +88,21 @@ TEST_CASE("NICK")
 		REQUIRE_THROWS_AS( command_nick(message, deps), ERR_ERRONEUSNICKNAME );
 		message.arguments[0] = "123john";
 		REQUIRE_THROWS_AS( command_nick(message, deps), ERR_ERRONEUSNICKNAME );
+	};
+	SECTION("should throw ERR_NICKNAMEINUSE if the nickname is in use")
+	{
+		struct sockaddr	addr;
+		Peer			peer(3, addr);
+		Message			message(peer, std::string());
+		Server			server((char *)"8080");
+		PeerManager		peers(server);
+		Dependencies	deps = {peers};
+
+		peers.add(3, addr);
+		peers.get(3).setNickname("john");
+		message.arguments[0] = "john";
+		message.argCount = 1;
+		REQUIRE_THROWS_AS( command_nick(message, deps), ERR_NICKNAMEINUSE );
 	};
 	SECTION("should set the nickname of the user")
 	{

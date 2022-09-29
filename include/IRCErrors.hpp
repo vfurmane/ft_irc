@@ -45,6 +45,20 @@ struct ERR_ERRONEUSNICKNAME : public AIRCError
 		}
 };
 
+struct ERR_NICKNAMEINUSE : public AIRCError
+{
+	private:
+		const std::string	_str;
+
+	public:
+		ERR_NICKNAMEINUSE(const std::string &nick) : _str("433 " + nick + " :Nickname is already in use") {}
+		~ERR_NICKNAMEINUSE(void) throw() {}
+		virtual const char* what() const throw()
+		{
+			return this->_str.c_str();
+		}
+};
+
 class ERR_NEEDMOREPARAMS : public AIRCError
 {
 	private:
