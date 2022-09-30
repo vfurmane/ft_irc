@@ -1,28 +1,23 @@
-#include "TCPServer.hpp"
+#include "Server.hpp"
+#include "PeerManager.hpp"
 
-#ifndef NDEBUG
-static const char	*g_handler_type_str[] = {"HDL_MESSAGE"};
-#endif
-
-TCPServer::TCPServer(char *port) : _sockfd(-1), _epollfd(-1), _peers(*this), _handlers()
+Server::Server(char *port) : _peers(*this), _sockfd(-1), _epollfd(-1)
 {
 #ifndef NDEBUG
-	std::cerr << "Creating a TCP server..." << std::endl;
+	std::cerr << "Creating a server..." << std::endl;
 #endif
 	this->_bindNewSocketToPort(port);
-	std::memset(&this->_handlers, 0, sizeof(this->_handlers));
 #ifndef NDEBUG
-	std::cerr << "Done creating the TCP server!" << std::endl;
+	std::cerr << "Done creating the server!" << std::endl;
 #endif
 }
 
-TCPServer::~TCPServer(void)
+Server::~Server(void)
 {
-	if (close(this->_sockfd) == -1)
-		throw sysCallError("close", strerror(errno));
+	close(this->_sockfd);
 }
 
-void		TCPServer::_bindNewSocketToPort(char *port)
+void		Server::_bindNewSocketToPort(char *port)
 {
 	int				status;
 	struct addrinfo	hints, *servinfo;
@@ -82,7 +77,7 @@ void		TCPServer::_bindNewSocketToPort(char *port)
 		throw noBindableAddress();
 }
 
-void	TCPServer::_addFdToEpoll(int new_fd) const
+void	Server::_addFdToEpoll(int new_fd) const
 {
 	struct epoll_event event;
 
@@ -99,7 +94,63 @@ void	TCPServer::_addFdToEpoll(int new_fd) const
 #endif
 }
 
-void	TCPServer::_handleReadyFds(int event_count, struct epoll_event *events)
+int	Server::_handle_message(epoll_event &event)
+{
+	int		bytes_read;
+	char	buffer[MAX_READ + 1];
+	Peer	&peer = this->_peers.get(event.data.fd);
+	
+	bytes_read = recv(event.data.fd, buffer, MAX_READ, 0);
+	if (bytes_read <= 0)
+		return -1;
+	else
+	{
+		buffer[bytes_read] = '\0';
+		if (peer.getMessage().length() + bytes_read > MAX_MSG_LENGTH)
+		{
+#ifndef NDEBUG
+			std::cerr << "Error: message exceeds 512 characters limit." << std::endl;
+#endif
+			peer.clearMessage();
+			return 1;
+		}
+		peer.appendMessage(buffer);
+		if (peer.hasCompleteMessage())
+		{
+#ifndef NDEBUG
+			std::cerr << "Complete message" << std::endl;
+#endif
+			Message	message = Message(peer, peer.getMessage());
+			message.parse();
+#ifndef NDEBUG
+			std::cerr << "PREFIX: " << (message.prefix ? *message.prefix : "(null)") << std::endl;
+			std::cerr << "COMMAND: " << message.command << std::endl;
+			std::cerr << "ARGS:" << std::endl;
+			for (size_t i = 0; i < message.argCount; i++)
+			{
+				std::cerr << i << ". " << message.arguments[i] << std::endl;
+			}
+#endif
+			try
+			{
+				if (message.execute(this->_peers) <= 0)
+					return 0;
+			}
+			catch (AIRCError &e)
+			{
+				Message	error(message.peer, e.what());
+				message.peer.sendMessage(error);
+			}
+			peer.clearMessage();
+#ifndef NDEBUG
+			std::cerr << "Cleared the message" << std::endl;
+#endif
+		}
+	}
+	return 0;
+}
+
+void	Server::_handleReadyFds(int event_count, struct epoll_event *events)
 {
 	for (int i = 0; i < event_count; i++)
 	{
@@ -116,9 +167,9 @@ void	TCPServer::_handleReadyFds(int event_count, struct epoll_event *events)
 		else
 		{
 #ifndef NDEBUG
-			std::cerr << "New message..." << std::endl;
+			std::cerr << this->_peers.get(events[i].data.fd).generatePrefix() << "> New message..." << std::endl;
 #endif
-			if (this->_handlers[HDL_MESSAGE](&events[i]) == -1)
+			if (this->_handle_message(events[i]) == -1)
 			{
 				this->_peers.closeConnection(events[i].data.fd);
 			}
@@ -126,15 +177,10 @@ void	TCPServer::_handleReadyFds(int event_count, struct epoll_event *events)
 	}
 }
 
-void	TCPServer::listen(void)
+void	Server::listen(void)
 {
 	struct epoll_event	events[MAX_EVENTS];
 
-	for(size_t i = 0; i < this->_handlers_nb; i++)
-	{
-		if (this->_handlers[i] == 0)
-			throw handlersNotSet();
-	}
 	if (::listen(_sockfd, BACKLOG))
 		throw sysCallError("listen", strerror(errno));
 #ifndef NDEBUG
@@ -169,20 +215,12 @@ void	TCPServer::listen(void)
 	}
 }
 
-void	TCPServer::setHandler(e_handler_type type, int (*handler)(epoll_event *))
-{
-	this->_handlers[type] = handler;
-#ifndef NDEBUG
-	std::cerr << "Set handler for " << g_handler_type_str[type] << "!" << std::endl;
-#endif
-}
-
-int	TCPServer::getEpollFd(void) const
+int	Server::getEpollFd(void) const
 {
 	return this->_epollfd;
 }
 
-int	TCPServer::getSocketFd(void) const
+int	Server::getSocketFd(void) const
 {
 	return this->_sockfd;
 }

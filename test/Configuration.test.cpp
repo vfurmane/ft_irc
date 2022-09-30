@@ -1,8 +1,11 @@
 #include <cstring>
+#include <sstream>
 #include "catch.hpp"
 
 #define private public
 #include "Configuration.hpp"
+
+#include "../src/Configuration.cpp"
 
 TEST_CASE("parse_port_number")
 {

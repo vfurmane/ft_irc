@@ -1,5 +1,4 @@
 #include "Configuration.hpp"
-#include <sstream>
 
 Configuration::Configuration() : _parsed(false), _port(), _password()
 {

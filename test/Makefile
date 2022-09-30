@@ -1,8 +1,10 @@
 NAME = test.out
-SRCS = main.cpp Configuration.test.cpp ../src/Configuration.cpp $(addprefix TCP/, Server.test.cpp ) ../src/TCP/Server.cpp
+SRCS = main.cpp commands.test.cpp Configuration.test.cpp Message.test.cpp PeerManager.test.cpp Peer.test.cpp Server.test.cpp $(addprefix commands/, nick.test.cpp quit.test.cpp user.test.cpp)
 OBJS = $(SRCS:.cpp=.o)
+DEPS = $(SRCS:.cpp=.d)
+INCLDIR = include
 CXX = c++
-CPPFLAGS += $(addprefix -I, . ../include)
+CPPFLAGS += -MMD $(addprefix -I, $(INCLDIR)) $(addprefix -I, . ../include) -DNDEBUG
 CXXFLAGS += -Wall -Wextra -Werror --std=c++11
 RM = rm -f
 
@@ -11,11 +13,14 @@ RM = rm -f
 
 all: $(NAME)
 
+-include $(DEPS)
+
 $(NAME): $(OBJS)
 	$(CXX) $(CXXFLAGS) $(CPPFLAGS) $^ -o $@
 
 clean:
 	$(RM) -r $(OBJS)
+	$(RM) -r $(DEPS)
 
 fclean: clean
 	$(RM) $(NAME)

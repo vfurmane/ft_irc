@@ -1,8 +1,7 @@
 #include <iostream>
 #include <exception>
 #include "Configuration.hpp"
-#include "TCPServer.hpp"
-#include "handlers.hpp"
+#include "Server.hpp"
 
 int	main(int argc, char **argv)
 {
@@ -18,10 +17,9 @@ int	main(int argc, char **argv)
 		return 1;
 	}
 
-	TCPServer serv(conf.getStrPort());
-	serv.setHandler(HDL_MESSAGE, handleTCPMessage);
 	try
 	{
+		Server serv(conf.getStrPort());
 		serv.listen();
 	}
 	catch (std::exception &e)
