@@ -5,9 +5,6 @@
 #include "Message.hpp"
 
 #include "../src/Message.cpp"
-#include "../src/Peer.cpp"
-#include "../src/commands/quit.cpp"
-#include "../src/commands/user.cpp"
 
 TEST_CASE("Message::parse()")
 {
