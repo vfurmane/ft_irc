@@ -108,11 +108,11 @@ int	PeerManager::acceptConnection(void)
 		close(this->_server.getSocketFd());
 		throw sysCallError("accept", strerror(errno));
 	}
+	this->add(new_fd, their_addr);
 #ifndef NDEBUG
 	std::cerr << "Accepted connection on fd no " << new_fd << "!" << std::endl;
-	std::cerr << "IP address -> " << inet_ntoa(((struct sockaddr_in *)(&their_addr))->sin_addr) << std::endl;
+	std::cerr << "Client -> " << this->get(new_fd).getStrAddr() << std::endl;
 #endif
-	this->add(new_fd, their_addr);
 	return new_fd;
 }
 
@@ -120,7 +120,7 @@ void	PeerManager::closeConnection(int fd)
 {
 #ifndef NDEBUG
 	std::cerr << "Closing connection on fd no " << fd << "..." << std::endl;
-	std::cerr << "IP address -> " << this->get(fd).getStrAddr() << std::endl;
+	std::cerr << "Client -> " << this->get(fd).generatePrefix() << std::endl;
 #endif
 	if (this->_peers.at(fd).close() == -1)
 		throw sysCallError("close", strerror(errno));
@@ -136,7 +136,7 @@ void	PeerManager::clear(void)
 	{
 #ifndef NDEBUG
 	std::cerr << "fd -> " << it->second.getFd() << " ; ";
-	std::cerr << "IP address -> " << it->second.getStrAddr() << std::endl;
+	std::cerr << "Client -> " << it->second.generatePrefix() << std::endl;
 #endif
 		if (it->second.close() == -1)
 			throw sysCallError("close", strerror(errno));
