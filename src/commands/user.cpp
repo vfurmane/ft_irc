@@ -3,7 +3,7 @@
 
 static bool	forbidden_user_char(const std::string &user)
 {
-	std::string forbidden = "@\r\n ";
+	static const std::string forbidden = "@\r\n ";
 
 	for (std::string::const_iterator it = user.begin(); it != user.end(); ++it)
 	{
@@ -22,7 +22,7 @@ int	command_user(Message &message, Dependencies &deps)
 		  throw ERR_ALREADYREGISTERED();
 	if (message.arguments[1].length() != 1)
 		throw ERR_UMODEUNKNOWNFLAG(); // DELETE
-	if	(forbidden_user_char(message.arguments[0]) == true)
+	if (forbidden_user_char(message.arguments[0]) == true)
 		return (1);
 	message.peer.registration(message.arguments[0], message.arguments[1], message.arguments[3]);
 	return (1);
