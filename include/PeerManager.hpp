@@ -29,7 +29,7 @@ class PeerManager
 		void	add(int fd, struct sockaddr &addr);
 		void	remove(int fd);
 		Peer	&get(int fd);
-		Peer	&get(const std::string &nick);
+		bool	containsNickname(const std::string &nick) const;
 		int		acceptConnection(void);
 		void	closeConnection(int fd);
 

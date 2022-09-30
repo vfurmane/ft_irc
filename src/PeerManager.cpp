@@ -86,14 +86,14 @@ static bool	areSameNickname(const std::string &nick1, const std::string &nick2)
 	return true;
 }
 
-Peer	&PeerManager::get(const std::string &nick)
+bool	PeerManager::containsNickname(const std::string &nick) const
 {
-	for (std::map<int, Peer>::iterator it = this->begin(); it != this->end(); ++it)
+	for (std::map<int, Peer>::const_iterator it = this->begin(); it != this->end(); ++it)
 	{
 		if (areSameNickname(it->second.getNickname(), nick))
-			return it->second;
+			return true;
 	}
-	throw std::out_of_range("PeerManager::get");
+	return false;
 }
 
 int	PeerManager::acceptConnection(void)
