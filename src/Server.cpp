@@ -1,6 +1,8 @@
 #include "Server.hpp"
 #include "PeerManager.hpp"
 
+static bool	g_is_listening = false;
+
 Server::Server(char *port) : _peers(*this), _sockfd(-1), _epollfd(-1)
 {
 #ifndef NDEBUG
@@ -177,9 +179,22 @@ void	Server::_handleReadyFds(int event_count, struct epoll_event *events)
 	}
 }
 
+void	stopListening(int signal)
+{
+	(void)signal;
+	std::cout << "\r";
+#ifndef NDEBUG
+	std::cerr << "RECEIVED SIGINT" << std::endl;
+#endif
+	g_is_listening = false;
+}
+
 void	Server::listen(void)
 {
 	struct epoll_event	events[MAX_EVENTS];
+
+	g_is_listening = true;
+	std::signal(SIGINT, stopListening);
 
 	if (::listen(_sockfd, BACKLOG))
 		throw sysCallError("listen", strerror(errno));
@@ -197,7 +212,7 @@ void	Server::listen(void)
 #ifndef NDEBUG
 	std::cerr << "Starting the listening loop..." << std::endl;
 #endif
-	while (true) {
+	while (g_is_listening) {
 		int event_count = epoll_wait(this->_epollfd, events, MAX_EVENTS, TIMEOUT);
 #ifndef NDEBUG
 		if (event_count > 0)
@@ -208,11 +223,17 @@ void	Server::listen(void)
 #ifndef NDEBUG
 	std::cerr << "Got out of the listening loop!" << std::endl;
 #endif
+	std::signal(SIGINT, SIG_DFL);
 
 	if (close(this->_epollfd) == -1)
 	{
 		throw sysCallError("close", strerror(errno));
 	}
+}
+
+void	Server::closeAllConnections(void)
+{
+	this->_peers.clear();
 }
 
 int	Server::getEpollFd(void) const

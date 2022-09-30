@@ -26,6 +26,7 @@ class PeerManager
 		iterator		end(void);
 		const_iterator	begin(void) const;
 		const_iterator	end(void) const;
+		void			clear(void);
 		void	add(int fd, struct sockaddr &addr);
 		void	remove(int fd);
 		Peer	&get(int fd);
