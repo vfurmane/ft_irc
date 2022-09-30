@@ -37,14 +37,16 @@ static bool	isValidNickname(const std::string &nick)
 
 int		command_nick(Message &message, Dependencies &deps)
 {
-	if (message.argCount < 1 || message.arguments[0].empty())
+	const std::string	&nick = message.arguments[0];
+
+	if (message.argCount < 1 || nick.empty())
 		throw ERR_NONICKNAMEGIVEN();
-	if (deps.peers.containsNickname(message.arguments[0]))
-		throw ERR_NICKNAMEINUSE(message.arguments[0]);
-	if (!isValidNickname(message.arguments[0]))
-		throw ERR_ERRONEUSNICKNAME(message.arguments[0]);
-	message.peer.setNickname(message.arguments[0]);
+	if (deps.peers.containsNickname(nick))
+		throw ERR_NICKNAMEINUSE(nick);
+	if (!isValidNickname(nick))
+		throw ERR_ERRONEUSNICKNAME(nick);
+	message.peer.setNickname(nick);
 	for (PeerManager::const_iterator it = deps.peers.begin(); it != deps.peers.end(); ++it)
-		it->second.sendMessage(NickMessage(message.peer, message.arguments[0]));
+		it->second.sendMessage(NickMessage(message.peer, nick));
 	return 1;
 }
