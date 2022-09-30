@@ -60,11 +60,37 @@ Peer	&PeerManager::get(int fd)
 	return this->_peers.at(fd);
 }
 
+static char	toIRCLower(char c)
+{
+	if (c >= 'A' && c <= ']')
+		return c + 32;
+	if (c == '~')
+		return '^';
+	return c;
+}
+
+static bool	areSameNickname(const std::string &nick1, const std::string &nick2)
+{
+	if (nick1.length() != nick2.length())
+		return false;
+
+	std::string::const_iterator	it1 = nick1.begin();
+	std::string::const_iterator	it2 = nick2.begin();
+	while (it1 != nick1.end() && it2 != nick2.end())
+	{
+		if (toIRCLower(*it1) != toIRCLower(*it2))
+			return false;
+		++it1;
+		++it2;
+	}
+	return true;
+}
+
 Peer	&PeerManager::get(const std::string &nick)
 {
 	for (std::map<int, Peer>::iterator it = this->begin(); it != this->end(); ++it)
 	{
-		if (it->second.getNickname() == nick)
+		if (areSameNickname(it->second.getNickname(), nick))
 			return it->second;
 	}
 	throw std::out_of_range("PeerManager::get");
