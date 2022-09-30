@@ -25,13 +25,13 @@ class Peer
 		const std::string	&getMessage(void) const;
 		bool				isRegistered(void) const;
 		void				registration(const std::string &user, const std::string &mode, const std::string &realname);
-		const std::string	&getNickname() const;
 		void				setNickname(const std::string &new_nick);
 		void				sendMessage(const Message &message) const;
 
 		char			*getStrAddr(void) const;
 		int				getFd(void) const;
 		const std::string		&getUsername(void) const;
+		const std::string 		&getNickname(void) const;
 
 	private:
 		int				_fd;

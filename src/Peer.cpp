@@ -64,11 +64,6 @@ void	Peer::registration(const std::string &user, const std::string &mode, const 
 	this->_realname = realname;
 }
 
-const std::string	&Peer::getNickname(void) const
-{
-	return this->_nickname;
-}
-
 void	Peer::setNickname(const std::string &new_nick)
 {
 	this->_nickname = new_nick;
@@ -87,4 +82,9 @@ char	*Peer::getStrAddr(void) const
 const std::string	&Peer::getUsername(void) const
 {
 	return this->_user;
+}
+
+const std::string 	&Peer::getNickname(void) const
+{
+	return this->_nickname;
 }

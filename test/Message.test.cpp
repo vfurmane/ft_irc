@@ -94,4 +94,29 @@ TEST_CASE("Message::parse()")
 		REQUIRE ( IM.arguments[2].compare("arg2 arg3") == 0);
 		REQUIRE ( IM.argCount == 3 );
 	}
+	SECTION("Should set the prefix without registration")
+	{
+		struct sockaddr address;
+		Peer	peer(3, address);
+		peer.setNickname("nickTest");	
+		Message IM(peer, "command arg0");
+		IM.updatePrefixFromPeer();
+
+		std::string prefixReference = "nickTest@";
+		prefixReference += peer.getStrAddr();
+		REQUIRE(IM.prefix[0] == prefixReference);
+	}
+	SECTION("Should set the prefix with registration")
+	{
+		struct sockaddr address;
+		Peer	peer(3, address);
+		peer.registration("testUser", "", "Real Name");
+		peer.setNickname("nickTest");	
+		Message IM(peer, "command arg0");
+		IM.updatePrefixFromPeer();
+
+		std::string prefixReference = "nickTest!testUser@";
+		prefixReference += peer.getStrAddr();
+		REQUIRE(IM.prefix[0] == prefixReference);
+	}
 }
