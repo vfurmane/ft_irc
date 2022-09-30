@@ -39,6 +39,8 @@ int		command_nick(Message &message, Dependencies &deps)
 {
 	if (message.argCount < 1 || message.arguments[0].empty())
 		throw ERR_NONICKNAMEGIVEN();
+	if (deps.peers.containsNickname(message.arguments[0]))
+		throw ERR_NICKNAMEINUSE(message.arguments[0]);
 	if (!isValidNickname(message.arguments[0]))
 		throw ERR_ERRONEUSNICKNAME(message.arguments[0]);
 	message.peer.setNickname(message.arguments[0]);

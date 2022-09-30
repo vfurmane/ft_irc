@@ -25,6 +25,16 @@ Peer	&PeerManager::operator[](int fd)
 	return this->get(fd);
 }
 
+PeerManager::iterator	PeerManager::begin(void)
+{
+	return this->_peers.begin();
+}
+
+PeerManager::iterator	PeerManager::end(void)
+{
+	return this->_peers.end();
+}
+
 PeerManager::const_iterator	PeerManager::begin(void) const
 {
 	return this->_peers.begin();
@@ -48,6 +58,42 @@ void PeerManager::remove(int fd)
 Peer	&PeerManager::get(int fd)
 {
 	return this->_peers.at(fd);
+}
+
+static char	toIRCLower(char c)
+{
+	if (c >= 'A' && c <= ']')
+		return c + 32;
+	if (c == '~')
+		return '^';
+	return c;
+}
+
+static bool	areSameNickname(const std::string &nick1, const std::string &nick2)
+{
+	if (nick1.length() != nick2.length())
+		return false;
+
+	std::string::const_iterator	it1 = nick1.begin();
+	std::string::const_iterator	it2 = nick2.begin();
+	while (it1 != nick1.end() && it2 != nick2.end())
+	{
+		if (toIRCLower(*it1) != toIRCLower(*it2))
+			return false;
+		++it1;
+		++it2;
+	}
+	return true;
+}
+
+bool	PeerManager::containsNickname(const std::string &nick) const
+{
+	for (std::map<int, Peer>::const_iterator it = this->begin(); it != this->end(); ++it)
+	{
+		if (areSameNickname(it->second.getNickname(), nick))
+			return true;
+	}
+	return false;
 }
 
 int	PeerManager::acceptConnection(void)
