@@ -9,10 +9,7 @@
 #include "Message.hpp"
 #include "Peer.hpp"
 
-#include "../src/commands.cpp"
 #include "../src/commands/nick.cpp"
-#include "../src/PeerManager.cpp"
-#include "../src/Server.cpp"
 
 bool	isValidNickname(const std::string &nick);
 

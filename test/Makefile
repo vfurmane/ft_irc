@@ -1,5 +1,5 @@
 NAME = test.out
-SRCS = main.cpp Configuration.test.cpp Message.test.cpp commands/nick.test.cpp
+SRCS = main.cpp commands.test.cpp Configuration.test.cpp Message.test.cpp PeerManager.test.cpp Peer.test.cpp Server.test.cpp $(addprefix commands/, nick.test.cpp quit.test.cpp user.test.cpp)
 OBJS = $(SRCS:.cpp=.o)
 DEPS = $(SRCS:.cpp=.d)
 INCLDIR = include
@@ -20,6 +20,7 @@ $(NAME): $(OBJS)
 
 clean:
 	$(RM) -r $(OBJS)
+	$(RM) -r $(DEPS)
 
 fclean: clean
 	$(RM) $(NAME)
