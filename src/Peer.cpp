@@ -85,6 +85,9 @@ std::string	Peer::generatePrefix(void) const
 
 void    Peer::sendMessage(const Message &message) const
 {
+#ifndef NDEBUG
+	std::cerr << this->generatePrefix() << "> " << message.input << std::endl;
+#endif
     send(this->getFd(), (message.input + CRLF).c_str(), (message.input + CRLF).length(), 0);
 }
 

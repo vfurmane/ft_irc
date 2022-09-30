@@ -139,9 +139,6 @@ int	Server::_handle_message(epoll_event &event)
 			catch (AIRCError &e)
 			{
 				Message	error(message.peer, e.what());
-#ifndef NDEBUG
-				std::cerr << error.input << std::endl;
-#endif
 				message.peer.sendMessage(error);
 			}
 			peer.clearMessage();
@@ -170,7 +167,7 @@ void	Server::_handleReadyFds(int event_count, struct epoll_event *events)
 		else
 		{
 #ifndef NDEBUG
-			std::cerr << "New message..." << std::endl;
+			std::cerr << this->_peers.get(events[i].data.fd).generatePrefix() << "> New message..." << std::endl;
 #endif
 			if (this->_handle_message(events[i]) == -1)
 			{
