@@ -26,6 +26,7 @@ class Peer
 		bool				isRegistered(void) const;
 		void				registration(const std::string &user, const std::string &mode, const std::string &realname);
 		void				setNickname(const std::string &new_nick);
+		std::string			generatePrefix(void) const;
 		void				sendMessage(const Message &message) const;
 
 		char			*getStrAddr(void) const;

@@ -116,10 +116,7 @@ std::string	*Message::updatePrefixFromPeer(void)
 	{
 		delete this->prefix;
 		this->prefix = new std::string;
+		*this->prefix = this->peer.generatePrefix();
 	}
-	if (this->peer.getUsername().empty())
-		*this->prefix = this->peer.getNickname() + "@" + this->peer.getStrAddr(); 
-	else
-		*this->prefix = this->peer.getNickname() + "!" + this->peer.getUsername() + "@" + this->peer.getStrAddr(); 
 	return this->prefix;
 }

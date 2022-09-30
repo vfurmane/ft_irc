@@ -69,6 +69,20 @@ void	Peer::setNickname(const std::string &new_nick)
 	this->_nickname = new_nick;
 }
 
+std::string	Peer::generatePrefix(void) const
+{
+	std::string	ret;
+
+	if (!this->_nickname.empty())
+		ret += this->_nickname; 
+	if (!this->_user.empty())
+		ret += "!" + this->_user; 
+	if (!this->_nickname.empty() || !this->_user.empty())
+		ret += "@";
+	ret += this->getStrAddr(); 
+	return ret;
+}
+
 void    Peer::sendMessage(const Message &message) const
 {
     send(this->getFd(), (message.input + CRLF).c_str(), (message.input + CRLF).length(), 0);
