@@ -31,6 +31,20 @@ struct ERR_NONICKNAMEGIVEN : public AIRCError
 	}
 };
 
+struct ERR_ERRONEUSNICKNAME : public AIRCError
+{
+	private:
+		const std::string	_str;
+
+	public:
+		ERR_ERRONEUSNICKNAME(const std::string &nick) : _str("432 " + nick + " :Erroneous nickname") {}
+		~ERR_ERRONEUSNICKNAME(void) throw() {}
+		virtual const char* what() const throw()
+		{
+			return this->_str.c_str();
+		}
+};
+
 class ERR_NEEDMOREPARAMS : public AIRCError
 {
 	private:
