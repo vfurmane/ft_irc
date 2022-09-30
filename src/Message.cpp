@@ -94,7 +94,6 @@ int	Message::execute(PeerManager &peers)
 
 const std::string	&Message::updateInputFromFields(void)
 {
-	this->updatePrefixFromPeer();
 	this->input.clear();
 	if (this->prefix != NULL)
 		this->input += ":" + *this->prefix + " ";

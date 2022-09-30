@@ -9,7 +9,7 @@ class	PeerManager;
 
 struct ErrorMessage : public Message
 {
-	ErrorMessage(Peer &peer, const std::string &quit_message);
+	ErrorMessage(Peer &peer, const std::string &message, bool include_prefix = false);
 };
 
 struct Dependencies
@@ -19,7 +19,7 @@ struct Dependencies
 
 struct NickMessage : public Message
 {
-	NickMessage(Peer &peer, const std::string &new_nick);
+	NickMessage(Peer &peer, const std::string &new_nick, bool include_prefix = false);
 };
 
 int	command_nick(Message &message, Dependencies &deps);
