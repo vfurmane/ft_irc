@@ -126,3 +126,20 @@ void	PeerManager::closeConnection(int fd)
 		throw sysCallError("close", strerror(errno));
 	this->remove(fd);
 }
+
+void	PeerManager::clear(void)
+{
+#ifndef NDEBUG
+	std::cerr << "Clearing all connections..." << std::endl;
+#endif
+	for (PeerManager::iterator it = this->begin(); it != this->end();)
+	{
+#ifndef NDEBUG
+	std::cerr << "fd -> " << it->second.getFd() << " ; ";
+	std::cerr << "IP address -> " << it->second.getStrAddr() << std::endl;
+#endif
+		if (it->second.close() == -1)
+			throw sysCallError("close", strerror(errno));
+		this->remove((it++)->second.getFd());
+	}
+}

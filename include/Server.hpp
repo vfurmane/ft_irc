@@ -9,6 +9,7 @@
 # define MAX_MSG_LENGTH 512
 
 # include <arpa/inet.h>
+# include <csignal>
 # include <cstring>
 # include <errno.h>
 # include <iostream>
@@ -36,6 +37,7 @@ class Server
 		~Server(void);
 
 		void		listen(void);
+		void		closeAllConnections(void);
 
 		int			getEpollFd(void) const; // DELETE
 		int			getSocketFd(void) const; // DELETE
