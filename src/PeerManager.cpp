@@ -22,7 +22,7 @@ PeerManager::~PeerManager(void)
 
 Peer	&PeerManager::operator[](int fd)
 {
-	return this->get(fd);
+	return this->_peers.at(fd);
 }
 
 PeerManager::iterator	PeerManager::begin(void)
@@ -45,9 +45,9 @@ PeerManager::const_iterator	PeerManager::end(void) const
 	return this->_peers.end();
 }
 
-void PeerManager::add(int fd, struct sockaddr &addr)
+std::pair<PeerManager::iterator, bool> PeerManager::add(int fd, struct sockaddr &addr)
 {
-	this->_peers.insert(std::make_pair(fd, Peer(fd, addr)));
+	return this->_peers.insert(std::make_pair(fd, Peer(fd, addr)));
 }
 
 void PeerManager::remove(int fd)
@@ -108,21 +108,30 @@ int	PeerManager::acceptConnection(void)
 		close(this->_server.getSocketFd());
 		throw sysCallError("accept", strerror(errno));
 	}
-	this->add(new_fd, their_addr);
+	std::pair<PeerManager::iterator, bool> ret = this->add(new_fd, their_addr);
+	if (!ret.second)
+	{
+#ifndef NDEBUG
+		std::cerr << "Critical error: it seems that the fd is already in the manager" << std::endl;
+#endif
+		close(new_fd);
+		throw std::exception();
+	}
 #ifndef NDEBUG
 	std::cerr << "Accepted connection on fd no " << new_fd << "!" << std::endl;
-	std::cerr << "Client -> " << this->get(new_fd).getStrAddr() << std::endl;
+	std::cerr << "Client -> " << ret.first->second.getStrAddr() << std::endl;
 #endif
 	return new_fd;
 }
 
 void	PeerManager::closeConnection(int fd)
 {
+	Peer	&peer = (*this)[fd];
 #ifndef NDEBUG
 	std::cerr << "Closing connection on fd no " << fd << "..." << std::endl;
-	std::cerr << "Client -> " << this->get(fd).generatePrefix() << std::endl;
+	std::cerr << "Client -> " << peer.generatePrefix() << std::endl;
 #endif
-	if (this->_peers.at(fd).close() == -1)
+	if (peer.close() == -1)
 		throw sysCallError("close", strerror(errno));
 	this->remove(fd);
 }
