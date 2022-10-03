@@ -41,7 +41,7 @@ TEST_CASE("USER")
 
 		message.argCount = 4;
 		message.peer._registered = true;
-		REQUIRE_THROWS_AS( command_user(message, deps), ERR_ALREADYREGISTERED );
+		REQUIRE_THROWS_AS( command_user(message, deps), ERR_ALREADYREGISTRED );
 	};
 	SECTION("should ignore the command")
 	{
