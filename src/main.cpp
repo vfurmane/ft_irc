@@ -21,6 +21,7 @@ int	main(int argc, char **argv)
 	{
 		Server serv(conf.getStrPort());
 		serv.listen();
+		serv.closeAllConnections();
 	}
 	catch (std::exception &e)
 	{
