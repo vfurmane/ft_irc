@@ -1,4 +1,5 @@
 #include <cstring>
+#include <sstream>
 #include "catch.hpp"
 
 #define private public

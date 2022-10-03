@@ -1,4 +1,5 @@
 #include "Server.hpp"
+#include "Message.hpp"
 #include "PeerManager.hpp"
 
 static bool	g_is_listening = false;
@@ -96,7 +97,7 @@ void	Server::_addFdToEpoll(int new_fd) const
 #endif
 }
 
-int	Server::_handle_message(epoll_event &event)
+int	Server::_handle_message(epoll_event &event, Configuration &config)
 {
 	int		bytes_read;
 	char	buffer[MAX_READ + 1];
@@ -143,7 +144,8 @@ int	Server::_handle_message(epoll_event &event)
 #endif
 			try
 			{
-				if (message.execute(this->_peers) <= 0)
+				Dependencies deps = {config, this->_peers};
+				if (message.execute(deps) <= 0)
 					return 0;
 			}
 			catch (AIRCError &e)
@@ -160,7 +162,7 @@ int	Server::_handle_message(epoll_event &event)
 	return 0;
 }
 
-void	Server::_handleReadyFds(int event_count, struct epoll_event *events)
+void	Server::_handleReadyFds(int event_count, struct epoll_event *events, Configuration &config)
 {
 	for (int i = 0; i < event_count; i++)
 	{
@@ -179,7 +181,7 @@ void	Server::_handleReadyFds(int event_count, struct epoll_event *events)
 #ifndef NDEBUG
 			std::cerr << this->_peers.get(events[i].data.fd).generatePrefix() << "> New message..." << std::endl;
 #endif
-			if (this->_handle_message(events[i]) == -1)
+			if (this->_handle_message(events[i], config) == -1)
 			{
 				this->_peers.closeConnection(events[i].data.fd);
 			}
@@ -197,7 +199,7 @@ void	stopListening(int signal)
 	g_is_listening = false;
 }
 
-void	Server::listen(void)
+void	Server::listen(Configuration &config)
 {
 	struct epoll_event	events[MAX_EVENTS];
 
@@ -226,7 +228,7 @@ void	Server::listen(void)
 		if (event_count > 0)
 			std::cerr << event_count << " fds ready..." << std::endl;
 #endif
-		this->_handleReadyFds(event_count, events);
+		this->_handleReadyFds(event_count, events, config);
 	}
 #ifndef NDEBUG
 	std::cerr << "Got out of the listening loop!" << std::endl;

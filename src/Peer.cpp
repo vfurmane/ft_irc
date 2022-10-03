@@ -2,11 +2,11 @@
 
 static const char	*CRLF = "\r\n";
 
-Peer::Peer(int fd, struct sockaddr &addr): _fd(fd), _addr(addr), _message(), _nickname(), _user(), _realname(), _mode(), _registered(false)
+Peer::Peer(int fd, struct sockaddr &addr): _fd(fd), _addr(addr), _message(), _nickname(), _user(), _realname(), _mode(), _logged(false), _registered(false)
 {
 }
 
-Peer::Peer(const Peer &obj): _fd(obj.getFd()), _addr(obj._addr), _message(), _nickname(), _user(), _realname(), _mode(), _registered(false)
+Peer::Peer(const Peer &obj): _fd(obj.getFd()), _addr(obj._addr), _message(), _nickname(), _user(), _realname(), _mode(), _logged(false), _registered(false)
 {
 }
 
@@ -51,9 +51,19 @@ int Peer::getFd(void) const
 	return this->_fd;
 }
 
+bool	Peer::isLogged(void) const
+{
+	return this->_logged;
+}
+
 bool	Peer::isRegistered(void) const
 {
 	return this->_registered;
+}
+
+void	Peer::login(void)
+{
+	this->_logged = true;
 }
 
 void	Peer::registration(const std::string &user, const std::string &mode, const std::string &realname)

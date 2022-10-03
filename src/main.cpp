@@ -20,7 +20,7 @@ int	main(int argc, char **argv)
 	try
 	{
 		Server serv(conf.getStrPort());
-		serv.listen();
+		serv.listen(conf);
 		serv.closeAllConnections();
 	}
 	catch (std::exception &e)

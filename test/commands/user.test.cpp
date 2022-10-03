@@ -1,4 +1,5 @@
 #include "catch.hpp"
+#include <sstream>
 #include <vector>
 
 #define private public
@@ -15,11 +16,12 @@ TEST_CASE("USER")
 	SECTION("should throw ERR_NEEDMOREPARAMS if there are less than 4 arguments")
 	{
 		struct sockaddr	addr;
+		Configuration	config;
 		Server			server((char *)6667);
 		Peer			peer(3, addr);
 		Message			message(peer, std::string());
 		PeerManager		peermanager(server);
-		Dependencies	deps = {peermanager};
+		Dependencies	deps = {config, peermanager};
 
 		message.argCount = 0;
 		REQUIRE_THROWS_AS( command_user(message, deps), ERR_NEEDMOREPARAMS );
@@ -30,11 +32,12 @@ TEST_CASE("USER")
 	SECTION("should throw ERR_ALREADYREGISTERED")
 	{
 		struct sockaddr	addr;
+		Configuration	config;
 		Server			server((char *)6667);
 		Peer			peer(3, addr);
 		Message			message(peer, std::string());
 		PeerManager		peermanager(server);
-		Dependencies	deps = {peermanager};
+		Dependencies	deps = {config, peermanager};
 
 		message.argCount = 4;
 		message.peer._registered = true;
@@ -43,11 +46,12 @@ TEST_CASE("USER")
 	SECTION("should ignore the command")
 	{
 		struct sockaddr	addr;
+		Configuration	config;
 		Server			server((char *)6667);
 		Peer			peer(3, addr);
 		Message			message(peer, std::string());
 		PeerManager		peermanager(server);
-		Dependencies	deps = {peermanager};
+		Dependencies	deps = {config, peermanager};
 
 		message.argCount = 4;
 		message.arguments[0] = "te@st";
@@ -95,11 +99,12 @@ TEST_CASE("USER")
 	SECTION("should correctly parse the arguments")
 	{
 		struct sockaddr	addr;
+		Configuration	config;
 		Server			server((char *)6667);
 		Peer			peer(3, addr);
 		Message			message(peer, std::string());
 		PeerManager		peermanager(server);
-		Dependencies	deps = {peermanager};
+		Dependencies	deps = {config, peermanager};
 
 		message.argCount = 4;
 		message.arguments[0] = "user";

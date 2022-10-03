@@ -1,5 +1,6 @@
 #include "catch.hpp"
 #include "mocks.hpp"
+#include <sstream>
 #include <vector>
 
 #define private public
@@ -62,11 +63,12 @@ TEST_CASE("NICK")
 	SECTION("should throw ERR_NONICKNAMEGIVEN if the no nickname was given")
 	{
 		struct sockaddr	addr;
+		Configuration	config;
 		Peer			peer(3, addr);
 		Message			message(peer, std::string());
 		Server			server((char *)"8080");
 		PeerManager		peers(server);
-		Dependencies	deps = {peers};
+		Dependencies	deps = {config, peers};
 
 		message.argCount = 0;
 		REQUIRE_THROWS_AS( command_nick(message, deps), ERR_NONICKNAMEGIVEN );
@@ -77,11 +79,12 @@ TEST_CASE("NICK")
 	SECTION("should throw ERR_ERRONEUSNICKNAME if the nicname is erroneous")
 	{
 		struct sockaddr	addr;
+		Configuration	config;
 		Peer			peer(3, addr);
 		Message			message(peer, std::string());
 		Server			server((char *)"8080");
 		PeerManager		peers(server);
-		Dependencies	deps = {peers};
+		Dependencies	deps = {config, peers};
 
 		message.arguments[0] = "j@de@hi";
 		message.argCount = 1;
@@ -92,11 +95,44 @@ TEST_CASE("NICK")
 	SECTION("should throw ERR_NICKNAMEINUSE if the nickname is in use")
 	{
 		struct sockaddr	addr;
+		Configuration	config;
 		Peer			peer(3, addr);
 		Message			message(peer, std::string());
 		Server			server((char *)"8080");
 		PeerManager		peers(server);
-		Dependencies	deps = {peers};
+		Dependencies	deps = {config, peers};
+
+		message.arguments[0] = "j@de@hi";
+		message.argCount = 1;
+		REQUIRE_THROWS_AS( command_nick(message, deps), ERR_ERRONEUSNICKNAME );
+		message.arguments[0] = "123john";
+		REQUIRE_THROWS_AS( command_nick(message, deps), ERR_ERRONEUSNICKNAME );
+	};
+	SECTION("should throw ERR_NICKNAMEINUSE if the nickname is in use")
+	{
+		struct sockaddr	addr;
+		Configuration	config;
+		Peer			peer(3, addr);
+		Message			message(peer, std::string());
+		Server			server((char *)"8080");
+		PeerManager		peers(server);
+		Dependencies	deps = {config, peers};
+
+		message.arguments[0] = "j@de@hi";
+		message.argCount = 1;
+		REQUIRE_THROWS_AS( command_nick(message, deps), ERR_ERRONEUSNICKNAME );
+		message.arguments[0] = "123john";
+		REQUIRE_THROWS_AS( command_nick(message, deps), ERR_ERRONEUSNICKNAME );
+	};
+	SECTION("should throw ERR_NICKNAMEINUSE if the nickname is in use")
+	{
+		struct sockaddr	addr;
+		Configuration	config;
+		Peer			peer(3, addr);
+		Message			message(peer, std::string());
+		Server			server((char *)"8080");
+		PeerManager		peers(server);
+		Dependencies	deps = {config, peers};
 
 		peers.add(3, addr);
 		peers.get(3).setNickname("john");
@@ -107,11 +143,12 @@ TEST_CASE("NICK")
 	SECTION("should set the nickname of the user")
 	{
 		struct sockaddr	addr;
+		Configuration	config;
 		Peer			peer(3, addr);
 		Message			message(peer, std::string());
 		Server			server((char *)"8080");
 		PeerManager		peers(server);
-		Dependencies	deps = {peers};
+		Dependencies	deps = {config, peers};
 
 		message.arguments[0] = "nickname";
 		message.argCount = 1;
@@ -121,11 +158,12 @@ TEST_CASE("NICK")
 	SECTION("should send a NICK message to all users")
 	{
 		struct sockaddr	addr;
+		Configuration	config;
 		Peer			peer(3, addr);
 		Message			message(peer, std::string());
 		Server			server((char *)"8080");
 		PeerManager		peers(server);
-		Dependencies	deps = {peers};
+		Dependencies	deps = {config, peers};
 
 		message.arguments[0] = "nickname";
 		message.argCount = 1;

@@ -1,6 +1,7 @@
 #ifndef SERVER_HPP
 # define SERVER_HPP
 
+#include "Configuration.hpp"
 # define BACKLOG 256
 # define MAX_EVENTS 256
 # define TIMEOUT 1000
@@ -36,7 +37,7 @@ class Server
 		Server(char *port);
 		~Server(void);
 
-		void		listen(void);
+		void		listen(Configuration &config);
 		void		closeAllConnections(void);
 
 		int			getEpollFd(void) const; // DELETE
@@ -52,8 +53,8 @@ class Server
 	private:
 		void		_bindNewSocketToPort(char *port);
 		void		_addFdToEpoll(int new_fd) const;
-		int			_handle_message(epoll_event &event);
-		void		_handleReadyFds(int event_count, struct epoll_event *events);
+		int			_handle_message(epoll_event &event, Configuration &config);
+		void		_handleReadyFds(int event_count, struct epoll_event *events, Configuration &config);
 
 		PeerManager	_peers;
 		int			_sockfd;

@@ -55,6 +55,7 @@ void	Configuration::parse_arguments(int argc, char **argv)
 
 	_port = parse_port_number(argv[1]);
 	_str_port = argv[1];
+	_password = argv[2];
 }
 
 
@@ -66,4 +67,9 @@ uint16_t		Configuration::getPort(void) const
 char			*Configuration::getStrPort(void) const
 {
 	return this->_str_port;
+}
+
+const std::string		&Configuration::getPassword(void) const
+{
+	return this->_password;
 }
