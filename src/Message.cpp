@@ -85,7 +85,7 @@ int	Message::execute(PeerManager &peers)
 			return commands[i](*this, deps);
 		}
 	}
-	if (i == commands_count)
+	if (i == commands_count && this->command.length() != 0)
 	{
 		throw ERR_UNKNOWNCOMMAND(this->command);
 	}
