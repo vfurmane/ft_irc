@@ -27,7 +27,7 @@ class PeerManager
 		const_iterator	begin(void) const;
 		const_iterator	end(void) const;
 		void			clear(void);
-		void	add(int fd, struct sockaddr &addr);
+		std::pair<PeerManager::iterator, bool>	add(int fd, struct sockaddr &addr);
 		void	remove(int fd);
 		Peer	&get(int fd);
 		bool	containsNickname(const std::string &nick) const;
