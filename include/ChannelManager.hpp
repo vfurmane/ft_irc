@@ -4,7 +4,6 @@
 # include "Channel.hpp"
 # include <map>
 # include <string>
-#include <utility>
 
 class ChannelManager
 {
@@ -17,7 +16,7 @@ class ChannelManager
 		ChannelManager &operator=(const ChannelManager &rhs);
 		~ChannelManager();
 
-		ChannelManager &operator[](std::string name);
+		Channel &operator[](std::string name);
 			
 		iterator		begin(void);
 		iterator		end(void);
