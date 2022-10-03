@@ -23,11 +23,10 @@ class Peer
 		void				clearMessage(void);
 		bool				hasCompleteMessage(void) const;
 		const std::string	&getMessage(void) const;
-		bool				isLogged(void) const;
 		bool				isRegistered(void) const;
-		void				login(void);
 		void				registration(const std::string &user, const std::string &mode, const std::string &realname);
 		void				setNickname(const std::string &new_nick);
+		void				setUserPassword(const std::string &new_pwd);
 		std::string			generatePrefix(void) const;
 		void				sendMessage(const Message &message) const;
 
@@ -35,6 +34,7 @@ class Peer
 		int				getFd(void) const;
 		const std::string		&getUsername(void) const;
 		const std::string 		&getNickname(void) const;
+		const std::string		&getUserPassword(void) const;
 
 	private:
 		const int				_fd;
@@ -44,7 +44,7 @@ class Peer
 		std::string		_user;
 		std::string		_realname;
 		std::string		_mode;
-		bool			_logged;
+		std::string		_user_pwd;
 		bool			_registered;
 };
 

@@ -2,11 +2,11 @@
 
 static const char	*CRLF = "\r\n";
 
-Peer::Peer(int fd, struct sockaddr &addr): _fd(fd), _addr(addr), _message(), _nickname(), _user(), _realname(), _mode(), _logged(false), _registered(false)
+Peer::Peer(int fd, struct sockaddr &addr): _fd(fd), _addr(addr), _message(), _nickname(), _user(), _realname(), _mode(), _user_pwd(), _registered(false)
 {
 }
 
-Peer::Peer(const Peer &obj): _fd(obj.getFd()), _addr(obj._addr), _message(), _nickname(), _user(), _realname(), _mode(), _logged(false), _registered(false)
+Peer::Peer(const Peer &obj): _fd(obj.getFd()), _addr(obj._addr), _message(), _nickname(), _user(), _realname(), _mode(), _user_pwd(), _registered(false)
 {
 }
 
@@ -51,19 +51,9 @@ int Peer::getFd(void) const
 	return this->_fd;
 }
 
-bool	Peer::isLogged(void) const
-{
-	return this->_logged;
-}
-
 bool	Peer::isRegistered(void) const
 {
 	return this->_registered;
-}
-
-void	Peer::login(void)
-{
-	this->_logged = true;
 }
 
 void	Peer::registration(const std::string &user, const std::string &mode, const std::string &realname)
@@ -77,6 +67,11 @@ void	Peer::registration(const std::string &user, const std::string &mode, const 
 void	Peer::setNickname(const std::string &new_nick)
 {
 	this->_nickname = new_nick;
+}
+
+void	Peer::setUserPassword(const std::string &new_pwd)
+{
+	this->_user_pwd = new_pwd;
 }
 
 std::string	Peer::generatePrefix(void) const
@@ -114,4 +109,9 @@ const std::string	&Peer::getUsername(void) const
 const std::string 	&Peer::getNickname(void) const
 {
 	return this->_nickname;
+}
+
+const std::string	&Peer::getUserPassword(void) const
+{
+	return this->_user_pwd;
 }

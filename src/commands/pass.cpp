@@ -9,10 +9,9 @@ int	command_pass(Message &message, Dependencies &deps)
 	{
 		if (message.argCount < 1)
 			throw ERR_NEEDMOREPARAMS(message.command);
-		if (message.peer.isLogged())
-			throw ERR_ALREADYREGISTERED();
+		if (message.peer.isRegistered())
+			throw ERR_ALREADYREGISTRED();
+		message.peer.setUserPassword(password);
 	}
-	if (password == deps.config.getPassword())
-		message.peer.login();
 	return (1);
 }
