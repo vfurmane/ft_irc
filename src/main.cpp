@@ -19,8 +19,8 @@ int	main(int argc, char **argv)
 
 	try
 	{
-		Server serv(conf.getStrPort());
-		serv.listen(conf);
+		Server serv(conf);
+		serv.listen();
 		serv.closeAllConnections();
 	}
 	catch (std::exception &e)

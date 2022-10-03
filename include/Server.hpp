@@ -34,10 +34,10 @@
 class Server
 {
 	public:
-		Server(char *port);
+		Server(Configuration &config);
 		~Server(void);
 
-		void		listen(Configuration &config);
+		void		listen();
 		void		closeAllConnections(void);
 
 		int			getEpollFd(void) const; // DELETE
@@ -53,9 +53,10 @@ class Server
 	private:
 		void		_bindNewSocketToPort(char *port);
 		void		_addFdToEpoll(int new_fd) const;
-		int			_handle_message(epoll_event &event, Configuration &config);
-		void		_handleReadyFds(int event_count, struct epoll_event *events, Configuration &config);
+		int			_handle_message(epoll_event &event);
+		void		_handleReadyFds(int event_count, struct epoll_event *events);
 
+		Configuration	_config;
 		PeerManager	_peers;
 		int			_sockfd;
 		int			_epollfd;

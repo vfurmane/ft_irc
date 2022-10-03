@@ -17,7 +17,7 @@ TEST_CASE("USER")
 	{
 		struct sockaddr	addr;
 		Configuration	config;
-		Server			server((char *)6667);
+		Server			server(config);
 		Peer			peer(3, addr);
 		Message			message(peer, std::string());
 		PeerManager		peermanager(server);
@@ -33,7 +33,7 @@ TEST_CASE("USER")
 	{
 		struct sockaddr	addr;
 		Configuration	config;
-		Server			server((char *)6667);
+		Server			server(config);
 		Peer			peer(3, addr);
 		Message			message(peer, std::string());
 		PeerManager		peermanager(server);
@@ -47,7 +47,7 @@ TEST_CASE("USER")
 	{
 		struct sockaddr	addr;
 		Configuration	config;
-		Server			server((char *)6667);
+		Server			server(config);
 		Peer			peer(3, addr);
 		Message			message(peer, std::string());
 		PeerManager		peermanager(server);
@@ -100,7 +100,7 @@ TEST_CASE("USER")
 	{
 		struct sockaddr	addr;
 		Configuration	config;
-		Server			server((char *)6667);
+		Server			server(config);
 		Peer			peer(3, addr);
 		Message			message(peer, std::string());
 		PeerManager		peermanager(server);

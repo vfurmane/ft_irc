@@ -66,7 +66,7 @@ TEST_CASE("NICK")
 		Configuration	config;
 		Peer			peer(3, addr);
 		Message			message(peer, std::string());
-		Server			server((char *)"8080");
+		Server			server(config);
 		PeerManager		peers(server);
 		Dependencies	deps = {config, peers};
 
@@ -82,7 +82,7 @@ TEST_CASE("NICK")
 		Configuration	config;
 		Peer			peer(3, addr);
 		Message			message(peer, std::string());
-		Server			server((char *)"8080");
+		Server			server(config);
 		PeerManager		peers(server);
 		Dependencies	deps = {config, peers};
 
@@ -98,7 +98,7 @@ TEST_CASE("NICK")
 		Configuration	config;
 		Peer			peer(3, addr);
 		Message			message(peer, std::string());
-		Server			server((char *)"8080");
+		Server			server(config);
 		PeerManager		peers(server);
 		Dependencies	deps = {config, peers};
 
@@ -114,7 +114,7 @@ TEST_CASE("NICK")
 		Configuration	config;
 		Peer			peer(3, addr);
 		Message			message(peer, std::string());
-		Server			server((char *)"8080");
+		Server			server(config);
 		PeerManager		peers(server);
 		Dependencies	deps = {config, peers};
 
@@ -130,7 +130,7 @@ TEST_CASE("NICK")
 		Configuration	config;
 		Peer			peer(3, addr);
 		Message			message(peer, std::string());
-		Server			server((char *)"8080");
+		Server			server(config);
 		PeerManager		peers(server);
 		Dependencies	deps = {config, peers};
 
@@ -146,7 +146,7 @@ TEST_CASE("NICK")
 		Configuration	config;
 		Peer			peer(3, addr);
 		Message			message(peer, std::string());
-		Server			server((char *)"8080");
+		Server			server(config);
 		PeerManager		peers(server);
 		Dependencies	deps = {config, peers};
 
@@ -161,7 +161,7 @@ TEST_CASE("NICK")
 		Configuration	config;
 		Peer			peer(3, addr);
 		Message			message(peer, std::string());
-		Server			server((char *)"8080");
+		Server			server(config);
 		PeerManager		peers(server);
 		Dependencies	deps = {config, peers};
 

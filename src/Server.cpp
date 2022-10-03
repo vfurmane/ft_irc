@@ -4,12 +4,12 @@
 
 static bool	g_is_listening = false;
 
-Server::Server(char *port) : _peers(*this), _sockfd(-1), _epollfd(-1)
+Server::Server(Configuration &config) : _peers(*this), _sockfd(-1), _epollfd(-1)
 {
 #ifndef NDEBUG
 	std::cerr << "Creating a server..." << std::endl;
 #endif
-	this->_bindNewSocketToPort(port);
+	this->_bindNewSocketToPort(config.getStrPort());
 #ifndef NDEBUG
 	std::cerr << "Done creating the server!" << std::endl;
 #endif
@@ -97,7 +97,7 @@ void	Server::_addFdToEpoll(int new_fd) const
 #endif
 }
 
-int	Server::_handle_message(epoll_event &event, Configuration &config)
+int	Server::_handle_message(epoll_event &event)
 {
 	int		bytes_read;
 	char	buffer[MAX_READ + 1];
@@ -144,7 +144,7 @@ int	Server::_handle_message(epoll_event &event, Configuration &config)
 #endif
 			try
 			{
-				Dependencies deps = {config, this->_peers};
+				Dependencies deps = {this->_config, this->_peers};
 				if (message.execute(deps) <= 0)
 					return 0;
 			}
@@ -162,7 +162,7 @@ int	Server::_handle_message(epoll_event &event, Configuration &config)
 	return 0;
 }
 
-void	Server::_handleReadyFds(int event_count, struct epoll_event *events, Configuration &config)
+void	Server::_handleReadyFds(int event_count, struct epoll_event *events)
 {
 	for (int i = 0; i < event_count; i++)
 	{
@@ -181,7 +181,7 @@ void	Server::_handleReadyFds(int event_count, struct epoll_event *events, Config
 #ifndef NDEBUG
 			std::cerr << this->_peers.get(events[i].data.fd).generatePrefix() << "> New message..." << std::endl;
 #endif
-			if (this->_handle_message(events[i], config) == -1)
+			if (this->_handle_message(events[i]) == -1)
 			{
 				this->_peers.closeConnection(events[i].data.fd);
 			}
@@ -199,7 +199,7 @@ void	stopListening(int signal)
 	g_is_listening = false;
 }
 
-void	Server::listen(Configuration &config)
+void	Server::listen()
 {
 	struct epoll_event	events[MAX_EVENTS];
 
@@ -228,7 +228,7 @@ void	Server::listen(Configuration &config)
 		if (event_count > 0)
 			std::cerr << event_count << " fds ready..." << std::endl;
 #endif
-		this->_handleReadyFds(event_count, events, config);
+		this->_handleReadyFds(event_count, events);
 	}
 #ifndef NDEBUG
 	std::cerr << "Got out of the listening loop!" << std::endl;
