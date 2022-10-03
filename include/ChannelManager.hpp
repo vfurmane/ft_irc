@@ -1,11 +1,10 @@
 #ifndef CHANNELMANAGER_HPP
 # define CHANNELMANAGER_HPP
 
-// # include "Channel.hpp"
+# include "Channel.hpp"
 # include <map>
 # include <string>
 #include <utility>
-// # include <algorithm>
 
 class ChannelManager
 {
