@@ -5,6 +5,8 @@
 # include "IRCErrors.hpp"
 # include "Message.hpp"
 # include "Peer.hpp"
+# include <stdexcept>
+# include <vector>
 
 class	PeerManager;
 class	ChannelManager;
