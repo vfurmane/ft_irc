@@ -119,6 +119,14 @@ int	Server::_handle_message(epoll_event &event)
 		peer.appendMessage(buffer);
 		if (peer.hasCompleteMessage())
 		{
+			if (peer.getMessage() == "\r\n")
+			{
+#ifndef NDEBUG
+				std::cerr << "Ignored empty message." << std::endl;
+#endif
+				peer.clearMessage();
+				return 1;
+			}
 #ifndef NDEBUG
 			std::cerr << "Complete message" << std::endl;
 #endif
