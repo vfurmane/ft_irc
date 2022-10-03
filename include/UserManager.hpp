@@ -15,6 +15,13 @@ class UserManager
 		UserManager	&operator=(const UserManager &rhs);
 		~UserManager(void);
 
+		User	&operator[](int fd);
+
+		iterator	begin(void);
+		iterator	end(void);
+		const_iterator begin(void) const;
+		const_iterator end(void) const;
+
 	private:
 		std::map<int, User>	_users;
 };

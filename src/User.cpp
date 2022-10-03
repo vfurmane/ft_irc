@@ -17,3 +17,8 @@ User	&User::operator=(const User &rhs)
 User::~User(void)
 {
 }
+
+const std::string &User::getName(void) const
+{
+	return this->_name;
+}

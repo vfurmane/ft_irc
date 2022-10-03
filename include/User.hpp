@@ -10,6 +10,8 @@ class User
 		User(const User &obj);
 		User &operator=(const User &rhs);
 		~User(void);
+
+		const std::string	&getName(void) const;
 	
 	private:
 		std::string	_name;
