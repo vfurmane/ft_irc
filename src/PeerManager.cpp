@@ -1,5 +1,4 @@
 #include "PeerManager.hpp"
-#include <map>
 
 PeerManager::PeerManager(Server &server) : _server(server), _peers()
 {
