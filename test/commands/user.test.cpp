@@ -136,7 +136,6 @@ TEST_CASE("USER")
 		config._password = "test";
 		peer._password = "wrong";
 	(void)addr;
-	(void)len;
 		REQUIRE( command_user(message, deps) == 0 );
 	};
 };
