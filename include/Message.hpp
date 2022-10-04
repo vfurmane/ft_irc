@@ -2,6 +2,7 @@
 # define MESSAGE_HPP
 
 #include <string>
+#include "Configuration.hpp"
 #include "IRCErrors.hpp"
 
 # ifndef NDEBUG
@@ -23,7 +24,7 @@ struct Message
 	static int(*const commands[])(Message&, Dependencies&);
 
 	void		parse();
-	int			execute(PeerManager &peers);
+	int			execute(Dependencies &deps);
 
 	const std::string	&updateInputFromFields(void);
 	std::string			*updatePrefixFromPeer(void);

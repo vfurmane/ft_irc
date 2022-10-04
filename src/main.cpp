@@ -19,7 +19,7 @@ int	main(int argc, char **argv)
 
 	try
 	{
-		Server serv(conf.getStrPort());
+		Server serv(conf);
 		serv.listen();
 		serv.closeAllConnections();
 	}

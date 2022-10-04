@@ -1,6 +1,7 @@
 #ifndef COMMANDS_HPP
 # define COMMANDS_HPP
 
+# include "Configuration.hpp"
 # include "IRCErrors.hpp"
 # include "Message.hpp"
 # include "Peer.hpp"
@@ -14,6 +15,7 @@ struct ErrorMessage : public Message
 
 struct Dependencies
 {
+	Configuration	&config;
 	PeerManager	&peers;
 };
 
@@ -25,6 +27,7 @@ struct NickMessage : public Message
 int	command_nick(Message &message, Dependencies &deps);
 int	command_quit(Message &message, Dependencies &deps);
 int	command_user(Message &message, Dependencies &deps);
+int	command_pass(Message &message, Dependencies &deps);
 
 # include "PeerManager.hpp"
 

@@ -1,14 +1,13 @@
 #include "Server.hpp"
-#include "PeerManager.hpp"
 
 static bool	g_is_listening = false;
 
-Server::Server(char *port) : _peers(*this), _sockfd(-1), _epollfd(-1)
+Server::Server(Configuration &config) : _config(config), _peers(*this), _sockfd(-1), _epollfd(-1)
 {
 #ifndef NDEBUG
 	std::cerr << "Creating a server..." << std::endl;
 #endif
-	this->_bindNewSocketToPort(port);
+	this->_bindNewSocketToPort(config.getStrPort());
 #ifndef NDEBUG
 	std::cerr << "Done creating the server!" << std::endl;
 #endif
@@ -143,7 +142,8 @@ int	Server::_handle_message(epoll_event &event)
 #endif
 			try
 			{
-				if (message.execute(this->_peers) <= 0)
+				Dependencies deps = {this->_config, this->_peers};
+				if (message.execute(deps) <= 0)
 					return 0;
 			}
 			catch (AIRCError &e)

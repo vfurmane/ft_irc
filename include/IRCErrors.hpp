@@ -73,7 +73,7 @@ class ERR_NEEDMOREPARAMS : public AIRCError
 	}
 };
 
-struct ERR_ALREADYREGISTERED : public AIRCError
+struct ERR_ALREADYREGISTRED : public AIRCError
 {
 	virtual const char* what() const throw()
 	{

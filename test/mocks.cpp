@@ -3,6 +3,13 @@
 
 # include "mocks.hpp"
 
+int g_close_return = 0;
+int	close(int fd)
+{
+	(void)fd;
+	return g_close_return;
+}
+
 int g_bind_return = 0;
 int	bind(int fd, const struct sockaddr *addr, socklen_t len)
 {

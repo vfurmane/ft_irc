@@ -42,7 +42,8 @@ class Configuration
 
 		uint16_t		getPort(void) const;
 		char			*getStrPort(void) const;
-
+		const std::string		&getPassword(void) const;
+		
 	private:
 		bool		_parsed;
 		uint16_t	_port;

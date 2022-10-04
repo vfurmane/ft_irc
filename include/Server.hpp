@@ -21,6 +21,7 @@
 # include <sys/socket.h>
 # include <sys/types.h>
 # include <unistd.h>
+# include "Configuration.hpp"
 # include "exception.hpp"
 # include "Message.hpp"
 # include "Peer.hpp"
@@ -33,7 +34,7 @@
 class Server
 {
 	public:
-		Server(char *port);
+		Server(Configuration &config);
 		~Server(void);
 
 		void		listen(void);
@@ -55,6 +56,7 @@ class Server
 		int			_handle_message(epoll_event &event);
 		void		_handleReadyFds(int event_count, struct epoll_event *events);
 
+		Configuration	_config;
 		PeerManager	_peers;
 		int			_sockfd;
 		int			_epollfd;

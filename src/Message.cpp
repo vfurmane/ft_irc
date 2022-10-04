@@ -1,8 +1,8 @@
 #include "Message.hpp"
 
-static const size_t commands_count = 3;
-const std::string Message::commands_name[commands_count] = {"NICK", "QUIT", "USER"};
-int (*const Message::commands[commands_count])(Message&, Dependencies&) = {command_nick, command_quit, command_user};
+static const size_t commands_count = 4;
+const std::string Message::commands_name[commands_count] = {"NICK", "PASS", "QUIT", "USER"};
+int (*const Message::commands[commands_count])(Message&, Dependencies&) = {command_nick, command_pass, command_quit, command_user};
 
 Message::Message(Peer &peer, const std::string &input): peer(peer), input(input), prefix(NULL), command(), arguments(), argCount(0)
 {
@@ -72,9 +72,8 @@ void	Message::parse()
 	parseArguments(*this, it);
 }
 
-int	Message::execute(PeerManager &peers)
+int	Message::execute(Dependencies &deps)
 {
-	Dependencies	deps = {peers};
 	size_t	i;
 
 	for (i = 0; i < commands_count; i++) {
