@@ -117,4 +117,26 @@ TEST_CASE("USER")
 		REQUIRE( message.peer._realname == "ppiques" );
 		REQUIRE( message.peer._registered == true );
 	};
+	SECTION("should closeConnection if the password is wrong")
+	{
+		struct sockaddr	addr;
+		Configuration	config;
+		Server			server(config);
+		Peer			peer(3, addr);
+		Message			message(peer, std::string());
+		PeerManager		peermanager(server);
+		Dependencies	deps = {config, peermanager};
+
+		message.argCount = 4;
+		message.arguments[0] = "user";
+		message.arguments[1] = "0";
+		message.arguments[2] = "*";
+		message.arguments[3] = "ppiques";
+		peermanager.add(3, addr);
+		config._password = "test";
+		peer._password = "wrong";
+	(void)addr;
+	(void)len;
+		REQUIRE( command_user(message, deps) == 0 );
+	};
 };
