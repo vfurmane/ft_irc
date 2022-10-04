@@ -1,18 +1,17 @@
 #include "Channel.hpp"
 
-Channel::Channel(const std::string &name): _name(name), _scope(0), _users_in_channel()
+Channel::Channel(const std::string &name): _name(name), _flags(0), _users()
 {
 }
 
-Channel::Channel(const Channel &obj): _name(obj._name), _scope(obj._scope), _users_in_channel(obj._users_in_channel)
+Channel::Channel(const Channel &obj): _name(obj._name), _flags(obj._flags), _users(obj._users)
 {
 }
 
 Channel	&Channel::operator=(const Channel &rhs)
 {
-	this->_name = rhs._name;
-	this->_scope = rhs._scope;
-	this->_users_in_channel = rhs._users_in_channel;
+	this->_flags = rhs._flags;
+	this->_users = rhs._users;
 	return (*this);
 }
 

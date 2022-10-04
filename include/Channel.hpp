@@ -1,8 +1,10 @@
 #ifndef CHANNEL_HPP
 # define CHANNEL_HPP
 
-#include <string>
-#include "UserManager.hpp"
+# include <stdint.h>
+# include <string>
+# include <stdint.h>
+# include "UserManager.hpp"
 
 class Channel
 {
@@ -14,9 +16,9 @@ class Channel
 
 
 	private:
-		std::string	_name;
-		unsigned int		_scope;
-		UserManager			_users_in_channel;
+		const std::string	_name;
+		uint32_t			_flags;
+		UserManager			_users;
 };
 
 #endif
