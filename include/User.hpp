@@ -1,20 +1,21 @@
 #ifndef USER_HPP
 # define USER_HPP
 
-#include <string>
+# include <string>
+# include "Peer.hpp"
 
 class User
 {
 	public:
-		User(const std::string &name);
+		User(Peer &peer);
 		User(const User &obj);
 		User &operator=(const User &rhs);
 		~User(void);
 
-		const std::string	&getName(void) const;
+		Peer	&getPeer(void) const;
 	
 	private:
-		std::string	_name;
+		Peer	&_peer;
 };
 
 #endif

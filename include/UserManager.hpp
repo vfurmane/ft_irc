@@ -1,8 +1,8 @@
 #ifndef USERMANAGER_HPP
 # define USERMANAGER_HPP
 
-#include <map>
-#include "User.hpp"
+# include <map>
+# include "User.hpp"
 
 class UserManager
 {

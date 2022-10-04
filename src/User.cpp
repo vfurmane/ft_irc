@@ -1,16 +1,16 @@
 #include "User.hpp"
 
-User::User(const std::string &name): _name(name)
+User::User(Peer &peer): _peer(peer)
 {
 }
 
-User::User(const User &obj): _name(obj._name)
+User::User(const User &obj): _peer(obj._peer)
 {
 }
 
 User	&User::operator=(const User &rhs)
 {
-	this->_name = rhs._name;
+	this->_peer = rhs._peer;
 	return (*this);
 }
 
@@ -18,7 +18,7 @@ User::~User(void)
 {
 }
 
-const std::string &User::getName(void) const
+Peer &User::getPeer(void) const
 {
-	return this->_name;
+	return this->_peer;
 }
