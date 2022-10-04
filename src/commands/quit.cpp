@@ -2,7 +2,10 @@
 
 int	command_quit(Message &message, Dependencies &deps)
 {
-	message.peer.sendMessage(ErrorMessage(message.peer, message.arguments[0]));
+	std::string	msg;
+
+	msg = "Quit: " + message.arguments[0];
+	message.peer.sendMessage(ErrorMessage(message.peer, msg));
 	deps.peers.closeConnection(message.peer.getFd());
 	return 0;
 }
