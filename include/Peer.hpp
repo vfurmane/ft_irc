@@ -35,7 +35,7 @@ class Peer
 		const std::string 		&getNickname(void) const;
 
 	private:
-		int				_fd;
+		const int				_fd;
 		struct sockaddr	_addr;
 		std::string		_message;
 		std::string		_nickname;
