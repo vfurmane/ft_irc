@@ -3,7 +3,6 @@
 
 # include <stdint.h>
 # include <string>
-# include <stdint.h>
 # include "UserManager.hpp"
 
 class Channel
