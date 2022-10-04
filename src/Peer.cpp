@@ -12,7 +12,7 @@ Peer::Peer(const Peer &obj): _fd(obj.getFd()), _addr(obj._addr), _message(), _ni
 
 Peer &Peer::operator=(const Peer &rhs)
 {
-	this->_fd = rhs.getFd();
+	(void)rhs;
 	return (*this);
 }
 
