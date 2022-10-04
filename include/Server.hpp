@@ -1,7 +1,6 @@
 #ifndef SERVER_HPP
 # define SERVER_HPP
 
-#include "Configuration.hpp"
 # define BACKLOG 256
 # define MAX_EVENTS 256
 # define TIMEOUT 1000
@@ -22,6 +21,7 @@
 # include <sys/socket.h>
 # include <sys/types.h>
 # include <unistd.h>
+# include "Configuration.hpp"
 # include "exception.hpp"
 # include "Message.hpp"
 # include "Peer.hpp"
@@ -37,7 +37,7 @@ class Server
 		Server(Configuration &config);
 		~Server(void);
 
-		void		listen();
+		void		listen(void);
 		void		closeAllConnections(void);
 
 		int			getEpollFd(void) const; // DELETE

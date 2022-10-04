@@ -19,10 +19,10 @@ int	command_user(Message &message, Dependencies &deps)
 	if (message.argCount < 4)
 		throw ERR_NEEDMOREPARAMS(message.command);
 	if (message.peer.isRegistered())
-		  throw ERR_ALREADYREGISTRED();
+		throw ERR_ALREADYREGISTRED();
 	if (message.arguments[1].length() != 1)
 		throw ERR_UMODEUNKNOWNFLAG(); // DELETE
-	if (message.peer.getUserPassword() != deps.config.getPassword())
+	if (message.peer.getPassword() != deps.config.getPassword())
 	{
 		message.peer.sendMessage(ErrorMessage(message.peer, message.arguments[0]));
 		deps.peers.closeConnection(message.peer.getFd());

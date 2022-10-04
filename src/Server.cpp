@@ -1,10 +1,8 @@
 #include "Server.hpp"
-#include "Message.hpp"
-#include "PeerManager.hpp"
 
 static bool	g_is_listening = false;
 
-Server::Server(Configuration &config) : _peers(*this), _sockfd(-1), _epollfd(-1)
+Server::Server(Configuration &config) : _config(config), _peers(*this), _sockfd(-1), _epollfd(-1)
 {
 #ifndef NDEBUG
 	std::cerr << "Creating a server..." << std::endl;
@@ -199,7 +197,7 @@ void	stopListening(int signal)
 	g_is_listening = false;
 }
 
-void	Server::listen()
+void	Server::listen(void)
 {
 	struct epoll_event	events[MAX_EVENTS];
 
