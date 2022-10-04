@@ -24,7 +24,7 @@ int	command_user(Message &message, Dependencies &deps)
 		throw ERR_UMODEUNKNOWNFLAG(); // DELETE
 	if (message.peer.getPassword() != deps.config.getPassword())
 	{
-		message.peer.sendMessage(ErrorMessage(message.peer, message.arguments[0]));
+		message.peer.sendMessage(ErrorMessage(message.peer, "Access denied by configuration"));
 		deps.peers.closeConnection(message.peer.getFd());
 		return (0);
 	}
