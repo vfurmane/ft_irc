@@ -144,7 +144,7 @@ class ERR_UNKNOWNMODE : public AIRCError
 		const std::string	_str;
 
 	public:
-		ERR_UNKNOWNMODE(const std::string &channel, const std::string &mode) : _str("472 " + mode + " :is unknown mode char to me for " + channel) {}
+		ERR_UNKNOWNMODE(const std::string &mode, const std::string &channel) : _str("472 " + mode + " :is unknown mode char to me for " + channel) {}
 		~ERR_UNKNOWNMODE(void) throw() {}
 		virtual const char* what() const throw()
 		{
@@ -158,7 +158,7 @@ class ERR_CHANOPRIVSNEEDED : public AIRCError
 		const std::string	_str;
 
 	public:
-		ERR_CHANOPRIVSNEEDED(const std::string &channel) : _str("482 " + channel + " :You're not a chanel operator") {}
+		ERR_CHANOPRIVSNEEDED(const std::string &channel) : _str("482 " + channel + " :You're not a channel operator") {}
 		~ERR_CHANOPRIVSNEEDED(void) throw() {}
 		virtual const char* what() const throw()
 		{
