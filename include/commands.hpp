@@ -7,6 +7,7 @@
 # include "Peer.hpp"
 
 class	PeerManager;
+class	ChannelManager;
 
 struct ErrorMessage : public Message
 {
@@ -17,6 +18,7 @@ struct Dependencies
 {
 	Configuration	&config;
 	PeerManager	&peers;
+	ChannelManager	&channels;
 };
 
 struct NickMessage : public Message
@@ -30,5 +32,6 @@ int	command_user(Message &message, Dependencies &deps);
 int	command_pass(Message &message, Dependencies &deps);
 
 # include "PeerManager.hpp"
+# include "ChannelManager.hpp"
 
 #endif

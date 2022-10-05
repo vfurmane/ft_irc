@@ -68,7 +68,8 @@ TEST_CASE("NICK")
 		Message			message(peer, std::string());
 		Server			server(config);
 		PeerManager		peers(server);
-		Dependencies	deps = {config, peers};
+		ChannelManager	channels;
+		Dependencies	deps = {config, peers, channels};
 
 		message.argCount = 0;
 		REQUIRE_THROWS_AS( command_nick(message, deps), ERR_NONICKNAMEGIVEN );
@@ -84,7 +85,8 @@ TEST_CASE("NICK")
 		Message			message(peer, std::string());
 		Server			server(config);
 		PeerManager		peers(server);
-		Dependencies	deps = {config, peers};
+		ChannelManager	channels;
+		Dependencies	deps = {config, peers, channels};
 
 		message.arguments[0] = "j@de@hi";
 		message.argCount = 1;
@@ -100,7 +102,8 @@ TEST_CASE("NICK")
 		Message			message(peer, std::string());
 		Server			server(config);
 		PeerManager		peers(server);
-		Dependencies	deps = {config, peers};
+		ChannelManager	channels;
+		Dependencies	deps = {config, peers, channels};
 
 		message.arguments[0] = "j@de@hi";
 		message.argCount = 1;
@@ -116,7 +119,8 @@ TEST_CASE("NICK")
 		Message			message(peer, std::string());
 		Server			server(config);
 		PeerManager		peers(server);
-		Dependencies	deps = {config, peers};
+		ChannelManager	channels;
+		Dependencies	deps = {config, peers, channels};
 
 		message.arguments[0] = "j@de@hi";
 		message.argCount = 1;
@@ -132,7 +136,8 @@ TEST_CASE("NICK")
 		Message			message(peer, std::string());
 		Server			server(config);
 		PeerManager		peers(server);
-		Dependencies	deps = {config, peers};
+		ChannelManager	channels;
+		Dependencies	deps = {config, peers, channels};
 
 		peers.add(3, addr);
 		peers.get(3).setNickname("john");
@@ -148,7 +153,8 @@ TEST_CASE("NICK")
 		Message			message(peer, std::string());
 		Server			server(config);
 		PeerManager		peers(server);
-		Dependencies	deps = {config, peers};
+		ChannelManager	channels;
+		Dependencies	deps = {config, peers, channels};
 
 		message.arguments[0] = "nickname";
 		message.argCount = 1;
@@ -163,7 +169,8 @@ TEST_CASE("NICK")
 		Message			message(peer, std::string());
 		Server			server(config);
 		PeerManager		peers(server);
-		Dependencies	deps = {config, peers};
+		ChannelManager	channels;
+		Dependencies	deps = {config, peers, channels};
 
 		message.arguments[0] = "nickname";
 		message.argCount = 1;

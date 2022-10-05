@@ -21,7 +21,8 @@ TEST_CASE("USER")
 		Peer			peer(3, addr);
 		Message			message(peer, std::string());
 		PeerManager		peermanager(server);
-		Dependencies	deps = {config, peermanager};
+		ChannelManager	channels;
+		Dependencies	deps = {config, peermanager, channels};
 
 		message.argCount = 0;
 		REQUIRE_THROWS_AS( command_user(message, deps), ERR_NEEDMOREPARAMS );
@@ -37,7 +38,8 @@ TEST_CASE("USER")
 		Peer			peer(3, addr);
 		Message			message(peer, std::string());
 		PeerManager		peermanager(server);
-		Dependencies	deps = {config, peermanager};
+		ChannelManager	channels;
+		Dependencies	deps = {config, peermanager, channels};
 
 		message.argCount = 4;
 		message.peer._registered = true;
@@ -51,7 +53,8 @@ TEST_CASE("USER")
 		Peer			peer(3, addr);
 		Message			message(peer, std::string());
 		PeerManager		peermanager(server);
-		Dependencies	deps = {config, peermanager};
+		ChannelManager	channels;
+		Dependencies	deps = {config, peermanager, channels};
 
 		message.argCount = 4;
 		message.arguments[0] = "te@st";
@@ -104,7 +107,8 @@ TEST_CASE("USER")
 		Peer			peer(3, addr);
 		Message			message(peer, std::string());
 		PeerManager		peermanager(server);
-		Dependencies	deps = {config, peermanager};
+		ChannelManager	channels;
+		Dependencies	deps = {config, peermanager, channels};
 
 		message.argCount = 4;
 		message.arguments[0] = "user";
@@ -125,7 +129,8 @@ TEST_CASE("USER")
 		Peer			peer(3, addr);
 		Message			message(peer, std::string());
 		PeerManager		peermanager(server);
-		Dependencies	deps = {config, peermanager};
+		ChannelManager	channels;
+		Dependencies	deps = {config, peermanager, channels};
 
 		message.argCount = 4;
 		message.arguments[0] = "user";
