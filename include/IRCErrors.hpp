@@ -45,7 +45,7 @@ struct ERR_NONICKNAMEGIVEN : public AIRCError
 	}
 };
 
-struct ERR_ERRONEUSNICKNAME : public AIRCError
+class ERR_ERRONEUSNICKNAME : public AIRCError
 {
 	private:
 		const std::string	_str;
@@ -67,6 +67,20 @@ struct ERR_NICKNAMEINUSE : public AIRCError
 	public:
 		ERR_NICKNAMEINUSE(const std::string &nick) : _str("433 " + nick + " :Nickname is already in use") {}
 		~ERR_NICKNAMEINUSE(void) throw() {}
+		virtual const char* what() const throw()
+		{
+			return this->_str.c_str();
+		}
+};
+
+class ERR_USERNOTINCHANNEL : public AIRCError
+{
+	private:
+		const std::string	_str;
+
+	public:
+		ERR_USERNOTINCHANNEL(const std::string &nick, const std::string &channel) : _str("441 " + nick + " " + channel + " :They aren't on that channel") {}
+		~ERR_USERNOTINCHANNEL(void) throw() {}
 		virtual const char* what() const throw()
 		{
 			return this->_str.c_str();
@@ -107,6 +121,49 @@ struct ERR_ALREADYREGISTRED : public AIRCError
 	{
 		return "462 :Unauthorized command (already registered)";
 	}
+};
+
+class ERR_KEYSET : public AIRCError
+{
+	private:
+		const std::string	_str;
+
+	public:
+		ERR_KEYSET(const std::string &channel) : _str("467 " + channel + " :Channel key already set") {}
+		~ERR_KEYSET(void) throw() {}
+		virtual const char* what() const throw()
+		{
+			return this->_str.c_str();
+		}
+};
+
+
+class ERR_UNKNOWNMODE : public AIRCError
+{
+	private:
+		const std::string	_str;
+
+	public:
+		ERR_UNKNOWNMODE(const std::string &channel, const std::string &mode) : _str("472 " + mode + " :is unknown mode char to me for " + channel) {}
+		~ERR_UNKNOWNMODE(void) throw() {}
+		virtual const char* what() const throw()
+		{
+			return this->_str.c_str();
+		}
+};
+
+class ERR_CHANOPRIVSNEEDED : public AIRCError
+{
+	private:
+		const std::string	_str;
+
+	public:
+		ERR_CHANOPRIVSNEEDED(const std::string &channel) : _str("482 " + channel + " :You're not a chanel operator") {}
+		~ERR_CHANOPRIVSNEEDED(void) throw() {}
+		virtual const char* what() const throw()
+		{
+			return this->_str.c_str();
+		}
 };
 
 struct ERR_UMODEUNKNOWNFLAG : public AIRCError
