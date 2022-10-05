@@ -1,9 +1,10 @@
 #ifndef CHANNELMANAGER_HPP
 # define CHANNELMANAGER_HPP
 
-# include "Channel.hpp"
 # include <map>
 # include <string>
+
+class Channel;
 
 class ChannelManager
 {
@@ -28,5 +29,7 @@ class ChannelManager
 	private:
 		std::map<std::string, Channel>	_channels;	
 };
+
+# include "Channel.hpp"
 
 #endif

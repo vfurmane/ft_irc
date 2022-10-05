@@ -2,7 +2,8 @@
 # define USERMANAGER_HPP
 
 # include <map>
-# include "User.hpp"
+
+class User;
 
 class UserManager
 {
@@ -25,5 +26,7 @@ class UserManager
 	private:
 		std::map<int, User>	_users;
 };
+
+# include "User.hpp"
 
 #endif

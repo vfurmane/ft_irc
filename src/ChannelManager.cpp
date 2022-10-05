@@ -16,6 +16,11 @@ ChannelManager &ChannelManager::operator=(const ChannelManager &rhs)
 	return *this;
 }
 
+ChannelManager::~ChannelManager()
+{
+
+}
+
 Channel &ChannelManager::operator[](std::string name)
 {
 	return this->_channels.at(name);

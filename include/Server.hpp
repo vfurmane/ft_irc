@@ -26,6 +26,7 @@
 # include "Message.hpp"
 # include "Peer.hpp"
 # include "PeerManager.hpp"
+# include "ChannelManager.hpp"
 
 # ifndef NDEBUG
 #  include <iostream>
@@ -58,6 +59,7 @@ class Server
 
 		Configuration	_config;
 		PeerManager	_peers;
+		ChannelManager	_channels;
 		int			_sockfd;
 		int			_epollfd;
 };
