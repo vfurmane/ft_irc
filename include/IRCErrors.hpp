@@ -9,6 +9,20 @@ struct AIRCError : std::exception
 	virtual const char* what() const throw() = 0;
 };
 
+class ERR_NOSUCHCHANNEL : public AIRCError
+{
+	private:
+		const std::string	_str;
+
+	public:
+		ERR_NOSUCHCHANNEL(const std::string &command) : _str("403 " + command + " :No such channel") {}
+		~ERR_NOSUCHCHANNEL(void) throw() {}
+		virtual const char* what() const throw()
+		{
+			return this->_str.c_str();
+		}
+};
+
 class ERR_UNKNOWNCOMMAND : public AIRCError
 {
 	private:
@@ -67,6 +81,20 @@ class ERR_NEEDMOREPARAMS : public AIRCError
 	public:
 		ERR_NEEDMOREPARAMS(const std::string &command) : _str("461 " + command + " :Not enough parameters") {}
 		~ERR_NEEDMOREPARAMS(void) throw() {}
+		virtual const char* what() const throw()
+	{
+		return this->_str.c_str();
+	}
+};
+
+class ERR_BADCHANNELKEY : public AIRCError
+{
+	private:
+		const std::string	_str;
+
+	public:
+		ERR_BADCHANNELKEY(const std::string &channel) : _str("475 " + channel + " :Cannot join channel (+k)") {}
+		~ERR_BADCHANNELKEY(void) throw() {}
 		virtual const char* what() const throw()
 	{
 		return this->_str.c_str();
