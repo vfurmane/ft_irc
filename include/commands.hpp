@@ -8,6 +8,7 @@
 # include <stdexcept>
 # include <vector>
 
+class	Channel;
 class	PeerManager;
 class	ChannelManager;
 
@@ -35,6 +36,7 @@ int	command_quit(Message &message, Dependencies &deps);
 int	command_user(Message &message, Dependencies &deps);
 int	command_pass(Message &message, Dependencies &deps);
 
+# include "Channel.hpp"
 # include "PeerManager.hpp"
 # include "ChannelManager.hpp"
 
