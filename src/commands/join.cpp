@@ -16,11 +16,18 @@ int		command_join(Message &message, Dependencies &deps)
 	std::vector<std::string>::const_iterator	key_it = keys.begin();
 	while (chan_it != channels.end())
 	{
-		Channel	&channel = deps.channels.get(*chan_it);
-		if (!keys.empty() && channel.comparePassword(*key_it))
-			message.peer.sendMessage(ERR_BADCHANNELKEY(*chan_it));
-		else
-			channel.add(message.peer);
+		try
+		{
+			Channel	&channel = deps.channels[*chan_it];
+			if (!keys.empty() && !channel.compareKey(*key_it))
+				message.peer.sendMessage(ERR_BADCHANNELKEY(*chan_it));
+			else
+				channel.add(message.peer);
+		}
+		catch (std::out_of_range &)
+		{
+			message.peer.sendMessage(ERR_NOSUCHCHANNEL(*chan_it));
+		}
 		++chan_it;
 		if (!keys.empty())
 			++key_it;
