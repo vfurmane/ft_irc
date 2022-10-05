@@ -20,6 +20,23 @@ NickMessage::NickMessage(Peer &peer, const std::string &new_nick, bool include_p
 	this->input = this->updateInputFromFields();
 }
 
+std::string	parseChannel(const std::string &channel)
+{
+	if (channel.empty() || channel.size() > 50)
+		throw InvalidChannelName();
+
+	std::string::const_iterator	it = channel.begin();
+
+	if (*it != '&' || *it != '#' || *it != '+' || *it != '!')
+		throw InvalidChannelName();
+	for (++it; it != channel.end(); ++it)
+	{
+		if (*it == ' ' || *it == '\a' || *it == ',' || *it == ':')
+			throw InvalidChannelName();
+	}
+	return channel.substr(1);
+}
+
 std::vector<std::string>	parseList(const std::string &list)
 {
 	if (list.empty())

@@ -18,7 +18,8 @@ int		command_join(Message &message, Dependencies &deps)
 	{
 		try
 		{
-			Channel	&channel = deps.channels[*chan_it];
+			_base_channel base_channel = parseChannel(*chan_it);
+			Channel	&channel = deps.channels[base_channel.getName()];
 			if (!keys.empty() && !channel.compareKey(*key_it))
 				message.peer.sendMessage(ERR_BADCHANNELKEY(*chan_it));
 			else

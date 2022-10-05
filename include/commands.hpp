@@ -29,6 +29,7 @@ struct Dependencies
 	ChannelManager	&channels;
 };
 
+std::string					parseChannel(const std::string &channel);
 std::vector<std::string>	parseList(const std::string &list);
 
 int	command_nick(Message &message, Dependencies &deps);
