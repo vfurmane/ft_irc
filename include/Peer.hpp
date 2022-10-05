@@ -7,6 +7,7 @@
 # include <string>
 # include <sys/socket.h>
 # include <unistd.h>
+# include "IRCErrors.hpp"
 
 struct Message;
 
@@ -29,6 +30,7 @@ class Peer
 		void				setPassword(const std::string &new_password);
 		std::string			generatePrefix(void) const;
 		void				sendMessage(const Message &message) const;
+		void				sendMessage(const AIRCError &error) const;
 
 		char			*getStrAddr(void) const;
 		int				getFd(void) const;

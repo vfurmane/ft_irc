@@ -96,6 +96,15 @@ void    Peer::sendMessage(const Message &message) const
     send(this->getFd(), (message.input + CRLF).c_str(), (message.input + CRLF).length(), 0);
 }
 
+void    Peer::sendMessage(const AIRCError &error) const
+{
+	const std::string	message = error.what();
+#ifndef NDEBUG
+	std::cerr << this->generatePrefix() << "> " << message << std::endl;
+#endif
+    send(this->getFd(), (message + CRLF).c_str(), (message + CRLF).length(), 0);
+}
+
 char	*Peer::getStrAddr(void) const
 {
 	return inet_ntoa(((struct sockaddr_in *)(&this->_addr))->sin_addr);
