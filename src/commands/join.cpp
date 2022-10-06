@@ -16,9 +16,9 @@ int		command_join(Message &message, Dependencies &deps)
 	std::vector<std::string>::const_iterator	key_it = keys.begin();
 	while (chan_it != channels.end())
 	{
+		_base_channel base_channel = parseChannel(*chan_it);
 		try
 		{
-			_base_channel base_channel = parseChannel(*chan_it);
 			Channel	&channel = deps.channels[base_channel.getName()];
 			if (!keys.empty() && !channel.compareKey(*key_it))
 				message.peer.sendMessage(ERR_BADCHANNELKEY(*chan_it));
@@ -27,7 +27,7 @@ int		command_join(Message &message, Dependencies &deps)
 		}
 		catch (std::out_of_range &)
 		{
-			message.peer.sendMessage(ERR_NOSUCHCHANNEL(*chan_it));
+			Channel &channel = message.peer.createChannel(base_channel);
 		}
 		++chan_it;
 		if (!keys.empty())
