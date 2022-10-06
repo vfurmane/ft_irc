@@ -10,6 +10,8 @@
 # include "IRCErrors.hpp"
 # include "utils.hpp"
 
+class _base_channel;
+class Channel;
 struct Message;
 class Server;
 
@@ -21,6 +23,7 @@ class Peer
 		Peer &operator=(const Peer &rhs);
 		~Peer(void);
 
+		Channel				&createChannel(const _base_channel &base_channel);
 		int					close(void) const;
 		void				appendMessage(const char *buffer);
 		void				clearMessage(void);
@@ -54,6 +57,7 @@ class Peer
 		bool			_registered;
 };
 
+# include "Channel.hpp"
 # include "Message.hpp"
 # include "Server.hpp"
 
