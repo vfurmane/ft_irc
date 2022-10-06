@@ -4,9 +4,9 @@
 # include <map>
 # include <algorithm>
 # include <stdexcept>
-# include "Peer.hpp"
 # include "exception.hpp"
 
+class Peer;
 class Server;
 
 class PeerManager
@@ -39,6 +39,7 @@ class PeerManager
 		std::map<int, Peer> _peers;
 };
 
+# include "Peer.hpp"
 # include "Server.hpp"
 
 #endif

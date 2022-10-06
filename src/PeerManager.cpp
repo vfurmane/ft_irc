@@ -46,7 +46,7 @@ PeerManager::const_iterator	PeerManager::end(void) const
 
 std::pair<PeerManager::iterator, bool> PeerManager::add(int fd, struct sockaddr &addr)
 {
-	return this->_peers.insert(std::make_pair(fd, Peer(fd, addr)));
+	return this->_peers.insert(std::make_pair(fd, Peer(this->_server, fd, addr)));
 }
 
 void PeerManager::remove(int fd)

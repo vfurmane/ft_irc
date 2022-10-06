@@ -10,11 +10,12 @@
 # include "IRCErrors.hpp"
 
 struct Message;
+class Server;
 
 class Peer
 {
 	public:
-		Peer(const int fd, struct sockaddr &addr);
+		Peer(Server &server, const int fd, struct sockaddr &addr);
 		Peer(const Peer &obj);
 		Peer &operator=(const Peer &rhs);
 		~Peer(void);
@@ -38,6 +39,8 @@ class Peer
 		const std::string 		&getNickname(void) const;
 		const std::string		&getPassword(void) const;
 
+		Server	&server;
+
 	private:
 		const int				_fd;
 		struct sockaddr	_addr;
@@ -51,5 +54,6 @@ class Peer
 };
 
 # include "Message.hpp"
+# include "Server.hpp"
 
 #endif
