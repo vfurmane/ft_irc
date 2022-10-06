@@ -64,9 +64,9 @@ TEST_CASE("NICK")
 	{
 		struct sockaddr	addr;
 		Configuration	config;
-		Peer			peer(3, addr);
-		Message			message(peer, std::string());
 		Server			server(config);
+		Peer			peer(server, 3, addr);
+		Message			message(peer, std::string());
 		PeerManager		peers(server);
 		ChannelManager	channels;
 		Dependencies	deps = {config, peers, channels};
@@ -81,9 +81,9 @@ TEST_CASE("NICK")
 	{
 		struct sockaddr	addr;
 		Configuration	config;
-		Peer			peer(3, addr);
-		Message			message(peer, std::string());
 		Server			server(config);
+		Peer			peer(server, 3, addr);
+		Message			message(peer, std::string());
 		PeerManager		peers(server);
 		ChannelManager	channels;
 		Dependencies	deps = {config, peers, channels};
@@ -98,9 +98,9 @@ TEST_CASE("NICK")
 	{
 		struct sockaddr	addr;
 		Configuration	config;
-		Peer			peer(3, addr);
-		Message			message(peer, std::string());
 		Server			server(config);
+		Peer			peer(server, 3, addr);
+		Message			message(peer, std::string());
 		PeerManager		peers(server);
 		ChannelManager	channels;
 		Dependencies	deps = {config, peers, channels};
@@ -115,9 +115,9 @@ TEST_CASE("NICK")
 	{
 		struct sockaddr	addr;
 		Configuration	config;
-		Peer			peer(3, addr);
-		Message			message(peer, std::string());
 		Server			server(config);
+		Peer			peer(server, 3, addr);
+		Message			message(peer, std::string());
 		PeerManager		peers(server);
 		ChannelManager	channels;
 		Dependencies	deps = {config, peers, channels};
@@ -132,9 +132,9 @@ TEST_CASE("NICK")
 	{
 		struct sockaddr	addr;
 		Configuration	config;
-		Peer			peer(3, addr);
-		Message			message(peer, std::string());
 		Server			server(config);
+		Peer			peer(server, 3, addr);
+		Message			message(peer, std::string());
 		PeerManager		peers(server);
 		ChannelManager	channels;
 		Dependencies	deps = {config, peers, channels};
@@ -149,9 +149,9 @@ TEST_CASE("NICK")
 	{
 		struct sockaddr	addr;
 		Configuration	config;
-		Peer			peer(3, addr);
-		Message			message(peer, std::string());
 		Server			server(config);
+		Peer			peer(server, 3, addr);
+		Message			message(peer, std::string());
 		PeerManager		peers(server);
 		ChannelManager	channels;
 		Dependencies	deps = {config, peers, channels};
@@ -165,9 +165,9 @@ TEST_CASE("NICK")
 	{
 		struct sockaddr	addr;
 		Configuration	config;
-		Peer			peer(3, addr);
-		Message			message(peer, std::string());
 		Server			server(config);
+		Peer			peer(server, 3, addr);
+		Message			message(peer, std::string());
 		PeerManager		peers(server);
 		ChannelManager	channels;
 		Dependencies	deps = {config, peers, channels};

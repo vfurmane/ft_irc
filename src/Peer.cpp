@@ -2,11 +2,11 @@
 
 static const char	*CRLF = "\r\n";
 
-Peer::Peer(int fd, struct sockaddr &addr): _fd(fd), _addr(addr), _message(), _nickname(), _user(), _realname(), _mode(), _password(), _registered(false)
+Peer::Peer(Server &server, int fd, struct sockaddr &addr): server(server), _fd(fd), _addr(addr), _message(), _nickname(), _user(), _realname(), _mode(), _password(), _registered(false)
 {
 }
 
-Peer::Peer(const Peer &obj): _fd(obj.getFd()), _addr(obj._addr), _message(), _nickname(), _user(), _realname(), _mode(), _password(), _registered(false)
+Peer::Peer(const Peer &obj): server(obj.server), _fd(obj.getFd()), _addr(obj._addr), _message(), _nickname(), _user(), _realname(), _mode(), _password(), _registered(false)
 {
 }
 
