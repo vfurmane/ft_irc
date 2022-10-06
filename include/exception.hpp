@@ -17,4 +17,12 @@ class sysCallError : public std::exception {
 		}
 };
 
+struct InvalidChannelName : public std::exception
+{
+	virtual const char* what() const throw()
+	{
+		return "invalid channel name";
+	}
+};
+
 #endif

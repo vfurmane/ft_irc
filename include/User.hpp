@@ -2,9 +2,9 @@
 # define USER_HPP
 
 # include <string>
-# include "Peer.hpp"
 
 class Channel;
+class Peer;
 
 class User
 {
@@ -19,5 +19,6 @@ class User
 };
 
 # include "Channel.hpp"
+# include "Peer.hpp"
 
 #endif
