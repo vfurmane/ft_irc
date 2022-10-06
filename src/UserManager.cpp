@@ -18,9 +18,9 @@ UserManager::~UserManager(void)
 {
 }
 
-User	&UserManager::operator[](int fd)
+User	&UserManager::operator[](const std::string &username)
 {
-	return this->_users.at(fd);
+	return this->_users.at(username);
 }
 
 UserManager::iterator	UserManager::begin(void)
