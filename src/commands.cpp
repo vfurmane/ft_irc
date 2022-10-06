@@ -27,7 +27,7 @@ std::string	parseChannel(const std::string &channel)
 
 	std::string::const_iterator	it = channel.begin();
 
-	if (*it != '&' || *it != '#' || *it != '+' || *it != '!')
+	if (*it != '#')
 		throw InvalidChannelName();
 	for (++it; it != channel.end(); ++it)
 	{
