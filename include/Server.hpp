@@ -51,6 +51,8 @@ class Server
 			}
 		};
 
+		ChannelManager	channels;
+
 	private:
 		void		_bindNewSocketToPort(char *port);
 		void		_addFdToEpoll(int new_fd) const;
@@ -59,7 +61,6 @@ class Server
 
 		Configuration	_config;
 		PeerManager	_peers;
-		ChannelManager	_channels;
 		int			_sockfd;
 		int			_epollfd;
 };
