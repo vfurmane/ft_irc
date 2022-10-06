@@ -18,6 +18,11 @@ _base_channel::~_base_channel(void)
 {
 }
 
+const std::string	&_base_channel::getName(void) const
+{
+	return this->_name;
+}
+
 Channel::Channel(const std::string &name): _base_channel(name), _key(), _flags(0), _users()
 {
 }

@@ -13,6 +13,8 @@ class _base_channel
 		_base_channel &operator=(const _base_channel &rhs);
 		~_base_channel(void);
 
+		const std::string	&getName(void) const;
+
 	protected:
 		const std::string	_name;
 };
