@@ -20,7 +20,7 @@ NickMessage::NickMessage(Peer &peer, const std::string &new_nick, bool include_p
 	this->input = this->updateInputFromFields();
 }
 
-std::string	parseChannel(const std::string &channel)
+_base_channel	parseChannel(const std::string &channel)
 {
 	if (channel.empty() || channel.size() > 50)
 		throw InvalidChannelName();

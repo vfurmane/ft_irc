@@ -8,6 +8,7 @@
 # include <stdexcept>
 # include <vector>
 
+class	_base_channel;
 class	Channel;
 class	PeerManager;
 class	ChannelManager;
@@ -29,7 +30,7 @@ struct Dependencies
 	ChannelManager	&channels;
 };
 
-std::string					parseChannel(const std::string &channel);
+_base_channel				parseChannel(const std::string &channel);
 std::vector<std::string>	parseList(const std::string &list);
 
 int	command_nick(Message &message, Dependencies &deps);

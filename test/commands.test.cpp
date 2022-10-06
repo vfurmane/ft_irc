@@ -1,6 +1,26 @@
+#include <sstream>
 #include "catch.hpp"
 
+#define protected public
 #include "../src/commands.cpp"
+
+TEST_CASE("parseChannel")
+{
+	SECTION("with a '#' prefix")
+	{
+		_base_channel ret = parseChannel("#hello");
+		REQUIRE( ret._name == "hello" );
+		REQUIRE( ret._namespace == PUBLIC );
+	};
+	SECTION("with a length of 50 character")
+	{
+		REQUIRE_NOTHROW( parseChannel("#thisisaquitelongchannelnameequaltofiftycharacters") );
+	};
+	SECTION("with a length greater than 50 characters")
+	{
+		REQUIRE_THROWS_AS( parseChannel("#thisisaverylongchannelnamelongerthanfiftycharacters"), InvalidChannelName );
+	};
+};
 
 TEST_CASE("parseList")
 {
