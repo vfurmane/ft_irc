@@ -4,6 +4,7 @@
 # include <map>
 # include <string>
 
+class _base_channel;
 class Channel;
 
 class ChannelManager
@@ -24,6 +25,7 @@ class ChannelManager
 		const_iterator	begin(void) const;
 		const_iterator	end(void) const;
 		std::pair<ChannelManager::iterator, bool>	add(std::string name);
+		std::pair<ChannelManager::iterator, bool>	add(const _base_channel &base_channel);
 		void			remove(std::string name);
 	
 	private:

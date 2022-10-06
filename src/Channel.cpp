@@ -27,7 +27,11 @@ Channel::Channel(const std::string &name): _base_channel(name), _key(), _flags(0
 {
 }
 
-Channel::Channel(const Channel &obj): _base_channel(obj._name), _key(obj._key), _flags(obj._flags), _users(obj._users)
+Channel::Channel(const _base_channel &obj): _base_channel(obj), _key(), _flags(0), _users()
+{
+}
+
+Channel::Channel(const Channel &obj): _base_channel(obj), _key(obj._key), _flags(obj._flags), _users(obj._users)
 {
 }
 

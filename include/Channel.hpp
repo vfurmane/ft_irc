@@ -23,6 +23,7 @@ class Channel : public _base_channel
 {
 	public:
 		Channel(const std::string &name);
+		Channel(const _base_channel &obj);
 		Channel(const Channel &obj);
 		Channel &operator=(const Channel &rhs);
 		~Channel(void);
