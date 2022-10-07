@@ -24,9 +24,9 @@ class ChannelManager
 		iterator		end(void);
 		const_iterator	begin(void) const;
 		const_iterator	end(void) const;
-		std::pair<ChannelManager::iterator, bool>	add(std::string name);
+		std::pair<ChannelManager::iterator, bool>	add(const std::string &name);
 		std::pair<ChannelManager::iterator, bool>	add(const _base_channel &base_channel);
-		void			remove(std::string name);
+		void			remove(const std::string &name);
 	
 	private:
 		std::map<std::string, Channel>	_channels;	
