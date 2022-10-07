@@ -54,14 +54,15 @@ void freeaddrinfo(struct addrinfo *res)
 	(void)res;
 }
 
-ssize_t 			g_send_return = 0;
-std::vector<int>	g_send_arg_sockfd;
+ssize_t 					g_send_return = 0;
+std::vector<int>			g_send_arg_sockfd;
+std::vector<std::string>	g_send_arg_buf;
 ssize_t send(int sockfd, const void *buf, size_t len, int flags)
 {
-	(void)buf;
 	(void)len;
 	(void)flags;
 	g_send_arg_sockfd.push_back(sockfd);
+	g_send_arg_buf.push_back(static_cast<const char *>(buf));
 	return g_send_return;
 }
 
