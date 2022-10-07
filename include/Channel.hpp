@@ -5,6 +5,11 @@
 # include <string>
 # include "UserManager.hpp"
 
+typedef enum	e_channel_namespace
+{
+	PUBLIC = '#'
+}				t_channel_namespace;
+
 class _base_channel
 {
 	public:
@@ -13,10 +18,12 @@ class _base_channel
 		_base_channel &operator=(const _base_channel &rhs);
 		~_base_channel(void);
 
-		const std::string	&getName(void) const;
+		const std::string			&getName(void) const;
+		const t_channel_namespace	&getNamespace(void) const;
 
 	protected:
-		const std::string	_name;
+		const std::string			_name;
+		const t_channel_namespace	_namespace;
 };
 
 class Channel : public _base_channel

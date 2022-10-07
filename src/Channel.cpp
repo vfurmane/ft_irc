@@ -1,10 +1,10 @@
 #include "Channel.hpp"
 
-_base_channel::_base_channel(const std::string &name): _name(name)
+_base_channel::_base_channel(const std::string &name): _name(name), _namespace(PUBLIC)
 {
 }
 
-_base_channel::_base_channel(const _base_channel &obj): _name(obj._name)
+_base_channel::_base_channel(const _base_channel &obj): _name(obj._name), _namespace(PUBLIC)
 {
 }
 
@@ -21,6 +21,11 @@ _base_channel::~_base_channel(void)
 const std::string	&_base_channel::getName(void) const
 {
 	return this->_name;
+}
+
+const t_channel_namespace	&_base_channel::getNamespace(void) const
+{
+	return this->_namespace;
 }
 
 Channel::Channel(const std::string &name): _base_channel(name), _key(), _flags(0), _users()
