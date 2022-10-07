@@ -12,10 +12,7 @@ class User
 		User &operator=(const User &rhs);
 		~User(void);
 
-		Peer	&getPeer(void) const;
-	
-	private:
-		Peer	&_peer;
+		Peer	&peer;
 };
 
 #endif
