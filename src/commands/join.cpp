@@ -23,11 +23,15 @@ int		command_join(Message &message, Dependencies &deps)
 			if (!keys.empty() && !channel.compareKey(*key_it))
 				message.peer.sendMessage(ERR_BADCHANNELKEY(*chan_it));
 			else
+			{
 				channel.add(message.peer);
+				message.peer.sendMessage(JoinMessage(message.peer, base_channel));
+			}
 		}
 		catch (std::out_of_range &)
 		{
 			message.peer.createChannel(base_channel);
+			message.peer.sendMessage(JoinMessage(message.peer, base_channel));
 		}
 		++chan_it;
 		if (!keys.empty())

@@ -23,6 +23,11 @@ struct NickMessage : public Message
 	NickMessage(Peer &peer, const std::string &new_nick, bool include_prefix = false);
 };
 
+struct JoinMessage : public Message
+{
+	JoinMessage(Peer &peer, const Channel &channel, bool include_prefix = false);
+};
+
 struct Dependencies
 {
 	Configuration	&config;
