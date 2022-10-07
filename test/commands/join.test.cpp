@@ -26,6 +26,15 @@ TEST_CASE("JOIN")
 		message.argCount = 0;
 		REQUIRE_THROWS_AS( command_join(message, deps), ERR_NEEDMOREPARAMS );
 	};
+	SECTION("when the channel name's case is different")
+	{
+		peer._user = "john_doe";
+		peer.createChannel(std::string("g[en]ERAL"));
+		message.arguments[0] = "#G[En}erAL";
+		message.argCount = 1;
+		command_join(message, deps);
+		REQUIRE( channels["G{eN]eral"].users.has(peer._user) );
+	};
 	SECTION("when the channel exists and no key is provided")
 	{
 		peer._user = "john_doe";
