@@ -42,10 +42,11 @@ class Channel : public _base_channel
 
 		User	&add(const User &user);
 		void	remove(const User &user);
+
+		UserManager			users;
 	private:
 		std::string			_key;
 		uint32_t			_flags;
-		UserManager			_users;
 };
 
 #endif
