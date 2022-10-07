@@ -66,3 +66,8 @@ User	&Channel::add(const User &user)
 {
 	return this->_users.add(user).first->second;
 }
+
+void	Channel::remove(const User &user)
+{
+	this->_users.remove(user);
+}

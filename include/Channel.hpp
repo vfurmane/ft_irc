@@ -33,6 +33,7 @@ class Channel : public _base_channel
 		bool	compareKey(const std::string &key) const;
 
 		User	&add(const User &user);
+		void	remove(const User &user);
 	private:
 		std::string			_key;
 		uint32_t			_flags;
