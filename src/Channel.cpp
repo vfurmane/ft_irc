@@ -33,15 +33,15 @@ std::string	_base_channel::stringify(void) const
 	return static_cast<char>(this->_namespace) + this->_name;
 }
 
-Channel::Channel(const std::string &name): _base_channel(name), _key(), _flags(0), _users()
+Channel::Channel(const std::string &name): _base_channel(name), users(), _key(), _flags(0) 
 {
 }
 
-Channel::Channel(const _base_channel &obj): _base_channel(obj), _key(), _flags(0), _users()
+Channel::Channel(const _base_channel &obj): _base_channel(obj), users(), _key(), _flags(0)
 {
 }
 
-Channel::Channel(const Channel &obj): _base_channel(obj), _key(obj._key), _flags(obj._flags), _users(obj._users)
+Channel::Channel(const Channel &obj): _base_channel(obj), users(obj.users), _key(obj._key), _flags(obj._flags) 
 {
 }
 
@@ -49,7 +49,7 @@ Channel	&Channel::operator=(const Channel &rhs)
 {
 	this->_key = rhs._key;
 	this->_flags = rhs._flags;
-	this->_users = rhs._users;
+	this->users = rhs.users;
 	return (*this);
 }
 
@@ -74,10 +74,10 @@ bool	Channel::compareKey(const std::string &key) const
 
 User	&Channel::add(const User &user)
 {
-	return this->_users.add(user).first->second;
+	return this->users.add(user).first->second;
 }
 
 void	Channel::remove(const User &user)
 {
-	this->_users.remove(user);
+	this->users.remove(user);
 }
