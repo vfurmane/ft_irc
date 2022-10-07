@@ -47,7 +47,7 @@ ChannelManager::const_iterator ChannelManager::end() const
 	return this->_channels.end();
 }
 
-std::pair<ChannelManager::iterator, bool> ChannelManager::add(std::string name)
+std::pair<ChannelManager::iterator, bool> ChannelManager::add(const std::string &name)
 {
 	return this->_channels.insert(std::make_pair(name, Channel(name)));
 }
@@ -57,7 +57,7 @@ std::pair<ChannelManager::iterator, bool>	ChannelManager::add(const _base_channe
 	return this->_channels.insert(std::make_pair(base_channel.getName(), base_channel));
 }
 
-void ChannelManager::remove(std::string name)
+void ChannelManager::remove(const std::string &name)
 {
 	this->_channels.erase(name);
 }
