@@ -52,3 +52,8 @@ void UserManager::remove(const User &user)
 {
 	this->_users.erase(user.peer.getUsername()); 
 }
+
+bool	UserManager::has(const std::string &username) const
+{
+	return this->_users.find(username) != this->_users.end();
+}

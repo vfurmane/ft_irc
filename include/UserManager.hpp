@@ -27,6 +27,7 @@ class UserManager
 		const_iterator end(void) const;
 		std::pair<UserManager::iterator, bool>	add(const User &user);
 		void	remove(const User &user);
+		bool	has(const std::string &username) const;
 
 	private:
 		std::map<std::string, User>	_users;
