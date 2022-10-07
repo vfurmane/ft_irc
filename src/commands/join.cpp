@@ -27,7 +27,7 @@ int		command_join(Message &message, Dependencies &deps)
 		}
 		catch (std::out_of_range &)
 		{
-			Channel &channel = message.peer.createChannel(base_channel);
+			message.peer.createChannel(base_channel);
 		}
 		++chan_it;
 		if (!keys.empty())
