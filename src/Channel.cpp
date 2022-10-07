@@ -61,3 +61,8 @@ bool	Channel::compareKey(const std::string &key) const
 {
 	return this->_key == key;
 }
+
+User	&Channel::add(User &user)
+{
+	return this->_users.add(user).first->second;
+}

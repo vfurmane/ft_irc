@@ -31,6 +31,8 @@ class Channel : public _base_channel
 		void	setKey(const std::string &key);
 		void	unsetKey(void);
 		bool	compareKey(const std::string &key) const;
+
+		User	&add(User &user);
 	private:
 		std::string			_key;
 		uint32_t			_flags;
