@@ -47,3 +47,8 @@ std::pair<UserManager::iterator, bool>	UserManager::add(const User &user)
 {
 	return this->_users.insert(std::make_pair(user.peer.getUsername(), user));
 }
+
+void UserManager::remove(const User &user)
+{
+	this->_users.erase(user.peer.getUsername()); 
+}
