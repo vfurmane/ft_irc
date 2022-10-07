@@ -1,5 +1,4 @@
 #include "UserManager.hpp"
-#include <map>
 
 UserManager::UserManager(void): _users()
 {
