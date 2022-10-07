@@ -43,7 +43,7 @@ UserManager::const_iterator	UserManager::end(void) const
 	return this->_users.end();
 }
 
-std::pair<UserManager::iterator, bool>	UserManager::add(Peer &peer)
+std::pair<UserManager::iterator, bool>	UserManager::add(User &user)
 {
-	return this->_users.insert(std::make_pair(peer.getUsername(), User(peer)));
+	return this->_users.insert(std::make_pair(user.peer.getUsername(), user));
 }
