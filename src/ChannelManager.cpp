@@ -1,4 +1,5 @@
 #include "ChannelManager.hpp"
+#include "utils.hpp"
 #include <utility>
 
 ChannelManager::ChannelManager(): _channels()
@@ -22,9 +23,10 @@ ChannelManager::~ChannelManager()
 
 }
 
-Channel &ChannelManager::operator[](std::string name)
+Channel &ChannelManager::operator[](const std::string &name)
 {
-	return this->_channels.at(name);
+	const std::string	lowercase_name = toIRCLower(name);
+	return this->_channels.at(lowercase_name);
 }
 
 ChannelManager::iterator ChannelManager::begin()
@@ -49,7 +51,8 @@ ChannelManager::const_iterator ChannelManager::end() const
 
 std::pair<ChannelManager::iterator, bool> ChannelManager::add(const std::string &name)
 {
-	return this->_channels.insert(std::make_pair(name, Channel(name)));
+	const std::string	lowercase_name = toIRCLower(name);
+	return this->_channels.insert(std::make_pair(lowercase_name, Channel(name)));
 }
 
 std::pair<ChannelManager::iterator, bool>	ChannelManager::add(const _base_channel &base_channel)
@@ -59,7 +62,8 @@ std::pair<ChannelManager::iterator, bool>	ChannelManager::add(const _base_channe
 
 void ChannelManager::remove(const std::string &name)
 {
-	this->_channels.erase(name);
+	const std::string	lowercase_name = toIRCLower(name);
+	this->_channels.erase(lowercase_name);
 }
 
 bool	ChannelManager::has(const std::string &name) const
