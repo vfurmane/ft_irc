@@ -8,9 +8,6 @@ int		command_join(Message &message, Dependencies &deps)
 	const std::vector<std::string>	channels = parseList(message.arguments[0]);
 	const std::vector<std::string>	keys = message.argCount >= 2 ?
 		parseList(message.arguments[1]) : std::vector<std::string>();
-
-	if (!keys.empty() && keys.size() != channels.size())
-		throw ERR_NEEDMOREPARAMS("JOIN");
 	
 	std::vector<std::string>::const_iterator	chan_it = channels.begin();
 	std::vector<std::string>::const_iterator	key_it = keys.begin();
@@ -20,7 +17,7 @@ int		command_join(Message &message, Dependencies &deps)
 		try
 		{
 			Channel	&channel = deps.channels[base_channel.getName()];
-			if (!keys.empty() && !channel.compareKey(*key_it))
+			if (key_it != keys.end() && !channel.compareKey(*key_it))
 				message.peer.sendMessage(ERR_BADCHANNELKEY(*chan_it));
 			else
 			{
@@ -34,7 +31,7 @@ int		command_join(Message &message, Dependencies &deps)
 			message.peer.sendMessage(JoinMessage(message.peer, base_channel));
 		}
 		++chan_it;
-		if (!keys.empty())
+		if (key_it != keys.end())
 			++key_it;
 	}
 	return 1;
