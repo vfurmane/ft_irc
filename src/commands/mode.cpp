@@ -3,7 +3,7 @@
 
 static const size_t mode_count = 4;
 static const char mode_name[mode_count] = {'O', 'o', 'i', 'k'};
-int (*const add_flags[mode_count])(Message&, Dependencies&) = {flag_creator, flag_operator, flag_invite, flag_key};
+void (*const manageFlags[mode_count])(Message&, Dependencies&, bool, size_t) = {flag_creator, flag_operator, flag_invite, flag_key};
 
 static bool	forbiddenChannelPrefix(char &chan_prefix)
 {
@@ -17,6 +17,45 @@ static bool	forbiddenChannelPrefix(char &chan_prefix)
 	return (true);
 }
 
+void	flag_creator(Message &message, Dependencies &deps, bool add_flag, size_t i)
+{
+	(void)message;
+	(void)deps;
+	(void)flag;
+	(void)i;
+	return ; // ONLY GIVEN TO CHANNEL CREATOR, STILL NOT SURE HOW IT SHOULD BE HANDLED IN MODE COMMAND
+}
+
+void	flag_operator(Message &message, Dependencies &deps, bool add_flag, size_t i)
+{
+	// NEED TO ACCESS THE USER flags, SO deps.channels._channels.users.peer.flags ?
+	std::map::iterator	it = deps.channels._channels.find(message.argument[0]);
+}
+
+void	flag_invite(Message &message, Dependencies &deps, bool add_flag, size_t i)
+{
+	std::map::iterator	it = deps.channels._channels.find(message.argument[0]);
+	if (add_flag == true)
+		*it._flags |= FLAG_INVITE;
+	if (add_flag == false)
+		*it._flags &= ~FLAG_INVITE;
+}
+
+void	flag_key(Message &message, Dependencies &deps, bool add_flag, size_t i)
+{
+	std::map::iterator	it = deps.channels._channels.find(message.argument[0]);
+	if (add_flag == true)
+	{
+		*it.setKey(message.arguments[i + 1]);
+		*it._flags |= FLAG_KEY;
+	}
+	if (add_flag == false)
+	{
+		*it.unsetKey();
+		*it._flags &= ~FLAG_KEY;
+	}
+}
+
 int	command_mode(Message &message, Dependencies &deps)
 {
 	if (message.argCount < 2)
@@ -28,20 +67,20 @@ int	command_mode(Message &message, Dependencies &deps)
 	size_t	i = 0;
 	size_t	j;
 	size_t	k;
+	bool	add_flag;
 	for (i = 0; i < message.argCount; i += 2)
 	{
 		j = 1;
 		k = 0;
+		add_flag = false;
 		if (message.arguments[i][0] != '+' && message.arguments[i][0] != '-')
 			continue;
+		if (message.arguments[i][0] == '+')
+			add_flag = true;
 		if (message.arguments[i][j] == mode_name[k])
-		{
-			add_flags[k](message, deps); // CHECK IF IT WORKS IN ALL CASES
-		}
+			manageFlags[k](message, deps, add_flag, i);
 		if (j == mode_count)
-		{
-			throw ERR_UNKNOWNMODE(message.arguments[2][j], deps.channels.); // CREATE A METHOD TO GET CHANNEL NAME
-		}
+			throw ERR_UNKNOWNMODE(message.arguments[2][j], message.arguments[0]);
 	}
 	return (1);	
 }
