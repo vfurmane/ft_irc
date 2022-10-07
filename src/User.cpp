@@ -1,24 +1,19 @@
 #include "User.hpp"
 
-User::User(Peer &peer): _peer(peer)
+User::User(Peer &peer): peer(peer)
 {
 }
 
-User::User(const User &obj): _peer(obj._peer)
+User::User(const User &obj): peer(obj.peer)
 {
 }
 
 User	&User::operator=(const User &rhs)
 {
-	this->_peer = rhs._peer;
+	this->peer = rhs.peer;
 	return (*this);
 }
 
 User::~User(void)
 {
-}
-
-Peer &User::getPeer(void) const
-{
-	return this->_peer;
 }
