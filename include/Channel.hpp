@@ -1,5 +1,10 @@
 #ifndef CHANNEL_HPP
 # define CHANNEL_HPP
+# define FLAG_CREATOR	1
+# define FLAG_OPERATOR	2
+# define FLAG_INVITE	4
+# define FLAG_KEY	8
+
 
 # include <stdint.h>
 # include <string>
