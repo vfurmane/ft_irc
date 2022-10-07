@@ -3,7 +3,9 @@
 
 # include <string>
 # include <map>
+# include <utility>
 
+class Peer;
 class User;
 
 class UserManager
@@ -23,11 +25,13 @@ class UserManager
 		iterator	end(void);
 		const_iterator begin(void) const;
 		const_iterator end(void) const;
+		std::pair<UserManager::iterator, bool>	add(User &user);
 
 	private:
 		std::map<std::string, User>	_users;
 };
 
+# include "Peer.hpp"
 # include "User.hpp"
 
 #endif
