@@ -4,6 +4,16 @@
 #define private public
 #include "../src/Channel.cpp"
 
+TEST_CASE("_base_channel::stringify")
+{
+	SECTION("with a public namespace")
+	{
+		_base_channel	channel("general");
+
+		REQUIRE( channel.stringify() == "#general" );
+	};
+};
+
 TEST_CASE("Channel::setKey")
 {
 	SECTION("should save the key")

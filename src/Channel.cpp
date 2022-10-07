@@ -28,6 +28,11 @@ const t_channel_namespace	&_base_channel::getNamespace(void) const
 	return this->_namespace;
 }
 
+std::string	_base_channel::stringify(void) const
+{
+	return static_cast<char>(this->_namespace) + this->_name;
+}
+
 Channel::Channel(const std::string &name): _base_channel(name), _key(), _flags(0), _users()
 {
 }

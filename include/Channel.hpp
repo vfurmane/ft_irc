@@ -20,6 +20,7 @@ class _base_channel
 
 		const std::string			&getName(void) const;
 		const t_channel_namespace	&getNamespace(void) const;
+		std::string					stringify(void) const;
 
 	protected:
 		const std::string			_name;
