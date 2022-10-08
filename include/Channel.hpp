@@ -40,6 +40,7 @@ class Channel : public _base_channel
 		void	setKey(const std::string &key);
 		void	unsetKey(void);
 		bool	compareKey(const std::string &key) const;
+		void	setCreator(User &user);
 
 		User	&add(Peer &peer);
 		void	remove(const User &user);
@@ -49,6 +50,7 @@ class Channel : public _base_channel
 	private:
 		std::string			_key;
 		uint32_t			_flags;
+		User				*_creator;
 };
 
 #endif
