@@ -69,6 +69,8 @@ void	Channel::unsetKey(void)
 
 bool	Channel::compareKey(const std::string &key) const
 {
+	if (this->_key.empty())
+		return true;
 	return this->_key == key;
 }
 

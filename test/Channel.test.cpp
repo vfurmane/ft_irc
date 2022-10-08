@@ -52,6 +52,14 @@ TEST_CASE("Channel::setKey and Channel::unsetKey")
 
 TEST_CASE("Channel::compareKey")
 {
+	SECTION("should ignore if the key is empty")
+	{
+		Channel	channel("general");
+
+		channel._key = "";
+		REQUIRE( channel.compareKey("") );
+		REQUIRE( channel.compareKey("key") );
+	};
 	SECTION("should validate the key")
 	{
 		Channel	channel("general");
