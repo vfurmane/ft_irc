@@ -40,7 +40,7 @@ class Channel : public _base_channel
 		void	unsetKey(void);
 		bool	compareKey(const std::string &key) const;
 
-		User	&add(const User &user);
+		User	&add(Peer &peer);
 		void	remove(const User &user);
 
 		UserManager			users;
