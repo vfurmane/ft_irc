@@ -13,7 +13,7 @@ int		command_join(Message &message, Dependencies &deps)
 	std::vector<std::string>::const_iterator	key_it = keys.begin();
 	while (chan_it != channels.end())
 	{
-		_base_channel base_channel = parseChannel(*chan_it);
+		_base_channel base_channel = Channel::parse(*chan_it);
 		try
 		{
 			Channel	&channel = deps.channels[base_channel.getName()];
