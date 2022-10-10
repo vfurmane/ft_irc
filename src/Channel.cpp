@@ -74,7 +74,7 @@ bool	Channel::compareKey(const std::string &key) const
 
 User	&Channel::add(Peer &peer)
 {
-	return this->users.add(User(peer)).first->second;
+	return this->users.add(User(peer, *this)).first->second;
 }
 
 void	Channel::remove(const User &user)
