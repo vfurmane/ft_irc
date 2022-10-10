@@ -22,13 +22,13 @@ int		command_join(Message &message, Dependencies &deps)
 			else
 			{
 				channel.add(message.peer);
-				message.peer.sendMessage(JoinMessage(message.peer, base_channel));
+				channel.sendMessage(JoinMessage(message.peer, base_channel));
 			}
 		}
 		catch (std::out_of_range &)
 		{
 			message.peer.createChannel(base_channel);
-			message.peer.sendMessage(JoinMessage(message.peer, base_channel));
+			message.peer.sendMessage(JoinMessage(message.peer, base_channel, true));
 		}
 		++chan_it;
 		if (key_it != keys.end())
