@@ -1,7 +1,5 @@
 #include "Peer.hpp"
 
-static const char	*CRLF = "\r\n";
-
 Peer::Peer(Server &server, int fd, struct sockaddr &addr): server(server), _fd(fd), _addr(addr), _message(), _nickname(), _user(), _realname(), _mode(), _password(), _registered(false)
 {
 }
