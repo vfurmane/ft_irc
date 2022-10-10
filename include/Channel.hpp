@@ -4,6 +4,7 @@
 # include <stdint.h>
 # include <string>
 # include "UserManager.hpp"
+# include "utils.hpp"
 
 typedef enum	e_channel_namespace
 {
@@ -42,6 +43,7 @@ class Channel : public _base_channel
 
 		User	&add(Peer &peer);
 		void	remove(const User &user);
+		void	sendMessage(const Message &message) const;
 
 		UserManager			users;
 	private:
