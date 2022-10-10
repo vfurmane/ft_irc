@@ -1,10 +1,10 @@
 #include "User.hpp"
 
-User::User(Peer &peer): peer(peer)
+User::User(Peer &peer, Channel &channel): peer(peer), channel(channel)
 {
 }
 
-User::User(const User &obj): peer(obj.peer)
+User::User(const User &obj): peer(obj.peer), channel(obj.channel)
 {
 }
 
