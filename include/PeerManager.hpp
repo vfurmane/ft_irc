@@ -5,6 +5,7 @@
 # include <algorithm>
 # include <stdexcept>
 # include "exception.hpp"
+# include "utils.hpp"
 
 class Peer;
 class Server;

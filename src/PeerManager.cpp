@@ -59,15 +59,6 @@ Peer	&PeerManager::get(int fd)
 	return this->_peers.at(fd);
 }
 
-static char	toIRCLower(char c)
-{
-	if (c >= 'A' && c <= ']')
-		return c + 32;
-	if (c == '~')
-		return '^';
-	return c;
-}
-
 static bool	areSameNickname(const std::string &nick1, const std::string &nick2)
 {
 	if (nick1.length() != nick2.length())
