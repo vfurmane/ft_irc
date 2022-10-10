@@ -27,6 +27,7 @@ class ChannelManager
 		std::pair<ChannelManager::iterator, bool>	add(const std::string &name);
 		std::pair<ChannelManager::iterator, bool>	add(const _base_channel &base_channel);
 		void			remove(const std::string &name);
+		bool			has(const std::string &name) const;
 	
 	private:
 		std::map<std::string, Channel>	_channels;	

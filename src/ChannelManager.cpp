@@ -61,3 +61,8 @@ void ChannelManager::remove(const std::string &name)
 {
 	this->_channels.erase(name);
 }
+
+bool	ChannelManager::has(const std::string &name) const
+{
+	return this->_channels.find(name) != this->_channels.end();
+}
