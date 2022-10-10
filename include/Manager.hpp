@@ -68,6 +68,10 @@ class Manager
 		{
 			return (*this)[key];
 		}
+		bool			has(const Key &key) const
+		{
+			return this->c.find(key) != this->c.end();
+		}
 
 	protected:
 		std::map<Key, T>	c;
