@@ -64,7 +64,7 @@ class Manager
 		{
 			this->c.erase(key);
 		}
-		T				&get(const Key key)
+		T				&get(const Key &key)
 		{
 			return (*this)[key];
 		}
