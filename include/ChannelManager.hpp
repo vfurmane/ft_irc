@@ -18,7 +18,7 @@ class ChannelManager
 		ChannelManager &operator=(const ChannelManager &rhs);
 		~ChannelManager();
 
-		Channel &operator[](std::string name);
+		Channel &operator[](const std::string &name);
 			
 		iterator		begin(void);
 		iterator		end(void);

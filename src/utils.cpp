@@ -8,3 +8,12 @@ char	toIRCLower(char c)
 		return '^';
 	return c;
 }
+
+std::string	toIRCLower(const std::string &str)
+{
+	std::string	lowercase_str;
+
+	for (std::string::const_iterator it = str.begin(); it != str.end(); ++it)
+		lowercase_str += toIRCLower(*it);;
+	return lowercase_str;
+}
