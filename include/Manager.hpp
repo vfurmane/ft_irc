@@ -13,14 +13,26 @@ class Manager
 		typedef typename container_type::iterator		iterator;
 		typedef typename container_type::const_iterator	const_iterator;
 
-		Manager(void);
-		Manager(const Manager &obj);
-		~Manager(void);
+		Manager(void) : c()
+		{
+		}
 
-		Manager			&operator=(const Manager &rhs);
+		Manager(const Manager &obj) : c(obj.c)
+		{
+			*this = obj;
+		}
+		~Manager(void)
+		{
+		}
+
+		Manager			&operator=(const Manager &rhs)
+		{
+			(void)rhs;
+			return *this;
+		}
 		T				&operator[](const Key key)
 		{
-			this->c.at(key);
+			return this->c.at(key);
 		}
 
 		iterator		begin(void)
@@ -54,7 +66,7 @@ class Manager
 		}
 		T				&get(const Key key)
 		{
-			(*this)[key];
+			return (*this)[key];
 		}
 
 	protected:
