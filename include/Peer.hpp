@@ -8,6 +8,7 @@
 # include <sys/socket.h>
 # include <unistd.h>
 # include "IRCErrors.hpp"
+# include "utils.hpp"
 
 struct Message;
 class Server;

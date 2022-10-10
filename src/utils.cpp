@@ -1,5 +1,7 @@
 #include "utils.hpp"
 
+const char	*CRLF = "\r\n";
+
 char	toIRCLower(char c)
 {
 	if (c >= 'A' && c <= ']')
