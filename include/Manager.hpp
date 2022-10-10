@@ -58,7 +58,7 @@ class Manager
 
 		T				&add(const Key &key, const T &value)
 		{
-			return this->c.insert(key, value).first.second;
+			return this->c.insert(std::make_pair(key, value)).first->second;
 		}
 		void			remove(const Key &key)
 		{
