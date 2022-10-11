@@ -1,7 +1,8 @@
 #ifndef CHANNELMANAGER_HPP
 # define CHANNELMANAGER_HPP
 
-#include "Manager.hpp"
+# include "Manager.hpp"
+# include "utils.hpp"
 # include <map>
 # include <string>
 

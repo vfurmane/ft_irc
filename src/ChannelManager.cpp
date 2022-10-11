@@ -1,6 +1,4 @@
 #include "ChannelManager.hpp"
-#include "utils.hpp"
-#include <utility>
 
 ChannelManager::ChannelManager(): Manager()
 {
