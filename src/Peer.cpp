@@ -20,7 +20,10 @@ Peer::~Peer(void)
 
 Channel	&Peer::createChannel(const _base_channel &base_channel)
 {
-	return this->server.channels.add(base_channel);
+	Channel &channel = this->server.channels.add(base_channel);
+	User	&user = channel.add(*this);
+	channel.setCreator(user);
+	return channel;
 }
 
 int	Peer::close(void) const

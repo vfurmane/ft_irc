@@ -33,15 +33,15 @@ std::string	_base_channel::stringify(void) const
 	return static_cast<char>(this->_namespace) + this->_name;
 }
 
-Channel::Channel(const std::string &name): _base_channel(name), users(), _key(), _flags(0) 
+Channel::Channel(const std::string &name): _base_channel(name), users(), _key(), _flags(0), _creator(NULL)
 {
 }
 
-Channel::Channel(const _base_channel &obj): _base_channel(obj), users(), _key(), _flags(0)
+Channel::Channel(const _base_channel &obj): _base_channel(obj), users(), _key(), _flags(0), _creator(NULL)
 {
 }
 
-Channel::Channel(const Channel &obj): _base_channel(obj), users(obj.users), _key(obj._key), _flags(obj._flags) 
+Channel::Channel(const Channel &obj): _base_channel(obj), users(obj.users), _key(obj._key), _flags(obj._flags) , _creator(NULL)
 {
 }
 
@@ -74,6 +74,11 @@ bool	Channel::compareKey(const std::string &key) const
 	return this->_key == key;
 }
 
+void	Channel::setCreator(User &user)
+{
+	this->_creator = &user;
+}
+
 User	&Channel::add(Peer &peer)
 {
 	return this->users.add(User(peer, *this));
@@ -81,6 +86,8 @@ User	&Channel::add(Peer &peer)
 
 void	Channel::remove(const User &user)
 {
+	if (&this->_creator->peer == &user.peer)
+		this->_creator = NULL;
 	this->users.remove(user);
 }
 
