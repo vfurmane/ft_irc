@@ -109,13 +109,8 @@ const std::string	&Message::updateInputFromFields(void)
 
 std::string	*Message::updatePrefixFromPeer(void)
 {
-	if (this->prefix != NULL)
-		this->prefix->clear();
-	else
-	{
-		delete this->prefix;
+	if (this->prefix == NULL)
 		this->prefix = new std::string;
-		*this->prefix = this->peer.generatePrefix();
-	}
+	*this->prefix = this->peer.generatePrefix();
 	return this->prefix;
 }
