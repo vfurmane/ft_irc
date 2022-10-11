@@ -1,17 +1,17 @@
 #include "PeerManager.hpp"
+#include "Manager.hpp"
 
-PeerManager::PeerManager(Server &server) : _server(server), _peers()
+PeerManager::PeerManager(Server &server) : Manager(), _server(server)
 {
 }
 
-PeerManager::PeerManager(const PeerManager &obj) : _server(obj._server), _peers()
+PeerManager::PeerManager(const PeerManager &obj) : Manager(obj), _server(obj._server)
 {
-	this->_peers = obj._peers;
 }
 
 PeerManager &PeerManager::operator=(const PeerManager &rhs)
 {
-	this->_peers = rhs._peers;
+	(void)rhs;
 	return (*this);
 }
 
@@ -19,44 +19,9 @@ PeerManager::~PeerManager(void)
 {
 }
 
-Peer	&PeerManager::operator[](int fd)
+Peer	&PeerManager::add(int fd, struct sockaddr &addr)
 {
-	return this->_peers.at(fd);
-}
-
-PeerManager::iterator	PeerManager::begin(void)
-{
-	return this->_peers.begin();
-}
-
-PeerManager::iterator	PeerManager::end(void)
-{
-	return this->_peers.end();
-}
-
-PeerManager::const_iterator	PeerManager::begin(void) const
-{
-	return this->_peers.begin();
-}
-
-PeerManager::const_iterator	PeerManager::end(void) const
-{
-	return this->_peers.end();
-}
-
-std::pair<PeerManager::iterator, bool> PeerManager::add(int fd, struct sockaddr &addr)
-{
-	return this->_peers.insert(std::make_pair(fd, Peer(this->_server, fd, addr)));
-}
-
-void PeerManager::remove(int fd)
-{
-	this->_peers.erase(fd);
-}
-
-Peer	&PeerManager::get(int fd)
-{
-	return this->_peers.at(fd);
+	return Manager::add(fd, Peer(this->_server, fd, addr));
 }
 
 static bool	areSameNickname(const std::string &nick1, const std::string &nick2)
@@ -98,8 +63,7 @@ int	PeerManager::acceptConnection(void)
 		close(this->_server.getSocketFd());
 		throw sysCallError("accept", strerror(errno));
 	}
-	std::pair<PeerManager::iterator, bool> ret = this->add(new_fd, their_addr);
-	if (!ret.second)
+	if (this->has(new_fd))
 	{
 #ifndef NDEBUG
 		std::cerr << "Critical error: it seems that the fd is already in the manager" << std::endl;
@@ -108,8 +72,12 @@ int	PeerManager::acceptConnection(void)
 		throw std::exception();
 	}
 #ifndef NDEBUG
+	Peer	&ret =
+#endif
+	this->add(new_fd, their_addr);
+#ifndef NDEBUG
 	std::cerr << "Accepted connection on fd no " << new_fd << "!" << std::endl;
-	std::cerr << "Client -> " << ret.first->second.getStrAddr() << std::endl;
+	std::cerr << "Client -> " << ret.getStrAddr() << std::endl;
 #endif
 	return new_fd;
 }
