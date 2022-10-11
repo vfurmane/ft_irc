@@ -18,6 +18,11 @@ Peer::~Peer(void)
 {
 }
 
+Channel	&Peer::createChannel(const _base_channel &base_channel)
+{
+	return this->server.channels.add(base_channel);
+}
+
 int	Peer::close(void) const
 {
 	return ::close(this->_fd);
