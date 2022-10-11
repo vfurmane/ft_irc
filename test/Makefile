@@ -1,5 +1,5 @@
 NAME = test.out
-SRCS = main.cpp Channel.test.cpp ChannelManager.test.cpp commands.test.cpp utils.test.cpp Configuration.test.cpp Message.test.cpp PeerManager.test.cpp Peer.test.cpp Server.test.cpp User.test.cpp UserManager.test.cpp $(addprefix commands/, nick.test.cpp pass.test.cpp quit.test.cpp user.test.cpp)
+SRCS = main.cpp Channel.test.cpp ChannelManager.test.cpp commands.test.cpp utils.test.cpp Configuration.test.cpp Manager.test.cpp Message.test.cpp PeerManager.test.cpp Peer.test.cpp Server.test.cpp User.test.cpp UserManager.test.cpp $(addprefix commands/, nick.test.cpp pass.test.cpp quit.test.cpp user.test.cpp)
 OBJS = $(SRCS:.cpp=.o)
 DEPS = $(SRCS:.cpp=.d)
 INCLDIR = include
