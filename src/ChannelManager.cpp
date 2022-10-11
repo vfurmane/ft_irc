@@ -51,8 +51,8 @@ ChannelManager::const_iterator ChannelManager::end() const
 
 std::pair<ChannelManager::iterator, bool> ChannelManager::add(const std::string &name)
 {
-	const std::string	lowercase_name = toIRCLower(name);
-	return this->_channels.insert(std::make_pair(lowercase_name, Channel(name)));
+	_base_channel	base_channel(name);
+	return this->add(base_channel);
 }
 
 std::pair<ChannelManager::iterator, bool>	ChannelManager::add(const _base_channel &base_channel)
