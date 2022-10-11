@@ -1,5 +1,4 @@
 #include "commands.hpp"
-#include "IRCErrors.hpp"
 
 static bool	forbidden_user_char(const std::string &user)
 {

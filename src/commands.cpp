@@ -1,6 +1,4 @@
 #include "commands.hpp"
-#include "Message.hpp"
-#include "Peer.hpp"
 
 ErrorMessage::ErrorMessage(Peer &peer, const std::string &message, bool include_prefix) : Message(peer, std::string())
 {
