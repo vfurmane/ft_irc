@@ -89,7 +89,7 @@ TEST_CASE("JOIN")
 		REQUIRE( channels["general"].users.has(peer._user) );
 		REQUIRE( channels["ft_irc"].users.has(peer._user) );
 	};
-	SECTION("with differing channels and keys lenght")
+	SECTION("with differing channels and keys length")
 	{
 		peer._user = "john_doe";
 		Channel	&general_channel = peer.createChannel(std::string("general"));
