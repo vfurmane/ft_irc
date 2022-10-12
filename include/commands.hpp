@@ -28,6 +28,11 @@ struct JoinMessage : public Message
 	JoinMessage(Peer &peer, const Channel &channel, bool include_prefix = false);
 };
 
+struct PongMessage : public Message
+{
+	PongMessage(Peer &peer, const std::string &server_name, bool include_prefix = false);
+};
+
 struct Dependencies
 {
 	Configuration	&config;
@@ -42,6 +47,7 @@ int	command_join(Message &message, Dependencies &deps);
 int	command_nick(Message &message, Dependencies &deps);
 int	command_part(Message &message, Dependencies &deps);
 int	command_pass(Message &message, Dependencies &deps);
+int	command_ping(Message &message, Dependencies &deps);
 int	command_quit(Message &message, Dependencies &deps);
 int	command_user(Message &message, Dependencies &deps);
 
