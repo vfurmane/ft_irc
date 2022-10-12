@@ -118,7 +118,6 @@ TEST_CASE("USER")
 		message.arguments[3] = "ppiques";
 		command_user(message, deps);
 		REQUIRE( message.peer._username == "user" );
-		REQUIRE( message.peer._mode == "0" );
 		REQUIRE( message.peer._realname == "ppiques" );
 		REQUIRE( message.peer._registered == true );
 	};

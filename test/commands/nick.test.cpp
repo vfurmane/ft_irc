@@ -173,7 +173,6 @@ TEST_CASE("NICK")
 		Dependencies	deps = {config, peers, channels};
 
 		peer._username = "username";
-		peer._mode = "0";
 		peer._realname = "Real Name";
 		message.arguments[0] = "nickname";
 		message.argCount = 1;

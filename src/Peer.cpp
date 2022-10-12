@@ -4,7 +4,7 @@ Peer::Peer(Server &server, int fd, const struct sockaddr &addr): server(server),
 {
 }
 
-Peer::Peer(const Peer &obj): server(obj.server), _fd(obj.getFd()), _addr(obj._addr), _message(), _nickname(), _username(), _realname(), _mode(), _password(), _registered(false)
+Peer::Peer(const Peer &obj): server(obj.server), _fd(obj.getFd()), _addr(obj._addr), _message(), _nickname(), _username(), _realname(), _password(), _registered(false)
 {
 }
 
@@ -69,12 +69,6 @@ void	Peer::setUsername(const std::string &username)
 		this->_username = username;
 }
 
-void	Peer::setMode(const std::string &mode)
-{
-	if (this->_mode.empty())
-		this->_mode = mode;
-}
-
 void	Peer::setRealName(const std::string &realname)
 {
 	if (this->_realname.empty())
@@ -83,7 +77,7 @@ void	Peer::setRealName(const std::string &realname)
 
 bool	Peer::hasAllFields(void) const
 {
-	return !(this->_nickname.empty() || this->_username.empty() || this->_mode.empty() || this->_realname.empty());
+	return !(this->_nickname.empty() || this->_username.empty() || this->_realname.empty());
 }
 
 bool	Peer::isRegistered(void) const

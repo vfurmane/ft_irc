@@ -30,7 +30,6 @@ class Peer
 		bool				hasCompleteMessage(void) const;
 		const std::string	&getMessage(void) const;
 		void				setUsername(const std::string &username);
-		void				setMode(const std::string &mode);
 		void				setRealName(const std::string &realname);
 		bool				hasAllFields(void) const;
 		bool				isRegistered(void) const;
@@ -56,7 +55,6 @@ class Peer
 		std::string		_nickname;
 		std::string		_username;
 		std::string		_realname;
-		std::string		_mode;
 		std::string		_password;
 		bool			_registered;
 };
