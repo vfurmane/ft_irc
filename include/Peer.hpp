@@ -50,7 +50,7 @@ class Peer
 		struct sockaddr	_addr;
 		std::string		_message;
 		std::string		_nickname;
-		std::string		_user;
+		std::string		_username;
 		std::string		_realname;
 		std::string		_mode;
 		std::string		_password;

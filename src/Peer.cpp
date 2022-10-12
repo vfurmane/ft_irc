@@ -1,10 +1,10 @@
 #include "Peer.hpp"
 
-Peer::Peer(Server &server, int fd, struct sockaddr &addr): server(server), _fd(fd), _addr(addr), _message(), _nickname(), _user(), _realname(), _mode(), _password(), _registered(false)
+Peer::Peer(Server &server, int fd, struct sockaddr &addr): server(server), _fd(fd), _addr(addr), _message(), _nickname(), _username(), _realname(), _mode(), _password(), _registered(false)
 {
 }
 
-Peer::Peer(const Peer &obj): server(obj.server), _fd(obj.getFd()), _addr(obj._addr), _message(), _nickname(), _user(), _realname(), _mode(), _password(), _registered(false)
+Peer::Peer(const Peer &obj): server(obj.server), _fd(obj.getFd()), _addr(obj._addr), _message(), _nickname(), _username(), _realname(), _mode(), _password(), _registered(false)
 {
 }
 
@@ -65,7 +65,7 @@ bool	Peer::isRegistered(void) const
 void	Peer::registration(const std::string &user, const std::string &mode, const std::string &realname)
 {
 	this->_registered = true;
-	this->_user = user;
+	this->_username = user;
 	this->_mode = mode;
 	this->_realname = realname;
 }
@@ -86,9 +86,9 @@ std::string	Peer::generatePrefix(void) const
 
 	if (!this->_nickname.empty())
 		ret += this->_nickname; 
-	if (!this->_user.empty())
-		ret += "!" + this->_user; 
-	if (!this->_nickname.empty() || !this->_user.empty())
+	if (!this->_username.empty())
+		ret += "!" + this->_username; 
+	if (!this->_nickname.empty() || !this->_username.empty())
 		ret += "@";
 	ret += this->getStrAddr(); 
 	return ret;
@@ -118,7 +118,7 @@ char	*Peer::getStrAddr(void) const
 
 const std::string	&Peer::getUsername(void) const
 {
-	return this->_user;
+	return this->_username;
 }
 
 const std::string 	&Peer::getNickname(void) const
