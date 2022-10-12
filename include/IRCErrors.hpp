@@ -87,6 +87,20 @@ class ERR_USERNOTINCHANNEL : public AIRCError
 		}
 };
 
+class ERR_NOTONCHANNEL : public AIRCError
+{
+	private:
+		const std::string _str;
+
+	public:
+		ERR_NOTONCHANNEL(const std::string &channel) : _str("442 " + channel + " :You're not on that channel") {}
+		~ERR_NOTONCHANNEL(void) throw() {}
+		virtual const char* what() const throw()
+		{
+			return this->_str.c_str();
+		}
+};
+
 class ERR_NEEDMOREPARAMS : public AIRCError
 {
 	private:
