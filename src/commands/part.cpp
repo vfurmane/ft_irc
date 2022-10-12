@@ -17,7 +17,7 @@ int command_part(Message &message, Dependencies &deps)
 	while (channel_it != channels.end())
 	{
 		_base_channel base_channel = Channel::parse(*channel_it);
-		if (channel_manager.has(base_channel.getName()) == false)
+		if (!channel_manager.has(base_channel.getName()))
 		{
 			message.peer.sendMessage(ERR_NOSUCHCHANNEL(*channel_it));
 			throw ERR_NOSUCHCHANNEL(*channel_it);
@@ -25,7 +25,7 @@ int command_part(Message &message, Dependencies &deps)
 		else 
 		{
 			Channel &channel = deps.channels[base_channel.getName()];
-			if (channel.users.has(message.peer.getUsername()) == true)
+			if (channel.users.has(message.peer.getUsername()))
 			{
 				channel.remove(channel.users[message.peer.getUsername()]);
 				if (!message.arguments[1].empty())
