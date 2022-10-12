@@ -28,12 +28,7 @@ int command_part(Message &message, Dependencies &deps)
 			if (channel.users.has(message.peer.getUsername()) == true)
 			{
 				channel.remove(channel.users[message.peer.getUsername()]);
-				if (message.arguments[1].empty())
-				{
-					Message reply(message.peer, message.peer.getNickname());
-					channel.sendMessage(reply);
-				}
-				else
+				if (!message.arguments[1].empty())
 				{
 					Message reply(message.peer, message.arguments[1]);
 					channel.sendMessage(reply);
