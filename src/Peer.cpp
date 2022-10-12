@@ -38,13 +38,19 @@ void	Peer::appendMessage(const char *buffer)
 
 void	Peer::clearMessage(void)
 {
-	this->_message.clear();
+	std::string::size_type crlf_pos = this->_message.find(CRLF);
+
+	if (crlf_pos == std::string::npos)
+		this->_message.clear();
+	else
+		this->_message = this->_message.substr(crlf_pos + 2);
 }
 
 bool	Peer::hasCompleteMessage(void) const
 {
-	return (*(this->_message.end() - 2) == '\r'
-			&& *(this->_message.end() - 1) == '\n');
+	std::string::size_type crlf_pos = this->_message.find(CRLF);
+
+	return crlf_pos != std::string::npos;
 }
 
 const std::string	&Peer::getMessage(void) const

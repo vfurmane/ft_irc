@@ -116,7 +116,7 @@ int	Server::_handle_message(epoll_event &event)
 			return 1;
 		}
 		peer.appendMessage(buffer);
-		if (peer.hasCompleteMessage())
+		while (peer.hasCompleteMessage())
 		{
 			if (peer.getMessage() == "\r\n")
 			{
