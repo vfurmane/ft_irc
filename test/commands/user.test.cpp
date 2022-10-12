@@ -61,24 +61,24 @@ TEST_CASE("USER")
 		message.arguments[1] = "0";
 		message.arguments[2] = "*";
 		message.arguments[3] = "ppiques";
-		message.peer._user = "user";
+		message.peer._username = "user";
 		command_user(message, deps);
-		REQUIRE( message.peer._user == "user" );
+		REQUIRE( message.peer._username == "user" );
 
 		message.peer._registered = false;
 		message.arguments[0] = "te\rst";
-		message.peer._user = "user";
+		message.peer._username = "user";
 		command_user(message, deps);
-		REQUIRE( message.peer._user == "user" );
+		REQUIRE( message.peer._username == "user" );
 
 		message.peer._registered = false;
 		message.arguments[0] = "te\nst";
 		message.arguments[1] = "0";
 		message.arguments[2] = "*";
 		message.arguments[3] = "ppiques";
-		message.peer._user = "user";
+		message.peer._username = "user";
 		command_user(message, deps);
-		REQUIRE( message.peer._user == "user" );
+		REQUIRE( message.peer._username == "user" );
 
 		message.peer._registered = false;
 		message.arguments[0] = "te0st";
@@ -86,18 +86,18 @@ TEST_CASE("USER")
 		message.arguments[1] = "0";
 		message.arguments[2] = "*";
 		message.arguments[3] = "ppiques";
-		message.peer._user = "user";
+		message.peer._username = "user";
 		command_user(message, deps);
-		REQUIRE( message.peer._user == "user" );
+		REQUIRE( message.peer._username == "user" );
 
 		message.peer._registered = false;
 		message.arguments[0] = "te st";
 		message.arguments[1] = "0";
 		message.arguments[2] = "*";
 		message.arguments[3] = "ppiques";
-		message.peer._user = "user";
+		message.peer._username = "user";
 		command_user(message, deps);
-		REQUIRE( message.peer._user == "user" );
+		REQUIRE( message.peer._username == "user" );
 	};
 	SECTION("should correctly parse the arguments")
 	{
@@ -116,7 +116,7 @@ TEST_CASE("USER")
 		message.arguments[2] = "*";
 		message.arguments[3] = "ppiques";
 		command_user(message, deps);
-		REQUIRE( message.peer._user == "user" );
+		REQUIRE( message.peer._username == "user" );
 		REQUIRE( message.peer._mode == "0" );
 		REQUIRE( message.peer._realname == "ppiques" );
 		REQUIRE( message.peer._registered == true );

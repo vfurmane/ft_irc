@@ -23,7 +23,7 @@ TEST_CASE("PART")
 	}
 	SECTION("no such channel")
 	{
-		peer._user = "test_user";
+		peer._username = "test_user";
 		message.arguments[0] = "#secret";
 		message.argCount = 1;
 		command_part(message, deps);
@@ -32,7 +32,7 @@ TEST_CASE("PART")
 	SECTION("should work with complex channel name #1")
 	{
 		Channel channel("channel");
-		peer._user = "test_user";
+		peer._username = "test_user";
 		peer.createChannel(channel);
 		message.arguments[0] = "#Channel";
 		message.argCount = 1;
@@ -41,7 +41,7 @@ TEST_CASE("PART")
 	SECTION("should work with complex channel name #2")
 	{
 		Channel channel("this_is_the_best_channel");
-		peer._user = "test_user";
+		peer._username = "test_user";
 		peer.createChannel(channel);
 		message.arguments[0] = "#tHIs_iS_tHe_beSt_chaNNEl";
 		message.argCount = 1;
@@ -50,7 +50,7 @@ TEST_CASE("PART")
 	SECTION("should remove the user from channel")
 	{
 		Channel channel("channel");
-		peer._user = "test_user";
+		peer._username = "test_user";
 		peer.createChannel(channel);
 		message.arguments[0] = "#channel";
 		message.argCount = 1;
@@ -62,7 +62,7 @@ TEST_CASE("PART")
 	{
 		Channel channel("channel");
 		Peer	test_peer(server, 4, addr);
-		test_peer._user = "valentin";
+		test_peer._username = "valentin";
 		test_peer.createChannel(channel);
 		message.arguments[0] = "#channel";
 		message.argCount = 1;
@@ -72,7 +72,7 @@ TEST_CASE("PART")
 	SECTION("user on channel")
 	{
 		Channel channel("channel");
-		peer._user = "test_user";
+		peer._username = "test_user";
 		peer.createChannel(channel);
 		message.arguments[0] = "#channel";
 		message.argCount = 1;
@@ -84,7 +84,7 @@ TEST_CASE("PART")
 		Channel channel2("channel2");
 		Channel channel3("channel3");
 		Channel channel4("channel4");
-		peer._user = "test_user";
+		peer._username = "test_user";
 		peer.createChannel(channel1);
 		peer.createChannel(channel2);
 		peer.createChannel(channel3);
