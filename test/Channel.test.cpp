@@ -2,7 +2,26 @@
 #include "catch.hpp"
 
 #define private public
+#define protected public
 #include "../src/Channel.cpp"
+
+TEST_CASE("_base_channel::parse")
+{
+	SECTION("with a '#' prefix")
+	{
+		_base_channel ret = _base_channel::parse("#hello");
+		REQUIRE( ret._name == "hello" );
+		REQUIRE( ret._namespace == PUBLIC );
+	};
+	SECTION("with a length of 50 character")
+	{
+		REQUIRE_NOTHROW( _base_channel::parse("#thisisaquitelongchannelnameequaltofiftycharacters") );
+	};
+	SECTION("with a length greater than 50 characters")
+	{
+		REQUIRE_THROWS_AS( _base_channel::parse("#thisisaverylongchannelnamelongerthanfiftycharacters"), InvalidChannelName );
+	};
+};
 
 TEST_CASE("_base_channel::stringify")
 {
