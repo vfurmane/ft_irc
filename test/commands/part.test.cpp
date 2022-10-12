@@ -1,4 +1,5 @@
 #include "catch.hpp"
+#include "mocks.hpp"
 #include <sstream>
 
 #define private public
@@ -25,7 +26,8 @@ TEST_CASE("PART")
 		peer._user = "test_user";
 		message.arguments[0] = "#secret";
 		message.argCount = 1;
-		REQUIRE_THROWS_AS( command_part(message, deps), ERR_NOSUCHCHANNEL );
+		command_part(message, deps);
+		REQUIRE(std::find(g_send_arg_buf.begin(), g_send_arg_buf.end(), ERR_NOSUCHCHANNEL("#secret").what() + std::string(CRLF)) != g_send_arg_buf.end());
 	}
 	SECTION("should work with complex channel name #1")
 	{
@@ -53,7 +55,8 @@ TEST_CASE("PART")
 		message.arguments[0] = "#channel";
 		message.argCount = 1;
 		REQUIRE_NOTHROW( command_part(message, deps) );
-		REQUIRE_THROWS_AS( command_part(message, deps), ERR_NOTONCHANNEL );
+		command_part(message, deps);
+		REQUIRE(std::find(g_send_arg_buf.begin(), g_send_arg_buf.end(), ERR_NOTONCHANNEL("#channel").what() + std::string(CRLF)) != g_send_arg_buf.end());
 	}
 	SECTION("user not on channel")
 	{
@@ -63,7 +66,8 @@ TEST_CASE("PART")
 		test_peer.createChannel(channel);
 		message.arguments[0] = "#channel";
 		message.argCount = 1;
-		REQUIRE_THROWS_AS( command_part(message, deps), ERR_NOTONCHANNEL );
+		command_part(message, deps);
+		REQUIRE(std::find(g_send_arg_buf.begin(), g_send_arg_buf.end(), ERR_NOTONCHANNEL("#channel").what() + std::string(CRLF)) != g_send_arg_buf.end());
 	}
 	SECTION("user on channel")
 	{
@@ -88,14 +92,17 @@ TEST_CASE("PART")
 		message.arguments[0] = "#channel1,#channel2,#channel4,#channel3";
 		message.argCount = 1;
 		REQUIRE_NOTHROW( command_part(message, deps) );
-		REQUIRE_THROWS_AS( command_part(message, deps), ERR_NOTONCHANNEL );
 		message.arguments[0] = "#channel1";
-		REQUIRE_THROWS_AS( command_part(message, deps), ERR_NOTONCHANNEL );
+		command_part(message,deps);
+		REQUIRE(std::find(g_send_arg_buf.begin(), g_send_arg_buf.end(), ERR_NOTONCHANNEL("#channel1").what() + std::string(CRLF)) != g_send_arg_buf.end());
 		message.arguments[0] = "#channel2";
-		REQUIRE_THROWS_AS( command_part(message, deps), ERR_NOTONCHANNEL );
+		command_part(message,deps);
+		REQUIRE(std::find(g_send_arg_buf.begin(), g_send_arg_buf.end(), ERR_NOTONCHANNEL("#channel2").what() + std::string(CRLF)) != g_send_arg_buf.end());
 		message.arguments[0] = "#channel3";
-		REQUIRE_THROWS_AS( command_part(message, deps), ERR_NOTONCHANNEL );
+		command_part(message,deps);
+		REQUIRE(std::find(g_send_arg_buf.begin(), g_send_arg_buf.end(), ERR_NOTONCHANNEL("#channel3").what() + std::string(CRLF)) != g_send_arg_buf.end());
 		message.arguments[0] = "#channel4";
-		REQUIRE_THROWS_AS( command_part(message, deps), ERR_NOTONCHANNEL );
+		command_part(message,deps);
+		REQUIRE(std::find(g_send_arg_buf.begin(), g_send_arg_buf.end(), ERR_NOTONCHANNEL("#channel4").what() + std::string(CRLF)) != g_send_arg_buf.end());
 	}
 }
