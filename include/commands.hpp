@@ -43,6 +43,8 @@ struct Dependencies
 _base_channel				parseChannel(const std::string &channel);
 std::vector<std::string>	parseList(const std::string &list);
 
+
+int	command_cap(Message &message, Dependencies &deps);
 int	command_join(Message &message, Dependencies &deps);
 int	command_nick(Message &message, Dependencies &deps);
 int	command_part(Message &message, Dependencies &deps);
