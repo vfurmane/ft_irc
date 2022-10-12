@@ -18,7 +18,7 @@ class Server;
 class Peer
 {
 	public:
-		Peer(Server &server, const int fd, struct sockaddr &addr);
+		Peer(Server &server, const int fd, const struct sockaddr &addr);
 		Peer(const Peer &obj);
 		Peer &operator=(const Peer &rhs);
 		~Peer(void);
