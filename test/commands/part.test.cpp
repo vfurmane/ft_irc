@@ -36,12 +36,21 @@ TEST_CASE("PART")
 		message.argCount = 1;
 		REQUIRE_NOTHROW( command_part(message, deps) );
 	}
+	SECTION("should work with complex channel name #2")
+	{
+		Channel channel("this_is_the_best_channel");
+		peer._user = "test_user";
+		peer.createChannel(channel);
+		message.arguments[0] = "#tHIs_iS_tHe_beSt_chaNNEl";
+		message.argCount = 1;
+		REQUIRE_NOTHROW( command_part(message, deps) );
+	}
 	SECTION("should remove the user from channel")
 	{
 		Channel channel("channel");
 		peer._user = "test_user";
 		peer.createChannel(channel);
-		message.arguments[0] = "channel";
+		message.arguments[0] = "#channel";
 		message.argCount = 1;
 		REQUIRE_NOTHROW( command_part(message, deps) );
 		REQUIRE_THROWS_AS( command_part(message, deps), ERR_NOTONCHANNEL );
@@ -52,7 +61,7 @@ TEST_CASE("PART")
 		Peer	test_peer(server, 4, addr);
 		test_peer._user = "valentin";
 		test_peer.createChannel(channel);
-		message.arguments[0] = "channel";
+		message.arguments[0] = "#channel";
 		message.argCount = 1;
 		REQUIRE_THROWS_AS( command_part(message, deps), ERR_NOTONCHANNEL );
 	}
@@ -61,7 +70,7 @@ TEST_CASE("PART")
 		Channel channel("channel");
 		peer._user = "test_user";
 		peer.createChannel(channel);
-		message.arguments[0] = "channel";
+		message.arguments[0] = "#channel";
 		message.argCount = 1;
 		REQUIRE_NOTHROW( command_part(message, deps) );
 	}
@@ -76,17 +85,17 @@ TEST_CASE("PART")
 		peer.createChannel(channel2);
 		peer.createChannel(channel3);
 		peer.createChannel(channel4);
-		message.arguments[0] = "channel1,channel2,channel4,channel3";
+		message.arguments[0] = "#channel1,#channel2,#channel4,#channel3";
 		message.argCount = 1;
 		REQUIRE_NOTHROW( command_part(message, deps) );
 		REQUIRE_THROWS_AS( command_part(message, deps), ERR_NOTONCHANNEL );
-		message.arguments[0] = "channel1";
+		message.arguments[0] = "#channel1";
 		REQUIRE_THROWS_AS( command_part(message, deps), ERR_NOTONCHANNEL );
-		message.arguments[0] = "channel2";
+		message.arguments[0] = "#channel2";
 		REQUIRE_THROWS_AS( command_part(message, deps), ERR_NOTONCHANNEL );
-		message.arguments[0] = "channel3";
+		message.arguments[0] = "#channel3";
 		REQUIRE_THROWS_AS( command_part(message, deps), ERR_NOTONCHANNEL );
-		message.arguments[0] = "channel4";
+		message.arguments[0] = "#channel4";
 		REQUIRE_THROWS_AS( command_part(message, deps), ERR_NOTONCHANNEL );
 	}
 }
