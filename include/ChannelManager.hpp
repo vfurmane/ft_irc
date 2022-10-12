@@ -3,7 +3,6 @@
 
 # include "Manager.hpp"
 # include "utils.hpp"
-# include <map>
 # include <string>
 
 class _base_channel;

@@ -1,9 +1,7 @@
 #ifndef CHANNEL_HPP
 # define CHANNEL_HPP
-# define FLAG_CREATOR	1
-# define FLAG_OPERATOR	2
-# define FLAG_INVITE	4
-# define FLAG_KEY	8
+# define FLAG_INVITE	1
+# define FLAG_KEY	2
 
 
 # include <stdint.h>
@@ -48,6 +46,7 @@ class Channel : public _base_channel
 		Channel &operator=(const Channel &rhs);
 		~Channel(void);
 
+		uint32_t	&getFlags(void);
 		void	setKey(const std::string &key);
 		void	unsetKey(void);
 		bool	compareKey(const std::string &key) const;
