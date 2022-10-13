@@ -94,6 +94,10 @@ int	Peer::registration(const std::string &password)
 		return 0;
 	}
 	this->_registered = true;
+	this->sendMessage(RPL_WELCOME(*this));
+	this->sendMessage(RPL_YOURHOST(*this));
+	this->sendMessage(RPL_CREATED(*this));
+	this->sendMessage(RPL_MYINFO(*this));
 	return 1;
 }
 

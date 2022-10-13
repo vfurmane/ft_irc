@@ -60,6 +60,7 @@ class Peer
 };
 
 # include "Channel.hpp"
+# include "IRCReplies.hpp"
 # include "Message.hpp"
 # include "Server.hpp"
 
