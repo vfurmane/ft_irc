@@ -163,4 +163,24 @@ TEST_CASE("USER")
 		command_user(message, deps);
 		REQUIRE( peer.isRegistered() );
 	};
+	SECTION("should register if the peer has all fields")
+	{
+		struct sockaddr	addr;
+		Configuration	config;
+		Server			server(config);
+		Peer			peer(server, 3, addr);
+		Message			message(peer, std::string());
+		PeerManager		peers(server);
+		ChannelManager	channels;
+		Dependencies	deps = {config, peers, channels};
+
+		peer._nickname = "ppik";
+		message.argCount = 4;
+		message.arguments[0] = "user";
+		message.arguments[1] = "0";
+		message.arguments[2] = "*";
+		message.arguments[3] = "ppiques";
+		command_user(message, deps);
+		REQUIRE( peer.isRegistered() );
+	};
 };

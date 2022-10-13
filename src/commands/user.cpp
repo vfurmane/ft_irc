@@ -19,12 +19,6 @@ int	command_user(Message &message, Dependencies &deps)
 		throw ERR_NEEDMOREPARAMS(message.command);
 	if (message.peer.isRegistered())
 		throw ERR_ALREADYREGISTRED();
-	if (message.peer.getPassword() != deps.config.getPassword())
-	{
-		message.peer.sendMessage(ErrorMessage(message.peer, "Access denied by configuration"));
-		deps.peers.closeConnection(message.peer.getFd());
-		return (0);
-	}
 	if (forbidden_user_char(message.arguments[0]) == true)
 		return (1);
 	message.peer.setUsername(message.arguments[0]);
