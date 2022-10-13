@@ -12,6 +12,7 @@ class Manager
 	public:
 		typedef typename container_type::iterator		iterator;
 		typedef typename container_type::const_iterator	const_iterator;
+		typedef typename std::map<Key ,T>::size_type	size_type;
 
 		Manager(void) : c()
 		{
@@ -71,6 +72,14 @@ class Manager
 		bool			has(const Key &key) const
 		{
 			return this->c.find(key) != this->c.end();
+		}
+		bool empty() const
+		{
+			return this->c.empty();
+		}
+		size_type size() const
+		{
+			return this->c.size();
 		}
 
 	protected:
