@@ -5,9 +5,9 @@
 
 typedef enum	e_user_flag
 {
-	 channel_creator = 3,
-	 channel_operator = 2,
-	 channel_user = 1
+	 CHANNEL_USER,
+	 CHANNEL_OPERATOR,
+	 CHANNEL_CREATOR
 }				t_user_flag;
 
 class Channel;

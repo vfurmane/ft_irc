@@ -1,57 +1,46 @@
+#include "Channel.hpp"
 #include "User.hpp"
 #include "commands.hpp"
 #include "IRCErrors.hpp"
 
-void	flag_operator(Message &message, Dependencies &deps, bool add_flag, size_t i, User &author);
-void	flag_invite(Message &message, Dependencies &deps, bool add_flag, size_t i, User &author);
-void	flag_key(Message &message, Dependencies &deps, bool add_flag, size_t i, User &author);
+void	flag_operator(Message &message, Dependencies &deps, bool add_flag, size_t i, User &author, std::string &channel_name);
+void	flag_invite(Message &message, Dependencies &deps, bool add_flag, size_t i, User &author, std::string &channel_name);
+void	flag_key(Message &message, Dependencies &deps, bool add_flag, size_t i, User &author, std::string &channel_name);
 
 static const size_t mode_count = 3;
 static const char mode_name[mode_count] = {'o', 'i', 'k'};
-void (*const manageFlags[mode_count])(Message&, Dependencies&, bool, size_t, User&) = {flag_operator, flag_invite, flag_key};
+void (*const manageFlags[mode_count])(Message&, Dependencies&, bool, size_t, User&, std::string&) = {flag_operator, flag_invite, flag_key};
 
-static bool	forbiddenChannelPrefix(char &chan_prefix)
+void	flag_operator(Message &message, Dependencies &deps, bool add_flag, size_t i, User &author, std::string &channel_name)
 {
-	const std::string	allowed_char = "#&!";
-
-	for (std::string::const_iterator it = allowed_char.begin(); it != allowed_char.end(); ++it)
-	{
-		if (*it == chan_prefix)
-			return (false);
-	}
-	return (true);
-}
-
-void	flag_operator(Message &message, Dependencies &deps, bool add_flag, size_t i, User &author)
-{
-	if (author.flags == channel_user)
+	if (author.flags == CHANNEL_USER)
 		throw ERR_CHANOPRIVSNEEDED(message.arguments[0]);
-	if (!deps.channels.get(message.arguments[0]).users.has(message.arguments[i + 1]))
+	if (!deps.channels.get(channel_name).users.has(message.arguments[i + 1]))
 		return ;
-	User	target = deps.channels.get(message.arguments[0]).users[message.arguments[i + 1]];
-	if (add_flag == true && target.flags != channel_creator)
-		target.flags = channel_operator;
-	if (add_flag == false && author.flags == channel_creator && target.flags != channel_creator)
-		target.flags = channel_user;
+	User	&target = deps.channels.get(channel_name).users[message.arguments[i + 1]];
+	if (add_flag == true && target.flags != CHANNEL_CREATOR)
+		target.flags = CHANNEL_OPERATOR;
+	if (add_flag == false && author.flags == CHANNEL_CREATOR && target.flags != CHANNEL_CREATOR)
+		target.flags = CHANNEL_USER;
 }
 
-void	flag_invite(Message &message, Dependencies &deps, bool add_flag, size_t i, User &author)
+void	flag_invite(Message &message, Dependencies &deps, bool add_flag, size_t i, User &author, std::string &channel_name)
 {
 	(void)i;
-	if (author.flags == channel_user)
+	if (author.flags == CHANNEL_USER)
 		throw ERR_CHANOPRIVSNEEDED(message.arguments[0]);
-	Channel	&it = deps.channels.get(message.arguments[0]);
+	Channel	&it = deps.channels.get(channel_name);
 	if (add_flag == true)
 		it.getFlags() |= FLAG_INVITE;
 	if (add_flag == false)
 		it.getFlags() &= ~FLAG_INVITE;
 }
 
-void	flag_key(Message &message, Dependencies &deps, bool add_flag, size_t i, User &author)
+void	flag_key(Message &message, Dependencies &deps, bool add_flag, size_t i, User &author, std::string &channel_name)
 {
-	if (author.flags == channel_user)
+	if (author.flags == CHANNEL_USER)
 		throw ERR_CHANOPRIVSNEEDED(message.arguments[0]);
-	Channel	&it = deps.channels.get(message.arguments[0]);
+	Channel	&it = deps.channels.get(channel_name);
 	if (add_flag == true)
 	{
 		it.setKey(message.arguments[i + 1]);
@@ -68,28 +57,50 @@ int	command_mode(Message &message, Dependencies &deps)
 {
 	if (message.argCount < 2)
 		throw ERR_NEEDMOREPARAMS(message.command);
-	if (forbiddenChannelPrefix(message.arguments[0][0]))
+	std::string channel_name;
+	try
+	{
+		channel_name = _base_channel::parse(message.arguments[0]).getName();
+	} 
+	catch (std::exception &e)
+	{
 		return (1);
-	if (!deps.channels.has(message.arguments[0]))
+	}
+	if (!deps.channels.has(channel_name))
 		return (1);
-	User	&author = deps.channels.get(message.arguments[0]).users[message.peer.getUsername()];
-	size_t	i = 0;
-	size_t	j;
+	if (!deps.channels.get(channel_name).users.has(message.peer.getUsername()))
+		return (1);
+	User	&author = deps.channels.get(channel_name).users[message.peer.getUsername()];
+	std::string::const_iterator	it;
 	size_t	k;
 	bool	add_flag;
-	for (i = 0; i < message.argCount; i += 2)
+	for (size_t i = 1; i < message.argCount; i += 2)
 	{
-		j = 1;
-		k = 0;
-		add_flag = false;
-		if (message.arguments[i][0] != '+' && message.arguments[i][0] != '-')
+		if (message.arguments[i].size() < 2)
 			continue;
-		if (message.arguments[i][0] == '+')
+		it = message.arguments[i].begin();
+		add_flag = false;
+		if (*it != '+' && *it != '-')
+			continue;
+		if (*it == '+')
 			add_flag = true;
-		if (message.arguments[i][j] == mode_name[k])
-			manageFlags[k](message, deps, add_flag, i, author);
-		if (j == mode_count)
-			throw ERR_UNKNOWNMODE(std::string(1, message.arguments[2][j]), message.arguments[0]);
+		++it;
+		while (it < message.arguments[i].end())
+		{
+			k = 0;
+			while (k < mode_count)
+			{
+				if (*it == mode_name[k])
+				{
+					manageFlags[k](message, deps, add_flag, i, author, channel_name);
+					break ;
+				}
+				k++;
+			}
+			if (k == mode_count)
+				throw ERR_UNKNOWNMODE(std::string(1, *it), message.arguments[0]);
+			++it;
+		}
 	}
 	return (1);	
 }

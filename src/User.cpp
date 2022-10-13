@@ -1,6 +1,6 @@
 #include "User.hpp"
 
-User::User(Peer &peer, Channel &channel): peer(peer), channel(channel), flags(channel_user) 
+User::User(Peer &peer, Channel &channel): peer(peer), channel(channel), flags(CHANNEL_USER) 
 {
 }
 
