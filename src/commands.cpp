@@ -20,6 +20,16 @@ JoinMessage::JoinMessage(Peer &peer, const Channel &channel, bool include_prefix
 	this->input = this->updateInputFromFields();
 }
 
+PongMessage::PongMessage(Peer &peer, const std::string &server_name, bool include_prefix) : Message(peer, std::string())
+{
+	this->command = "PONG";
+	this->arguments[0] = server_name;
+	this->argCount = 1;
+	if (include_prefix)
+		this->prefix = this->updatePrefixFromPeer();
+	this->input = this->updateInputFromFields();
+}
+
 NickMessage::NickMessage(Peer &peer, const std::string &new_nick, bool include_prefix) : Message(peer, std::string())
 {
 	this->command = "NICK";
