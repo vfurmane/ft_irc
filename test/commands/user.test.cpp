@@ -110,6 +110,7 @@ TEST_CASE("USER")
 		ChannelManager	channels;
 		Dependencies	deps = {config, peermanager, channels};
 
+		peer._nickname = "ppik";
 		message.argCount = 4;
 		message.arguments[0] = "user";
 		message.arguments[1] = "0";
@@ -128,10 +129,11 @@ TEST_CASE("USER")
 		Server			server(config);
 		Peer			peer(server, 3, addr);
 		Message			message(peer, std::string());
-		PeerManager		peermanager(server);
+		PeerManager		&peermanager = server.peers;
 		ChannelManager	channels;
 		Dependencies	deps = {config, peermanager, channels};
 
+		peer._nickname = "ppik";
 		message.argCount = 4;
 		message.arguments[0] = "user";
 		message.arguments[1] = "0";
@@ -140,7 +142,26 @@ TEST_CASE("USER")
 		peermanager.add(3, addr);
 		config._password = "test";
 		peer._password = "wrong";
-	(void)addr;
 		REQUIRE( command_user(message, deps) == 0 );
+	};
+	SECTION("should register if the peer has all fields")
+	{
+		struct sockaddr	addr;
+		Configuration	config;
+		Server			server(config);
+		Peer			peer(server, 3, addr);
+		Message			message(peer, std::string());
+		PeerManager		peers(server);
+		ChannelManager	channels;
+		Dependencies	deps = {config, peers, channels};
+
+		peer._nickname = "ppik";
+		message.argCount = 4;
+		message.arguments[0] = "user";
+		message.arguments[1] = "0";
+		message.arguments[2] = "*";
+		message.arguments[3] = "ppiques";
+		command_user(message, deps);
+		REQUIRE( peer.isRegistered() );
 	};
 };

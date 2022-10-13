@@ -29,8 +29,12 @@ class Peer
 		void				clearMessage(void);
 		bool				hasCompleteMessage(void) const;
 		const std::string	&getMessage(void) const;
+		void				setUsername(const std::string &username);
+		void				setMode(const std::string &mode);
+		void				setRealName(const std::string &realname);
+		bool				hasAllFields(void) const;
 		bool				isRegistered(void) const;
-		void				registration(const std::string &user, const std::string &mode, const std::string &realname);
+		int					registration(const std::string &password = std::string());
 		void				setNickname(const std::string &new_nick);
 		void				setPassword(const std::string &new_password);
 		std::string			generatePrefix(void) const;

@@ -52,6 +52,7 @@ class Server
 		};
 
 		ChannelManager	channels;
+		PeerManager		peers;
 
 	private:
 		void		_bindNewSocketToPort(char *port);
@@ -60,7 +61,6 @@ class Server
 		void		_handleReadyFds(int event_count, struct epoll_event *events);
 
 		Configuration	_config;
-		PeerManager	_peers;
 		int			_sockfd;
 		int			_epollfd;
 };

@@ -46,7 +46,10 @@ int		command_nick(Message &message, Dependencies &deps)
 	if (!isValidNickname(nick))
 		throw ERR_ERRONEUSNICKNAME(nick);
 	message.peer.setNickname(nick);
-	for (PeerManager::const_iterator it = deps.peers.begin(); it != deps.peers.end(); ++it)
-		it->second.sendMessage(NickMessage(message.peer, nick));
+	if (message.peer.hasAllFields())
+	{
+		if (message.peer.registration(deps.config.getPassword()) == 0)
+			return 0;
+	}
 	return 1;
 }

@@ -21,14 +21,15 @@ int	command_user(Message &message, Dependencies &deps)
 		throw ERR_ALREADYREGISTRED();
 	if (message.arguments[1].length() != 1)
 		throw ERR_UMODEUNKNOWNFLAG(); // DELETE
-	if (message.peer.getPassword() != deps.config.getPassword())
-	{
-		message.peer.sendMessage(ErrorMessage(message.peer, "Access denied by configuration"));
-		deps.peers.closeConnection(message.peer.getFd());
-		return (0);
-	}
 	if (forbidden_user_char(message.arguments[0]) == true)
 		return (1);
-	message.peer.registration(message.arguments[0], message.arguments[1], message.arguments[3]);
+	message.peer.setUsername(message.arguments[0]);
+	message.peer.setMode(message.arguments[1]);
+	message.peer.setRealName(message.arguments[3]);
+	if (message.peer.hasAllFields())
+	{
+		if (message.peer.registration(deps.config.getPassword()) == 0)
+			return 0;
+	}
 	return (1);
 }

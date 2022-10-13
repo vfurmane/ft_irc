@@ -161,7 +161,7 @@ TEST_CASE("NICK")
 		command_nick(message, deps);
 		REQUIRE( peer._nickname == "nickname" );
 	};
-	SECTION("should send a NICK message to all users")
+	SECTION("should register if the peer has all fields")
 	{
 		struct sockaddr	addr;
 		Configuration	config;
@@ -172,14 +172,12 @@ TEST_CASE("NICK")
 		ChannelManager	channels;
 		Dependencies	deps = {config, peers, channels};
 
+		peer._username = "username";
+		peer._mode = "0";
+		peer._realname = "Real Name";
 		message.arguments[0] = "nickname";
 		message.argCount = 1;
-		deps.peers.add(4, addr);
-		deps.peers.add(5, addr);
-		deps.peers.add(6, addr);
 		command_nick(message, deps);
-		REQUIRE( g_send_arg_sockfd[0] == 4 );
-		REQUIRE( g_send_arg_sockfd[1] == 5 );
-		REQUIRE( g_send_arg_sockfd[2] == 6 );
+		REQUIRE( peer.isRegistered() );
 	};
 };

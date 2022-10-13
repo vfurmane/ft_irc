@@ -132,8 +132,10 @@ TEST_CASE("Message::parse()")
 		Server			server(config);
 		struct sockaddr address;
 		Peer	peer(server, 3, address);
-		peer.registration("testUser", "", "Real Name");
+		peer._username = "testUser";
+		peer._realname = "Real Name";
 		peer.setNickname("nickTest");	
+		peer.registration();
 		Message IM(peer, "command arg0");
 		IM.updatePrefixFromPeer();
 

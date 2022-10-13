@@ -57,17 +57,44 @@ int Peer::getFd(void) const
 	return this->_fd;
 }
 
+void	Peer::setUsername(const std::string &username)
+{
+	if (this->_username.empty())
+		this->_username = username;
+}
+
+void	Peer::setMode(const std::string &mode)
+{
+	if (this->_mode.empty())
+		this->_mode = mode;
+}
+
+void	Peer::setRealName(const std::string &realname)
+{
+	if (this->_realname.empty())
+		this->_realname = realname;
+}
+
+bool	Peer::hasAllFields(void) const
+{
+	return !(this->_nickname.empty() || this->_username.empty() || this->_mode.empty() || this->_realname.empty());
+}
+
 bool	Peer::isRegistered(void) const
 {
 	return this->_registered;
 }
 
-void	Peer::registration(const std::string &user, const std::string &mode, const std::string &realname)
+int	Peer::registration(const std::string &password)
 {
+	if (!password.empty() && this->getPassword() != password)
+	{
+		this->sendMessage(ErrorMessage(*this, "Access denied by configuration"));
+		this->server.peers.closeConnection(this->getFd());
+		return 0;
+	}
 	this->_registered = true;
-	this->_username = user;
-	this->_mode = mode;
-	this->_realname = realname;
+	return 1;
 }
 
 void	Peer::setNickname(const std::string &new_nick)
