@@ -20,6 +20,15 @@ docker run -it -v $PWD:$PWD --workdir $PWD irc_build make -C test
 docker run -it -v $PWD:$PWD --workdir $PWD irc_build ./test/test.out
 ```
 
+## Debugging
+
+To debug the network exchanges, you can use the `tcpdump.Dockerfile` (after following the [Build](#build) steps).
+
+```sh
+docker build -t irc_tcpdump -f tcpdump.Dockerfile .
+docker run -it -v $PWD:$PWD --workdir $PWD -p 6667:6667 irc_tcpdump ./ircserv 6667 password
+```
+
 ## Contributors
 
 - [@ppiques](https://github.com/ppiques)
