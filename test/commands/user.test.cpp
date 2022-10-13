@@ -60,7 +60,7 @@ TEST_CASE("USER")
 		message.arguments[0] = "te@st";
 		message.arguments[1] = "0";
 		message.arguments[2] = "*";
-		message.arguments[3] = "ppiques";
+		message.arguments[3] = "john doe";
 		message.peer._username = "user";
 		command_user(message, deps);
 		REQUIRE( message.peer._username == "user" );
@@ -75,7 +75,7 @@ TEST_CASE("USER")
 		message.arguments[0] = "te\nst";
 		message.arguments[1] = "0";
 		message.arguments[2] = "*";
-		message.arguments[3] = "ppiques";
+		message.arguments[3] = "john doe";
 		message.peer._username = "user";
 		command_user(message, deps);
 		REQUIRE( message.peer._username == "user" );
@@ -85,7 +85,7 @@ TEST_CASE("USER")
 		message.arguments[0][2] = '\0';
 		message.arguments[1] = "0";
 		message.arguments[2] = "*";
-		message.arguments[3] = "ppiques";
+		message.arguments[3] = "john doe";
 		message.peer._username = "user";
 		command_user(message, deps);
 		REQUIRE( message.peer._username == "user" );
@@ -94,7 +94,7 @@ TEST_CASE("USER")
 		message.arguments[0] = "te st";
 		message.arguments[1] = "0";
 		message.arguments[2] = "*";
-		message.arguments[3] = "ppiques";
+		message.arguments[3] = "john doe";
 		message.peer._username = "user";
 		command_user(message, deps);
 		REQUIRE( message.peer._username == "user" );
@@ -115,10 +115,10 @@ TEST_CASE("USER")
 		message.arguments[0] = "user";
 		message.arguments[1] = "0";
 		message.arguments[2] = "*";
-		message.arguments[3] = "ppiques";
+		message.arguments[3] = "john doe";
 		command_user(message, deps);
 		REQUIRE( message.peer._username == "user" );
-		REQUIRE( message.peer._realname == "ppiques" );
+		REQUIRE( message.peer._realname == "john doe" );
 		REQUIRE( message.peer._registered == true );
 	};
 	SECTION("should closeConnection if the password is wrong")
@@ -137,7 +137,7 @@ TEST_CASE("USER")
 		message.arguments[0] = "user";
 		message.arguments[1] = "0";
 		message.arguments[2] = "*";
-		message.arguments[3] = "ppiques";
+		message.arguments[3] = "john doe";
 		peermanager.add(3, addr);
 		config._password = "test";
 		peer._password = "wrong";
