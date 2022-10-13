@@ -21,6 +21,7 @@ class UserManager : public Manager<std::string, User>
 		void	remove(const User &user);
 };
 
+# include "Peer.hpp"
 # include "User.hpp"
 
 #endif
