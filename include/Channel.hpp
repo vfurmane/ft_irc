@@ -7,6 +7,7 @@
 # include "utils.hpp"
 
 struct Message;
+class ChannelManager;
 
 typedef enum	e_channel_namespace
 {
@@ -35,8 +36,8 @@ class _base_channel
 class Channel : public _base_channel
 {
 	public:
-		Channel(const std::string &name);
-		Channel(const _base_channel &obj);
+		Channel(ChannelManager &manager, const std::string &name);
+		Channel(ChannelManager &manager, const _base_channel &obj);
 		Channel(const Channel &obj);
 		Channel &operator=(const Channel &rhs);
 		~Channel(void);
@@ -51,6 +52,7 @@ class Channel : public _base_channel
 		void	sendMessage(const Message &message) const;
 
 		UserManager			users;
+		ChannelManager		&manager;
 	private:
 		std::string			_key;
 		uint32_t			_flags;
@@ -58,5 +60,6 @@ class Channel : public _base_channel
 };
 
 #include "Message.hpp"
+# include "ChannelManager.hpp"
 
 #endif

@@ -34,7 +34,7 @@ Channel	&ChannelManager::add(const std::string &name)
 
 Channel	&ChannelManager::add(const _base_channel &base_channel)
 {
-	return Manager::add(base_channel.getName(), base_channel);
+	return Manager::add(base_channel.getName(), Channel(*this, base_channel));
 }
 
 void ChannelManager::remove(const std::string &name)

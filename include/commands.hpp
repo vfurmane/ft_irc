@@ -25,7 +25,7 @@ struct NickMessage : public Message
 
 struct JoinMessage : public Message
 {
-	JoinMessage(Peer &peer, const Channel &channel, bool include_prefix = false);
+	JoinMessage(Peer &peer, const _base_channel &channel, bool include_prefix = false);
 };
 
 struct PongMessage : public Message
