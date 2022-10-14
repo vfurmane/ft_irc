@@ -28,6 +28,23 @@ const t_channel_namespace	&_base_channel::getNamespace(void) const
 	return this->_namespace;
 }
 
+bool	_base_channel::isValidName(const std::string &channel)
+{
+	if (channel.empty() || channel.size() > 50)
+		return false;
+
+	std::string::const_iterator	it = channel.begin();
+
+	if (*it != '#')
+		return false;
+	for (++it; it != channel.end(); ++it)
+	{
+		if (*it == ' ' || *it == '\a' || *it == ',' || *it == ':')
+			return false;
+	}
+	return true;
+}
+
 _base_channel	_base_channel::parse(const std::string &channel)
 {
 	if (channel.empty() || channel.size() > 50)
