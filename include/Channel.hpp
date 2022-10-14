@@ -1,8 +1,5 @@
 #ifndef CHANNEL_HPP
 # define CHANNEL_HPP
-# define FLAG_INVITE	1
-# define FLAG_KEY	2
-
 
 # include <stdint.h>
 # include <string>
@@ -16,6 +13,12 @@ typedef enum	e_channel_namespace
 {
 	PUBLIC = '#'
 }				t_channel_namespace;
+
+typedef enum	e_channel_flags
+{
+	FLAG_INVITE = 1,
+	FLAG_KEY	= 2
+}				t_channel_flags;
 
 class _base_channel
 {
