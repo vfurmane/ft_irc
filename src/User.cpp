@@ -1,5 +1,4 @@
 #include "User.hpp"
-#include "Channel.hpp"
 
 User::User(Peer &peer, Channel &channel): peer(peer), channel(channel), _status(CHANNEL_USER) 
 {
