@@ -3,13 +3,13 @@
 #include "commands.hpp"
 #include "IRCErrors.hpp"
 
-void	flag_operator(Message &message, Dependencies &deps, bool add_flag, size_t i, User &author, const std::string &channel_name)
+void	flag_operator(bool add_flag, User &author, Channel &channel, const std::string &argument)
 {
 	if (author.getStatus() == CHANNEL_USER)
-		throw ERR_CHANOPRIVSNEEDED(message.arguments[0]);
-	if (!deps.channels.get(channel_name).users.has(message.arguments[i + 1]))
+		throw ERR_CHANOPRIVSNEEDED(channel.getName());
+	if (!channel.users.has(argument))
 		return ;
-	User	&target = deps.channels.get(channel_name).users[message.arguments[i + 1]];
+	User	&target = channel.users[argument];
 	if (add_flag == true && target.getStatus() != CHANNEL_CREATOR)
 		target.setStatus(CHANNEL_OPERATOR);
 	if (add_flag == false && author.getStatus() == CHANNEL_CREATOR && target.getStatus() != CHANNEL_CREATOR)

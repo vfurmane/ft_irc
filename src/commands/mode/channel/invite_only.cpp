@@ -3,14 +3,13 @@
 #include "commands.hpp"
 #include "IRCErrors.hpp"
 
-void	flag_invite_only(Message &message, Dependencies &deps, bool add_flag, size_t i, User &author, const std::string &channel_name)
+void	flag_invite_only(bool add_flag, User &author, Channel &channel, const std::string &argument)
 {
-	(void)i;
+	(void)argument;
 	if (author.getStatus() == CHANNEL_USER)
-		throw ERR_CHANOPRIVSNEEDED(message.arguments[0]);
-	Channel	&it = deps.channels.get(channel_name);
+		throw ERR_CHANOPRIVSNEEDED(channel.getName());
 	if (add_flag == true)
-		it.setFlag(FLAG_INVITE);
+		channel.setFlag(FLAG_INVITE);
 	if (add_flag == false)
-		it.unsetFlag(FLAG_INVITE);
+		channel.unsetFlag(FLAG_INVITE);
 }

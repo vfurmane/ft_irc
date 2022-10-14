@@ -5,11 +5,16 @@
 
 static const size_t mode_count = 3;
 static const char mode_name[mode_count] = {'o', 'i', 'k'};
-void (*const manageFlags[mode_count])(Message&, Dependencies&, bool, size_t, User&, const std::string&) = {flag_operator, flag_invite_only, flag_key};
+void (*const manageFlags[mode_count])(bool, User&, Channel&, const std::string&) = {flag_operator, flag_invite_only, flag_key};
 
-void	command_mode_channel(Message &message, Dependencies &deps, const std::string &channel_name)
+void	command_mode_channel(Message &message, Dependencies &deps, const _base_channel &base_channel)
 {
-	User	&author = deps.channels.get(channel_name).users[message.peer.getUsername()];
+	if (!deps.channels.has(base_channel))
+		return;
+	Channel	&channel = deps.channels.get(base_channel.getName());
+	if (!channel.users.has(message.peer.getUsername()))
+		return;
+	User	&author = channel.users[message.peer.getUsername()];
 	std::string::const_iterator	it;
 	size_t	k;
 	bool	add_flag;
@@ -31,7 +36,7 @@ void	command_mode_channel(Message &message, Dependencies &deps, const std::strin
 			{
 				if (*it == mode_name[k])
 				{
-					manageFlags[k](message, deps, add_flag, i, author, channel_name);
+					manageFlags[k](add_flag, author, channel, message.arguments[i + 1]);
 					break ;
 				}
 				k++;

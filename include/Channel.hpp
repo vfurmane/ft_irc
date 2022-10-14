@@ -23,6 +23,7 @@ typedef enum	e_channel_flag
 class _base_channel
 {
 	public:
+		_base_channel(void);
 		_base_channel(const std::string &name);
 		_base_channel(const _base_channel &obj);
 		_base_channel &operator=(const _base_channel &rhs);

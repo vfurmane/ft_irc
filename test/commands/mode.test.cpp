@@ -42,6 +42,7 @@ TEST_CASE("MODE")
 	
 		message.argCount = 2;
 		message.arguments[0] = "general";
+		message.arguments[1] = "+z";
 
 		REQUIRE( command_mode(message, deps) == 1 );
 	};

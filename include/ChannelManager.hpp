@@ -22,6 +22,7 @@ class ChannelManager : public Manager<std::string, Channel>
 		Channel			&add(const _base_channel &base_channel);
 		void			remove(const std::string &name);
 		bool			has(const std::string &name) const;
+		bool			has(const _base_channel &base_channel) const;
 };
 
 # include "Channel.hpp"
