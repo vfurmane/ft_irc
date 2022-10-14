@@ -50,8 +50,8 @@ class Channel : public _base_channel
 		~Channel(void);
 
 		uint32_t	getFlags(void) const;
-		void	setFlag(int flag);
-		void	unsetFlag(int flag);
+		void	setFlag(uint32_t flag);
+		void	unsetFlag(uint32_t flag);
 		void	setKey(const std::string &key);
 		void	unsetKey(void);
 		bool	compareKey(const std::string &key) const;

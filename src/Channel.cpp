@@ -96,12 +96,12 @@ uint32_t	Channel::getFlags(void) const
 	return this->_flags;
 }
 
-void	Channel::setFlag(int flag)
+void	Channel::setFlag(uint32_t flag)
 {
 	this->_flags |= flag;
 }
 
-void	Channel::unsetFlag(int flag)
+void	Channel::unsetFlag(uint32_t flag)
 {
 	this->_flags &= ~flag;
 }

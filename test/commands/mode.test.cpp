@@ -65,7 +65,7 @@ TEST_CASE("MODE")
 
 		REQUIRE_THROWS_AS( command_mode(message, deps), ERR_UNKNOWNMODE );
 	};
-	SECTION("should throw an error if there are multiple flags and at least one if incorrect")
+	SECTION("should throw an error if there are multiple _status and at least one if incorrect")
 	{
 		struct sockaddr	addr;
 		Configuration	config;
@@ -79,14 +79,14 @@ TEST_CASE("MODE")
 		peer._username = "john_doe";
 		Channel &channel = channels.add("general");
 		User &user = channel.add(peer);
-		user.flags = CHANNEL_OPERATOR;
+		user._status = CHANNEL_OPERATOR;
 		message.argCount = 2;
 		message.arguments[0] = "#general";
 		message.arguments[1] = "+ioz";
 
 		REQUIRE_THROWS_AS( command_mode(message, deps), ERR_UNKNOWNMODE );
 	};
-	SECTION("should throw an error if the user is not operator or creator and try to change flags")
+	SECTION("should throw an error if the user is not operator or creator and try to change _status")
 	{	
 		struct sockaddr	addr;
 		Configuration	config;
@@ -100,14 +100,14 @@ TEST_CASE("MODE")
 		peer._username = "john_doe";
 		Channel &channel = channels.add("general");
 		User &user = channel.add(peer);
-		user.flags = CHANNEL_USER;
+		user._status = CHANNEL_USER;
 		message.argCount = 2;
 		message.arguments[0] = "#general";
 		message.arguments[1] = "+i";
 
 		REQUIRE_THROWS_AS( command_mode(message, deps), ERR_CHANOPRIVSNEEDED );
 	};
-	SECTION("should correctly change the channel flags when key is used")
+	SECTION("should correctly change the channel _status when key is used")
 	{
 		struct sockaddr	addr;
 		Configuration	config;
@@ -121,7 +121,7 @@ TEST_CASE("MODE")
 		peer._username = "john_doe";
 		Channel &channel = channels.add("general");
 		User &user = channel.add(peer);
-		user.flags = CHANNEL_OPERATOR;
+		user._status = CHANNEL_OPERATOR;
 		message.argCount = 3;
 		message.arguments[0] = "#general";
 		message.arguments[1] = "+k";
@@ -139,7 +139,7 @@ TEST_CASE("MODE")
 		REQUIRE ( channel._key == "" );
 		REQUIRE ( channel._flags == 0 );
 	};
-	SECTION("should correctly change the user flags when operator is used")
+	SECTION("should correctly change the user _status when operator is used")
 	{	
 		struct sockaddr	addr;
 		Configuration	config;
@@ -156,15 +156,15 @@ TEST_CASE("MODE")
 		Channel &channel = channels.add("general");
 		User &user1 = channel.add(peer1);
 		User &user2 = channel.add(peer2);
-		user1.flags = CHANNEL_CREATOR;
-		user2.flags = CHANNEL_USER;
+		user1._status = CHANNEL_CREATOR;
+		user2._status = CHANNEL_USER;
 		message.argCount = 3;
 		message.arguments[0] = "#general";
 		message.arguments[1] = "+o";
 		message.arguments[2] = "wruce_bayne";
 		command_mode(message, deps);
 
-		REQUIRE ( user2.flags == CHANNEL_OPERATOR );
+		REQUIRE ( user2._status == CHANNEL_OPERATOR );
 
 		message.argCount = 3;
 		message.arguments[0] = "#general";
@@ -172,7 +172,7 @@ TEST_CASE("MODE")
 		message.arguments[2] = "wruce_bayne";
 		command_mode(message, deps);
 
-		REQUIRE ( user2.flags == CHANNEL_USER );
+		REQUIRE ( user2._status == CHANNEL_USER );
 	};
 	SECTION("should prevent the change of the operator flag if author is not creator")
 	{
@@ -191,14 +191,14 @@ TEST_CASE("MODE")
 		Channel &channel = channels.add("general");
 		User &user1 = channel.add(peer1);
 		User &user2 = channel.add(peer2);
-		user1.flags = CHANNEL_OPERATOR;
-		user2.flags = CHANNEL_OPERATOR;
+		user1._status = CHANNEL_OPERATOR;
+		user2._status = CHANNEL_OPERATOR;
 		message.argCount = 3;
 		message.arguments[0] = "#general";
 		message.arguments[1] = "-o";
 		message.arguments[2] = "wruce_bayne";
 		command_mode(message, deps);
 
-		REQUIRE ( user2.flags == CHANNEL_OPERATOR );
+		REQUIRE ( user2._status == CHANNEL_OPERATOR );
 	};
 };

@@ -2,13 +2,14 @@
 # define USER_HPP
 
 # include <string>
+# include <stdint.h>
 
-typedef enum	e_user_flag
+typedef enum	e_user_status
 {
 	 CHANNEL_USER,
 	 CHANNEL_OPERATOR,
 	 CHANNEL_CREATOR
-}				t_user_flag;
+}				t_user_status;
 
 class Channel;
 class Peer;
@@ -21,9 +22,14 @@ class User
 		User &operator=(const User &rhs);
 		~User(void);
 
+		uint8_t	getStatus(void) const;
+		void	setStatus(uint8_t status);
+
 		Peer	&peer;
 		Channel	&channel;
-		t_user_flag	flags;
+
+	private:
+		uint8_t	_status;
 };
 
 # include "Channel.hpp"

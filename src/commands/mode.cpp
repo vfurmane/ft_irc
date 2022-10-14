@@ -13,21 +13,21 @@ void (*const manageFlags[mode_count])(Message&, Dependencies&, bool, size_t, Use
 
 void	flag_operator(Message &message, Dependencies &deps, bool add_flag, size_t i, User &author, std::string &channel_name)
 {
-	if (author.flags == CHANNEL_USER)
+	if (author.getStatus() == CHANNEL_USER)
 		throw ERR_CHANOPRIVSNEEDED(message.arguments[0]);
 	if (!deps.channels.get(channel_name).users.has(message.arguments[i + 1]))
 		return ;
 	User	&target = deps.channels.get(channel_name).users[message.arguments[i + 1]];
-	if (add_flag == true && target.flags != CHANNEL_CREATOR)
-		target.flags = CHANNEL_OPERATOR;
-	if (add_flag == false && author.flags == CHANNEL_CREATOR && target.flags != CHANNEL_CREATOR)
-		target.flags = CHANNEL_USER;
+	if (add_flag == true && target.getStatus() != CHANNEL_CREATOR)
+		target.setStatus(CHANNEL_OPERATOR);
+	if (add_flag == false && author.getStatus() == CHANNEL_CREATOR && target.getStatus() != CHANNEL_CREATOR)
+		target.setStatus(CHANNEL_USER);
 }
 
 void	flag_invite(Message &message, Dependencies &deps, bool add_flag, size_t i, User &author, std::string &channel_name)
 {
 	(void)i;
-	if (author.flags == CHANNEL_USER)
+	if (author.getStatus() == CHANNEL_USER)
 		throw ERR_CHANOPRIVSNEEDED(message.arguments[0]);
 	Channel	&it = deps.channels.get(channel_name);
 	if (add_flag == true)
@@ -38,7 +38,7 @@ void	flag_invite(Message &message, Dependencies &deps, bool add_flag, size_t i, 
 
 void	flag_key(Message &message, Dependencies &deps, bool add_flag, size_t i, User &author, std::string &channel_name)
 {
-	if (author.flags == CHANNEL_USER)
+	if (author.getStatus() == CHANNEL_USER)
 		throw ERR_CHANOPRIVSNEEDED(message.arguments[0]);
 	Channel	&it = deps.channels.get(channel_name);
 	if (add_flag == true)
