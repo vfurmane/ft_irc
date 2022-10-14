@@ -1,5 +1,5 @@
 NAME = ircserv
-SRCS = $(addprefix src/, main.cpp ChannelManager.cpp Channel.cpp commands.cpp utils.cpp Configuration.cpp IRCReplies.cpp Peer.cpp PeerManager.cpp Message.cpp Server.cpp User.cpp UserManager.cpp $(addprefix commands/, cap.cpp join.cpp mode.cpp nick.cpp part.cpp pass.cpp ping.cpp quit.cpp user.cpp))
+SRCS = $(addprefix src/, main.cpp ChannelManager.cpp Channel.cpp commands.cpp utils.cpp Configuration.cpp IRCReplies.cpp Peer.cpp PeerManager.cpp Message.cpp Server.cpp User.cpp UserManager.cpp $(addprefix commands/, cap.cpp join.cpp mode.cpp nick.cpp part.cpp pass.cpp ping.cpp quit.cpp user.cpp $(addprefix mode/, channel.cpp $(addprefix channel/, invite_only.cpp key.cpp operator.cpp))))
 OBJS = $(SRCS:.cpp=.o)
 DEPS = $(SRCS:.cpp=.d)
 INCLDIR = include
