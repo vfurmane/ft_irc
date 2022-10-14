@@ -25,7 +25,7 @@ int	command_user(Message &message, Dependencies &deps)
 	message.peer.setRealName(message.arguments[3]);
 	if (message.peer.hasAllFields())
 	{
-		if (message.peer.registration(deps.config.getPassword()) == 0)
+		if (message.peer.registration() == 0)
 			return 0;
 	}
 	return (1);

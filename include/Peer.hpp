@@ -33,7 +33,7 @@ class Peer
 		void				setRealName(const std::string &realname);
 		bool				hasAllFields(void) const;
 		bool				isRegistered(void) const;
-		int					registration(const std::string &password = std::string());
+		int					registration(void);
 		void				setNickname(const std::string &new_nick);
 		void				setPassword(const std::string &new_password);
 		std::string			generatePrefix(void) const;

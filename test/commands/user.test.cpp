@@ -125,6 +125,7 @@ TEST_CASE("USER")
 	{
 		struct sockaddr	addr;
 		Configuration	config;
+		config._password = "test";
 		Server			server(config);
 		Peer			peer(server, 3, addr);
 		Message			message(peer, std::string());
@@ -139,7 +140,6 @@ TEST_CASE("USER")
 		message.arguments[2] = "*";
 		message.arguments[3] = "john doe";
 		peermanager.add(3, addr);
-		config._password = "test";
 		peer._password = "wrong";
 		REQUIRE( command_user(message, deps) == 0 );
 	};

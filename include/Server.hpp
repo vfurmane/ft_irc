@@ -51,6 +51,7 @@ class Server
 		};
 
 		ChannelManager	channels;
+		Configuration	config;
 		PeerManager		peers;
 
 	private:
@@ -59,7 +60,6 @@ class Server
 		int			_handle_message(epoll_event &event);
 		void		_handleReadyFds(int event_count, struct epoll_event *events);
 
-		Configuration	_config;
 		int			_sockfd;
 		int			_epollfd;
 };

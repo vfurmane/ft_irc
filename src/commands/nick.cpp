@@ -53,7 +53,7 @@ int		command_nick(Message &message, Dependencies &deps)
 	}
 	else if (message.peer.hasAllFields())
 	{
-		if (message.peer.registration(deps.config.getPassword()) == 0)
+		if (message.peer.registration() == 0)
 			return 0;
 	}
 	return 1;
