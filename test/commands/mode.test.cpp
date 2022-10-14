@@ -19,8 +19,8 @@ TEST_CASE("MODE")
 		Server			server(config);
 		Peer			peer(server, 3, addr);
 		Message			message(peer, std::string());
-		PeerManager		peermanager(server);
-		ChannelManager	channels;
+		PeerManager		&peermanager(server);
+		ChannelManager	&channels;
 		Dependencies	deps = {config, peermanager, channels};
 
 		message.argCount = 0;
@@ -36,8 +36,8 @@ TEST_CASE("MODE")
 		Server			server(config);
 		Peer			peer(server, 3, addr);
 		Message			message(peer, std::string());
-		PeerManager		peermanager(server);
-		ChannelManager	channels;
+		PeerManager		&peermanager(server);
+		ChannelManager	&channels;
 		Dependencies	deps = {config, peermanager, channels};
 	
 		message.argCount = 2;
