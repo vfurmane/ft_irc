@@ -6,6 +6,8 @@
 # include "UserManager.hpp"
 # include "utils.hpp"
 
+struct Message;
+
 typedef enum	e_channel_namespace
 {
 	PUBLIC = '#'
@@ -54,5 +56,7 @@ class Channel : public _base_channel
 		uint32_t			_flags;
 		User				*_creator;
 };
+
+#include "Message.hpp"
 
 #endif
