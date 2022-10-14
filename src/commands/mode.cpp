@@ -31,9 +31,9 @@ void	flag_invite(Message &message, Dependencies &deps, bool add_flag, size_t i, 
 		throw ERR_CHANOPRIVSNEEDED(message.arguments[0]);
 	Channel	&it = deps.channels.get(channel_name);
 	if (add_flag == true)
-		it.getFlags() |= FLAG_INVITE;
+		it.setFlag(FLAG_INVITE);
 	if (add_flag == false)
-		it.getFlags() &= ~FLAG_INVITE;
+		it.unsetFlag(FLAG_INVITE);
 }
 
 void	flag_key(Message &message, Dependencies &deps, bool add_flag, size_t i, User &author, std::string &channel_name)
@@ -44,12 +44,12 @@ void	flag_key(Message &message, Dependencies &deps, bool add_flag, size_t i, Use
 	if (add_flag == true)
 	{
 		it.setKey(message.arguments[i + 1]);
-		it.getFlags() |= FLAG_KEY;
+		it.setFlag(FLAG_KEY);
 	}
 	if (add_flag == false)
 	{
 		it.unsetKey();
-		it.getFlags() &= ~FLAG_KEY;
+		it.unsetFlag(FLAG_KEY);
 	}
 }
 

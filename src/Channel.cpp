@@ -91,9 +91,19 @@ Channel::~Channel(void)
 {
 }
 
-uint32_t	&Channel::getFlags(void)
+uint32_t	Channel::getFlags(void) const
 {
 	return this->_flags;
+}
+
+void	Channel::setFlag(int flag)
+{
+	this->_flags |= flag;
+}
+
+void	Channel::unsetFlag(int flag)
+{
+	this->_flags &= ~flag;
 }
 
 void	Channel::setKey(const std::string &key)

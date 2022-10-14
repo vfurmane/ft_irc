@@ -49,7 +49,9 @@ class Channel : public _base_channel
 		Channel &operator=(const Channel &rhs);
 		~Channel(void);
 
-		uint32_t	&getFlags(void);
+		uint32_t	getFlags(void) const;
+		void	setFlag(int flag);
+		void	unsetFlag(int flag);
 		void	setKey(const std::string &key);
 		void	unsetKey(void);
 		bool	compareKey(const std::string &key) const;
