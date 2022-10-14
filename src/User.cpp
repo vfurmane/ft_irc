@@ -1,4 +1,5 @@
 #include "User.hpp"
+#include "Channel.hpp"
 
 User::User(Peer &peer, Channel &channel): peer(peer), channel(channel), _status(CHANNEL_USER) 
 {
@@ -24,7 +25,7 @@ uint8_t	User::getStatus(void) const
 	return this->_status;
 }
 
-void	User::setStatus(uint8_t status)
+void	User::setStatus(t_user_status status)
 {
 	this->_status = status;
 }

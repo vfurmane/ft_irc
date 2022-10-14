@@ -23,13 +23,13 @@ class User
 		~User(void);
 
 		uint8_t	getStatus(void) const;
-		void	setStatus(uint8_t status);
+		void	setStatus(t_user_status status);
 
 		Peer	&peer;
 		Channel	&channel;
 
 	private:
-		uint8_t	_status;
+		t_user_status	_status;
 };
 
 # include "Channel.hpp"

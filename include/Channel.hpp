@@ -14,11 +14,11 @@ typedef enum	e_channel_namespace
 	PUBLIC = '#'
 }				t_channel_namespace;
 
-typedef enum	e_channel_flags
+typedef enum	e_channel_flag
 {
 	FLAG_INVITE = 1,
 	FLAG_KEY	= 2
-}				t_channel_flags;
+}				t_channel_flag;
 
 class _base_channel
 {
@@ -50,8 +50,8 @@ class Channel : public _base_channel
 		~Channel(void);
 
 		uint32_t	getFlags(void) const;
-		void	setFlag(uint32_t flag);
-		void	unsetFlag(uint32_t flag);
+		void	setFlag(t_channel_flag flag);
+		void	unsetFlag(t_channel_flag flag);
 		void	setKey(const std::string &key);
 		void	unsetKey(void);
 		bool	compareKey(const std::string &key) const;

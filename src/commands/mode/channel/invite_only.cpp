@@ -3,7 +3,7 @@
 #include "commands.hpp"
 #include "IRCErrors.hpp"
 
-void	flag_invite(Message &message, Dependencies &deps, bool add_flag, size_t i, User &author, std::string &channel_name)
+void	flag_invite_only(Message &message, Dependencies &deps, bool add_flag, size_t i, User &author, const std::string &channel_name)
 {
 	(void)i;
 	if (author.getStatus() == CHANNEL_USER)

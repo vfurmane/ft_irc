@@ -3,7 +3,7 @@
 #include "commands.hpp"
 #include "IRCErrors.hpp"
 
-void	command_mode_channel(Message &message, Dependencies &deps, std::string &channel_name);
+void	command_mode_channel(Message &message, Dependencies &deps, const std::string &channel_name);
 
 int	command_mode(Message &message, Dependencies &deps)
 {

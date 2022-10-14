@@ -3,15 +3,11 @@
 #include "commands.hpp"
 #include "IRCErrors.hpp"
 
-void	flag_operator(Message &message, Dependencies &deps, bool add_flag, size_t i, User &author, std::string &channel_name);
-void	flag_invite(Message &message, Dependencies &deps, bool add_flag, size_t i, User &author, std::string &channel_name);
-void	flag_key(Message &message, Dependencies &deps, bool add_flag, size_t i, User &author, std::string &channel_name);
-
 static const size_t mode_count = 3;
 static const char mode_name[mode_count] = {'o', 'i', 'k'};
-void (*const manageFlags[mode_count])(Message&, Dependencies&, bool, size_t, User&, std::string&) = {flag_operator, flag_invite, flag_key};
+void (*const manageFlags[mode_count])(Message&, Dependencies&, bool, size_t, User&, const std::string&) = {flag_operator, flag_invite_only, flag_key};
 
-void	command_mode_channel(Message &message, Dependencies &deps, std::string &channel_name)
+void	command_mode_channel(Message &message, Dependencies &deps, const std::string &channel_name)
 {
 	User	&author = deps.channels.get(channel_name).users[message.peer.getUsername()];
 	std::string::const_iterator	it;

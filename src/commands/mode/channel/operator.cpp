@@ -3,7 +3,7 @@
 #include "commands.hpp"
 #include "IRCErrors.hpp"
 
-void	flag_operator(Message &message, Dependencies &deps, bool add_flag, size_t i, User &author, std::string &channel_name)
+void	flag_operator(Message &message, Dependencies &deps, bool add_flag, size_t i, User &author, const std::string &channel_name)
 {
 	if (author.getStatus() == CHANNEL_USER)
 		throw ERR_CHANOPRIVSNEEDED(message.arguments[0]);

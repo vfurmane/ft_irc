@@ -53,6 +53,11 @@ int	command_ping(Message &message, Dependencies &deps);
 int	command_quit(Message &message, Dependencies &deps);
 int	command_user(Message &message, Dependencies &deps);
 
+void	command_mode_channel(Message &message, Dependencies &deps, std::string &channel_name);
+void	flag_operator(Message &message, Dependencies &deps, bool add_flag, size_t i, User &author, const std::string &channel_name);
+void	flag_invite_only(Message &message, Dependencies &deps, bool add_flag, size_t i, User &author, const std::string &channel_name);
+void	flag_key(Message &message, Dependencies &deps, bool add_flag, size_t i, User &author, const std::string &channel_name);
+
 # include "Channel.hpp"
 # include "PeerManager.hpp"
 # include "ChannelManager.hpp"
