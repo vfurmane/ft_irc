@@ -26,6 +26,7 @@ class _base_channel
 		std::string					stringify(void) const;
 
 		static _base_channel		parse(const std::string &channel);
+		static bool					isValidName(const std::string &channel);
 
 	protected:
 		const std::string			_name;
