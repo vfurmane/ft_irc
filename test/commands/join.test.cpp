@@ -103,4 +103,17 @@ TEST_CASE("JOIN")
 		REQUIRE( channels["general"].users.has(peer._username) );
 		REQUIRE( channels["ft_irc"].users.has(peer._username) );
 	};
+	SECTION("JOIN 0")
+	{
+		peer._username = "john_doe";
+		Channel	&channel1 = peer.createChannel(std::string("general"));
+		Channel	&channel2 = peer.createChannel(std::string("random"));
+		channel1.add(peer);
+		channel2.add(peer);
+		message.arguments[0] = "0";
+		message.argCount = 1;
+		command_join(message, deps);
+		REQUIRE( !channels["general"].users.has(peer._username) );
+		REQUIRE( !channels["random"].users.has(peer._username) );
+	};
 };

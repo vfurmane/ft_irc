@@ -111,6 +111,15 @@ void    Peer::sendMessage(const AIRCError &error) const
     send(this->getFd(), (message + CRLF).c_str(), (message + CRLF).length(), 0);
 }
 
+void	Peer::leaveAllChannels(void)
+{
+	for (ChannelManager::iterator it = this->server.channels.begin(); it != this->server.channels.end(); ++it)
+	{
+		if (it->second.users.has(this->getUsername()))
+			it->second.users.remove(this->getUsername());
+	}
+}
+
 char	*Peer::getStrAddr(void) const
 {
 	return inet_ntoa(((struct sockaddr_in *)(&this->_addr))->sin_addr);
