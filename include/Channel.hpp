@@ -3,6 +3,7 @@
 
 # include <stdint.h>
 # include <string>
+#include <vector>
 # include "UserManager.hpp"
 # include "utils.hpp"
 
@@ -56,6 +57,8 @@ class Channel : public _base_channel
 		void	unsetKey(void);
 		bool	compareKey(const std::string &key) const;
 		void	setCreator(User &user);
+		void	addInvitation(std::string nickname);
+		bool	isInvited(std::string nickname);
 
 		User	&add(Peer &peer);
 		void	remove(const Peer &peer);
@@ -68,6 +71,7 @@ class Channel : public _base_channel
 		std::string			_key;
 		uint32_t			_flags;
 		User				*_creator;
+		std::vector<std::string>	_invitations;
 };
 
 #include "Message.hpp"

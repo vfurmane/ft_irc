@@ -67,15 +67,15 @@ std::string	_base_channel::stringify(void) const
 	return static_cast<char>(this->_namespace) + this->_name;
 }
 
-Channel::Channel(ChannelManager &manager, const std::string &name): _base_channel(name), users(), manager(manager), _key(), _flags(0), _creator(NULL)
+Channel::Channel(ChannelManager &manager, const std::string &name): _base_channel(name), users(), manager(manager), _key(), _flags(0), _creator(NULL), _invitations()
 {
 }
 
-Channel::Channel(ChannelManager &manager, const _base_channel &obj): _base_channel(obj), users(), manager(manager), _key(), _flags(0), _creator(NULL)
+Channel::Channel(ChannelManager &manager, const _base_channel &obj): _base_channel(obj), users(), manager(manager), _key(), _flags(0), _creator(NULL), _invitations()
 {
 }
 
-Channel::Channel(const Channel &obj): _base_channel(obj), users(obj.users), manager(obj.manager), _key(obj._key), _flags(obj._flags) , _creator(NULL)
+Channel::Channel(const Channel &obj): _base_channel(obj), users(obj.users), manager(obj.manager), _key(obj._key), _flags(obj._flags) , _creator(NULL), _invitations()
 {
 }
 
@@ -129,6 +129,16 @@ void	Channel::setCreator(User &user)
 	user.setStatus(CHANNEL_CREATOR);
 }
 
+void	Channel::addInvitation(std::string nickName)
+{
+	this->_invitations.push_back(nickName);
+}
+
+bool	Channel::isInvited(std::string nickname)
+{
+	return std::find(this->_invitations.begin(), this->_invitations.end(), nickname) != this->_invitations.end();
+}
+
 User	&Channel::add(Peer &peer)
 {
 #ifndef NDEBUG
@@ -154,7 +164,7 @@ void	Channel::remove(const User &user)
 	this->remove(user.peer);
 }
 
-void    Channel::sendMessage(const Message &message) const
+void	Channel::sendMessage(const Message &message) const
 {
 #ifndef NDEBUG
 	std::cerr << "Sending message to channel " << this->stringify() << std::endl;
