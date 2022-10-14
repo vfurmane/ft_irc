@@ -1,6 +1,6 @@
 #include "Peer.hpp"
 
-Peer::Peer(Server &server, int fd, struct sockaddr &addr): server(server), _fd(fd), _addr(addr), _message(), _nickname(), _username(), _realname(), _mode(), _password(), _registered(false)
+Peer::Peer(Server &server, int fd, const struct sockaddr &addr): server(server), _fd(fd), _addr(addr), _message(), _nickname(), _username(), _realname(), _password(), _registered(false)
 {
 }
 
