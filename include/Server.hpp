@@ -6,7 +6,6 @@
 # define TIMEOUT 1000
 
 # define MAX_READ 63
-# define MAX_MSG_LENGTH 512
 
 # include <arpa/inet.h>
 # include <csignal>
