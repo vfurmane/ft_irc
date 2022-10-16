@@ -2,7 +2,7 @@
 
 static bool	g_is_listening = false;
 
-Server::Server(Configuration &config) : channels(), _config(config), _peers(*this), _sockfd(-1), _epollfd(-1)
+Server::Server(Configuration &config) : channels(), peers(*this), _config(config), _sockfd(-1), _epollfd(-1)
 {
 #ifndef NDEBUG
 	std::cerr << "Creating a server..." << std::endl;
@@ -99,7 +99,7 @@ int	Server::_handle_message(epoll_event &event)
 {
 	int		bytes_read;
 	char	buffer[MAX_READ + 1];
-	Peer	&peer = this->_peers.get(event.data.fd);
+	Peer	&peer = this->peers.get(event.data.fd);
 	
 	bytes_read = recv(event.data.fd, buffer, MAX_READ, 0);
 	if (bytes_read <= 0)
@@ -116,7 +116,7 @@ int	Server::_handle_message(epoll_event &event)
 			return 1;
 		}
 		peer.appendMessage(buffer);
-		if (peer.hasCompleteMessage())
+		while (peer.hasCompleteMessage())
 		{
 			if (peer.getMessage() == "\r\n")
 			{
@@ -142,7 +142,7 @@ int	Server::_handle_message(epoll_event &event)
 #endif
 			try
 			{
-				Dependencies deps = {this->_config, this->_peers, this->channels};
+				Dependencies deps = {this->_config, this->peers, this->channels};
 				if (message.execute(deps) <= 0)
 					return 0;
 			}
@@ -172,16 +172,16 @@ void	Server::_handleReadyFds(int event_count, struct epoll_event *events)
 #ifndef NDEBUG
 			std::cerr << "New connection..." << std::endl;
 #endif
-			this->_addFdToEpoll(this->_peers.acceptConnection());
+			this->_addFdToEpoll(this->peers.acceptConnection());
 		}
 		else
 		{
 #ifndef NDEBUG
-			std::cerr << this->_peers.get(events[i].data.fd).generatePrefix() << "> New message..." << std::endl;
+			std::cerr << this->peers.get(events[i].data.fd).generatePrefix() << "> New message..." << std::endl;
 #endif
 			if (this->_handle_message(events[i]) == -1)
 			{
-				this->_peers.closeConnection(events[i].data.fd);
+				this->peers.closeConnection(events[i].data.fd);
 			}
 		}
 	}
@@ -241,7 +241,7 @@ void	Server::listen(void)
 
 void	Server::closeAllConnections(void)
 {
-	this->_peers.clear();
+	this->peers.clear();
 }
 
 int	Server::getEpollFd(void) const

@@ -4,7 +4,7 @@ Peer::Peer(Server &server, int fd, const struct sockaddr &addr): server(server),
 {
 }
 
-Peer::Peer(const Peer &obj): server(obj.server), _fd(obj.getFd()), _addr(obj._addr), _message(), _nickname(), _username(), _realname(), _mode(), _password(), _registered(false)
+Peer::Peer(const Peer &obj): server(obj.server), _fd(obj.getFd()), _addr(obj._addr), _message(), _nickname(), _username(), _realname(), _password(), _registered(false)
 {
 }
 
@@ -38,13 +38,19 @@ void	Peer::appendMessage(const char *buffer)
 
 void	Peer::clearMessage(void)
 {
-	this->_message.clear();
+	std::string::size_type crlf_pos = this->_message.find(CRLF);
+
+	if (crlf_pos == std::string::npos)
+		this->_message.clear();
+	else
+		this->_message = this->_message.substr(crlf_pos + 2);
 }
 
 bool	Peer::hasCompleteMessage(void) const
 {
-	return (*(this->_message.end() - 2) == '\r'
-			&& *(this->_message.end() - 1) == '\n');
+	std::string::size_type crlf_pos = this->_message.find(CRLF);
+
+	return crlf_pos != std::string::npos;
 }
 
 const std::string	&Peer::getMessage(void) const
@@ -57,17 +63,42 @@ int Peer::getFd(void) const
 	return this->_fd;
 }
 
+void	Peer::setUsername(const std::string &username)
+{
+	if (this->_username.empty())
+		this->_username = username;
+}
+
+void	Peer::setRealName(const std::string &realname)
+{
+	if (this->_realname.empty())
+		this->_realname = realname;
+}
+
+bool	Peer::hasAllFields(void) const
+{
+	return !(this->_nickname.empty() || this->_username.empty() || this->_realname.empty());
+}
+
 bool	Peer::isRegistered(void) const
 {
 	return this->_registered;
 }
 
-void	Peer::registration(const std::string &user, const std::string &mode, const std::string &realname)
+int	Peer::registration(const std::string &password)
 {
+	if (!password.empty() && this->getPassword() != password)
+	{
+		this->sendMessage(ErrorMessage(*this, "Access denied by configuration"));
+		this->server.peers.closeConnection(this->getFd());
+		return 0;
+	}
 	this->_registered = true;
-	this->_username = user;
-	this->_mode = mode;
-	this->_realname = realname;
+	this->sendMessage(RPL_WELCOME(*this));
+	this->sendMessage(RPL_YOURHOST(*this));
+	this->sendMessage(RPL_CREATED(*this));
+	this->sendMessage(RPL_MYINFO(*this));
+	return 1;
 }
 
 void	Peer::setNickname(const std::string &new_nick)
