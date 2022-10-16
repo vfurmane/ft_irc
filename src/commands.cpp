@@ -10,7 +10,7 @@ ErrorMessage::ErrorMessage(Peer &peer, const std::string &message, bool include_
 	this->input = this->updateInputFromFields();
 }
 
-JoinMessage::JoinMessage(Peer &peer, const Channel &channel, bool include_prefix) : Message(peer, std::string())
+JoinMessage::JoinMessage(Peer &peer, const _base_channel &channel, bool include_prefix) : Message(peer, std::string())
 {
 	this->command = "JOIN";
 	this->arguments[0] = channel.stringify();

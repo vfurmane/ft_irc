@@ -37,7 +37,8 @@ TEST_CASE("Channel::setKey")
 {
 	SECTION("should save the key")
 	{
-		Channel	channel("general");
+		ChannelManager	channels;
+		Channel			channel(channels, "general");
 
 		channel.setKey("key");
 		REQUIRE( channel._key == "key" );
@@ -48,7 +49,8 @@ TEST_CASE("Channel::unsetKey")
 {
 	SECTION("should change the key")
 	{
-		Channel	channel("general");
+		ChannelManager	channels;
+		Channel			channel(channels, "general");
 
 		channel._key = "key";
 		channel.unsetKey();
@@ -60,7 +62,8 @@ TEST_CASE("Channel::setKey and Channel::unsetKey")
 {
 	SECTION("should change the key")
 	{
-		Channel	channel("general");
+		ChannelManager	channels;
+		Channel			channel(channels, "general");
 
 		channel.setKey("key");
 		channel.unsetKey();
@@ -73,7 +76,8 @@ TEST_CASE("Channel::compareKey")
 {
 	SECTION("should ignore if the key is empty")
 	{
-		Channel	channel("general");
+		ChannelManager	channels;
+		Channel			channel(channels, "general");
 
 		channel._key = "";
 		REQUIRE( channel.compareKey("") );
@@ -81,14 +85,16 @@ TEST_CASE("Channel::compareKey")
 	};
 	SECTION("should validate the key")
 	{
-		Channel	channel("general");
+		ChannelManager	channels;
+		Channel			channel(channels, "general");
 
 		channel._key = "key";
 		REQUIRE( channel.compareKey("key") );
 	};
 	SECTION("should not validate the key")
 	{
-		Channel	channel("general");
+		ChannelManager	channels;
+		Channel			channel(channels, "general");
 
 		channel._key = "key";
 		REQUIRE( !channel.compareKey("password") );

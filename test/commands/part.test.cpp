@@ -31,7 +31,8 @@ TEST_CASE("PART")
 	}
 	SECTION("should work with complex channel name #1")
 	{
-		Channel channel("channel");
+		ChannelManager	channels;
+		Channel			channel(channels, "general");
 		peer._username = "test_user";
 		peer.createChannel(channel);
 		message.arguments[0] = "#Channel";
@@ -40,7 +41,8 @@ TEST_CASE("PART")
 	}
 	SECTION("should work with complex channel name #2")
 	{
-		Channel channel("this_is_the_best_channel");
+		ChannelManager	channels;
+		Channel			channel(channels, "this_is_the_best_channel");
 		peer._username = "test_user";
 		peer.createChannel(channel);
 		message.arguments[0] = "#tHIs_iS_tHe_beSt_chaNNEl";
@@ -49,7 +51,8 @@ TEST_CASE("PART")
 	}
 	SECTION("should remove the user from channel")
 	{
-		Channel channel("channel");
+		ChannelManager	channels;
+		Channel			channel(channels, "channel");
 		peer._username = "test_user";
 		peer.createChannel(channel);
 		message.arguments[0] = "#channel";
@@ -60,7 +63,8 @@ TEST_CASE("PART")
 	}
 	SECTION("user not on channel")
 	{
-		Channel channel("channel");
+		ChannelManager	channels;
+		Channel			channel(channels, "channel");
 		Peer	test_peer(server, 4, addr);
 		test_peer._username = "valentin";
 		test_peer.createChannel(channel);
@@ -71,7 +75,8 @@ TEST_CASE("PART")
 	}
 	SECTION("user on channel")
 	{
-		Channel channel("channel");
+		ChannelManager	channels;
+		Channel			channel(channels, "channel");
 		peer._username = "test_user";
 		peer.createChannel(channel);
 		message.arguments[0] = "#channel";
@@ -80,10 +85,11 @@ TEST_CASE("PART")
 	}
 	SECTION("should part from a list of channel")
 	{
-		Channel channel1("channel1");
-		Channel channel2("channel2");
-		Channel channel3("channel3");
-		Channel channel4("channel4");
+		ChannelManager	channels;
+		Channel			channel1(channels, "channel1");
+		Channel			channel2(channels, "channel2");
+		Channel			channel3(channels, "channel3");
+		Channel			channel4(channels, "channel4");
 		peer._username = "test_user";
 		peer.createChannel(channel1);
 		peer.createChannel(channel2);
