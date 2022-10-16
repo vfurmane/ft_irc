@@ -19,7 +19,7 @@ User::~User(void)
 {
 }
 
-uint8_t	User::getStatus(void) const
+t_user_status	User::getStatus(void) const
 {
 	return this->_status;
 }

@@ -22,7 +22,7 @@ class User
 		User &operator=(const User &rhs);
 		~User(void);
 
-		uint8_t	getStatus(void) const;
+		t_user_status	getStatus(void) const;
 		void	setStatus(t_user_status status);
 
 		Peer	&peer;
