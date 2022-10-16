@@ -48,3 +48,8 @@ bool	ChannelManager::has(const std::string &name) const
 	const std::string	lowercase_name = toIRCLower(name);
 	return Manager::has(lowercase_name);
 }
+
+bool	ChannelManager::has(const _base_channel &base_channel) const
+{
+	return this->has(base_channel.getName());
+}
