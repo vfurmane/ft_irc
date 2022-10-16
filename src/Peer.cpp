@@ -23,6 +23,7 @@ Channel	&Peer::createChannel(const _base_channel &base_channel)
 	Channel &channel = this->server.channels.add(base_channel);
 	User	&user = channel.add(*this);
 	channel.setCreator(user);
+	user.setStatus(CHANNEL_CREATOR);
 	return channel;
 }
 
