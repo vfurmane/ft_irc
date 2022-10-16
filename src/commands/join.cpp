@@ -18,6 +18,8 @@ int		command_join(Message &message, Dependencies &deps)
 	std::vector<std::string>::const_iterator	key_it = keys.begin();
 	while (chan_it != channels.end())
 	{
+		if (!_base_channel::isValidName(*chan_it))
+			return 1;
 		_base_channel base_channel = Channel::parse(*chan_it);
 		try
 		{
