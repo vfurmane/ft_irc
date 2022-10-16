@@ -23,6 +23,28 @@ class ERR_NOSUCHCHANNEL : public AIRCError
 		}
 };
 
+class ERR_NORECIPIENT : public AIRCError
+{
+	private:
+		const std::string	_str;
+
+	public:
+		ERR_NORECIPIENT(const std::string &command) : _str("411 :No recipient given (" + command + ")") {}
+		~ERR_NORECIPIENT(void) throw() {}
+		virtual const char* what() const throw()
+		{
+			return this->_str.c_str();
+		}
+};
+
+struct ERR_NOTEXTTOSEND : public AIRCError
+{
+	virtual const char* what() const throw()
+	{
+		return "412 :No text to send";
+	}
+};
+
 class ERR_UNKNOWNCOMMAND : public AIRCError
 {
 	private:
