@@ -1,9 +1,5 @@
 #include "Channel.hpp"
 
-_base_channel::_base_channel(void): _name(), _namespace(PUBLIC)
-{
-}
-
 _base_channel::_base_channel(const std::string &name): _name(toIRCLower(name)), _namespace(PUBLIC)
 {
 }
