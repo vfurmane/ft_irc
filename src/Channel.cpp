@@ -126,6 +126,7 @@ bool	Channel::compareKey(const std::string &key) const
 void	Channel::setCreator(User &user)
 {
 	this->_creator = &user;
+	user.setStatus(CHANNEL_CREATOR);
 }
 
 User	&Channel::add(Peer &peer)
