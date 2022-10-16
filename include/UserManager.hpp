@@ -18,6 +18,7 @@ class UserManager : public Manager<std::string, User>
 		~UserManager(void);
 
 		User	&add(const User &user);
+		void	remove(const std::string &username);
 		void	remove(const User &user);
 };
 

@@ -23,7 +23,12 @@ User	&UserManager::add(const User &user)
 	return Manager::add(user.peer.getUsername(), user);
 }
 
+void	UserManager::remove(const std::string &username)
+{
+	Manager::remove(username); 
+}
+
 void UserManager::remove(const User &user)
 {
-	Manager::remove(user.peer.getUsername()); 
+	this->remove(user.peer.getUsername());
 }

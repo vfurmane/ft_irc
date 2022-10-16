@@ -5,6 +5,11 @@ int		command_join(Message &message, Dependencies &deps)
 	if (message.argCount < 1)
 		throw ERR_NEEDMOREPARAMS("JOIN");
 
+	if (message.arguments[0] == "0")
+	{
+		message.peer.leaveAllChannels();
+		return 1;
+	}
 	const std::vector<std::string>	channels = parseList(message.arguments[0]);
 	const std::vector<std::string>	keys = message.argCount >= 2 ?
 		parseList(message.arguments[1]) : std::vector<std::string>();

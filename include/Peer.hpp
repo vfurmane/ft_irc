@@ -39,6 +39,7 @@ class Peer
 		std::string			generatePrefix(void) const;
 		void				sendMessage(const Message &message) const;
 		void				sendMessage(const AIRCError &error) const;
+		void				leaveAllChannels(void);
 
 		char			*getStrAddr(void) const;
 		int				getFd(void) const;
