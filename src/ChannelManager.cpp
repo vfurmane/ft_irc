@@ -43,6 +43,17 @@ void ChannelManager::remove(const std::string &name)
 	Manager::remove(lowercase_name);
 }
 
+Channel	&ChannelManager::get(const std::string &name)
+{
+	const std::string	lowercase_name = toIRCLower(name);
+	return (*this)[lowercase_name];
+}
+
+Channel	&ChannelManager::get(const _base_channel &base_channel)
+{
+	return this->get(base_channel.getName());
+}
+
 bool	ChannelManager::has(const std::string &name) const
 {
 	const std::string	lowercase_name = toIRCLower(name);
