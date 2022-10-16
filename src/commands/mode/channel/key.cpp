@@ -12,7 +12,7 @@ void	flag_key(bool add_flag, User &author, Channel &channel, const std::string &
 		channel.setKey(argument);
 		channel.setFlag(FLAG_KEY);
 	}
-	if (add_flag == false)
+	else
 	{
 		channel.unsetKey();
 		channel.unsetFlag(FLAG_KEY);

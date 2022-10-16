@@ -10,6 +10,6 @@ void	flag_invite_only(bool add_flag, User &author, Channel &channel, const std::
 		throw ERR_CHANOPRIVSNEEDED(channel.getName());
 	if (add_flag == true)
 		channel.setFlag(FLAG_INVITE);
-	if (add_flag == false)
+	else
 		channel.unsetFlag(FLAG_INVITE);
 }
