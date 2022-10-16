@@ -33,6 +33,11 @@ struct PongMessage : public Message
 	PongMessage(Peer &peer, const std::string &server_name, bool include_prefix = false);
 };
 
+struct PrivmsgMessage : public Message
+{
+	PrivmsgMessage(Peer &peer, const std::string &text_to_send, bool include_prefix = false);
+};
+
 struct Dependencies
 {
 	Configuration	&config;
