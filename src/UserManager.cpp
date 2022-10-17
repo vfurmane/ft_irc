@@ -32,3 +32,23 @@ void UserManager::remove(const User &user)
 {
 	this->remove(user.peer.getUsername());
 }
+
+User	&UserManager::getByNickname(const std::string &nick)
+{
+	for (UserManager::iterator it = this->begin(); it != this->end(); ++it)
+	{
+		if (it->second.peer.getNickname() == nick)
+			return it->second;
+	}
+	throw std::out_of_range("UserManager::getByNickname");
+}
+
+bool	UserManager::hasByNickname(const std::string &nick)
+{
+	for (UserManager::iterator it = this->begin(); it != this->end(); ++it)
+	{
+		if (it->second.peer.getNickname() == nick)
+			return true;
+	}
+	return false;
+}

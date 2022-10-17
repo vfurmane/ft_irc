@@ -20,6 +20,8 @@ class UserManager : public Manager<std::string, User>
 		User	&add(const User &user);
 		void	remove(const std::string &username);
 		void	remove(const User &user);
+		User	&getByNickname(const std::string &nick);
+		bool	hasByNickname(const std::string &nick);
 };
 
 # include "User.hpp"
