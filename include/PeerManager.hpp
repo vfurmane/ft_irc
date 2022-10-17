@@ -25,6 +25,9 @@ class PeerManager : public Manager<int, Peer>
 		int		acceptConnection(void);
 		void	closeConnection(int fd);
 
+		Peer	&getByNickname(const std::string &nick);
+		bool	hasByNickname(const std::string &nick) const;
+
 	private:
 		Server				&_server;
 };

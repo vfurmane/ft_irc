@@ -109,3 +109,23 @@ void	PeerManager::clear(void)
 		this->remove((it++)->second.getFd());
 	}
 }
+
+Peer	&PeerManager::getByNickname(const std::string &nick)
+{
+	for (PeerManager::iterator it = this->begin(); it != this->end(); ++it)
+	{
+		if (it->second.getNickname() == nick)
+			return it->second;
+	}
+	throw std::out_of_range("PeerManager::getByNickname");
+}
+
+bool	PeerManager::hasByNickname(const std::string &nick) const
+{
+	for (PeerManager::const_iterator it = this->begin(); it != this->end(); ++it)
+	{
+		if (it->second.getNickname() == nick)
+			return true;
+	}
+	return false;
+}
