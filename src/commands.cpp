@@ -30,11 +30,12 @@ PongMessage::PongMessage(Peer &peer, const std::string &server_name, bool includ
 	this->input = this->updateInputFromFields();
 }
 
-PrivmsgMessage::PrivmsgMessage(Peer &peer, const std::string &text_to_send, bool include_prefix) : Message(peer, std::string())
+PrivmsgMessage::PrivmsgMessage(Peer &peer, const std::string &target, const std::string &text_to_send, bool include_prefix) : Message(peer, std::string())
 {
 	this->command = "PRIVMSG";
-	this->arguments[0] = text_to_send;
-	this->argCount = 1;
+	this->arguments[0] = target;
+	this->arguments[1] = text_to_send;
+	this->argCount = 2;
 	if (include_prefix)
 		this->prefix = this->updatePrefixFromPeer();
 	this->input = this->updateInputFromFields();
