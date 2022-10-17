@@ -41,16 +41,16 @@ class Peer
 		void				sendMessage(const AIRCError &error) const;
 		void				leaveAllChannels(void);
 
-		char			*getStrAddr(void) const;
-		int				getFd(void) const;
-		const std::string		&getUsername(void) const;
-		const std::string 		&getNickname(void) const;
-		const std::string		&getPassword(void) const;
+		char				*getStrAddr(void) const;
+		int					getFd(void) const;
+		const std::string	&getUsername(void) const;
+		const std::string	&getNickname(void) const;
+		const std::string	&getPassword(void) const;
 
 		Server	&server;
 
 	private:
-		const int				_fd;
+		const int		_fd;
 		struct sockaddr	_addr;
 		std::string		_message;
 		std::string		_nickname;
