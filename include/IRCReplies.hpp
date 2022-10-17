@@ -31,6 +31,11 @@ struct RPL_MYINFO : public Message
 	RPL_MYINFO(Peer &peer, bool include_prefix = false);
 };
 
+struct RPL_INVITING : public Message
+{
+	RPL_INVITING(Peer &peer, const std::string &channel, const std::string &nickname, bool include_prefix = false);
+};
+
 # include "Peer.hpp"
 
 #endif
