@@ -24,6 +24,7 @@ int		command_join(Message &message, Dependencies &deps)
 			++chan_it;
 			if (key_it != keys.end())
 				++key_it;
+			continue;
 		}
 		_base_channel base_channel = Channel::parse(*chan_it);
 		try

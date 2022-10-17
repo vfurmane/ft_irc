@@ -20,6 +20,7 @@ int command_part(Message &message, Dependencies &deps)
 		{
 			message.peer.sendMessage(ERR_NOSUCHCHANNEL(*channel_it));
 			++channel_it;
+			continue;
 		}
 		_base_channel base_channel = Channel::parse(*channel_it);
 		if (!channel_manager.has(base_channel.getName()))
