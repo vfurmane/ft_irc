@@ -30,7 +30,7 @@ class PeerManager : public Manager<int, Peer>
 		bool	hasByNickname(const std::string &nick) const;
 
 	private:
-		Server				&_server;
+		Server	&_server;
 };
 
 # include "Peer.hpp"
