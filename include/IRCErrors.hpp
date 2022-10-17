@@ -9,6 +9,20 @@ struct AIRCError : std::exception
 	virtual const char* what() const throw() = 0;
 };
 
+class ERR_NOSUCHNICK : public AIRCError
+{
+	private:
+		const std::string	_str;
+
+	public:
+		ERR_NOSUCHNICK(const std::string &nickname) : _str("401 " + nickname + " :No such nick/channel") {}
+		~ERR_NOSUCHNICK(void) throw() {}
+		virtual const char* what() const throw()
+		{
+			return this->_str.c_str();
+		}
+};
+
 class ERR_NOSUCHCHANNEL : public AIRCError
 {
 	private:
@@ -21,6 +35,28 @@ class ERR_NOSUCHCHANNEL : public AIRCError
 		{
 			return this->_str.c_str();
 		}
+};
+
+class ERR_NORECIPIENT : public AIRCError
+{
+	private:
+		const std::string	_str;
+
+	public:
+		ERR_NORECIPIENT(const std::string &command) : _str("411 :No recipient given (" + command + ")") {}
+		~ERR_NORECIPIENT(void) throw() {}
+		virtual const char* what() const throw()
+		{
+			return this->_str.c_str();
+		}
+};
+
+struct ERR_NOTEXTTOSEND : public AIRCError
+{
+	virtual const char* what() const throw()
+	{
+		return "412 :No text to send";
+	}
 };
 
 class ERR_UNKNOWNCOMMAND : public AIRCError
