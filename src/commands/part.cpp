@@ -17,7 +17,10 @@ int command_part(Message &message, Dependencies &deps)
 	while (channel_it != channels.end())
 	{
 		if (!_base_channel::isValidName(*channel_it))
-			return 1;
+		{
+			message.peer.sendMessage(ERR_NOSUCHCHANNEL(*channel_it));
+			++channel_it;
+		}
 		_base_channel base_channel = Channel::parse(*channel_it);
 		if (!channel_manager.has(base_channel.getName()))
 			message.peer.sendMessage(ERR_NOSUCHCHANNEL(*channel_it));

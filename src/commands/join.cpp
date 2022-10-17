@@ -19,7 +19,12 @@ int		command_join(Message &message, Dependencies &deps)
 	while (chan_it != channels.end())
 	{
 		if (!_base_channel::isValidName(*chan_it))
-			return 1;
+		{
+			message.peer.sendMessage(ERR_NOSUCHCHANNEL(*chan_it));
+			++chan_it;
+			if (key_it != keys.end())
+				++key_it;
+		}
 		_base_channel base_channel = Channel::parse(*chan_it);
 		try
 		{
