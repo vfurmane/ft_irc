@@ -35,7 +35,7 @@ struct PongMessage : public Message
 
 struct PrivmsgMessage : public Message
 {
-	PrivmsgMessage(Peer &peer, const std::string &text_to_send, bool include_prefix = false);
+	PrivmsgMessage(Peer &peer, const std::string &target, const std::string &text_to_send, bool include_prefix = false);
 };
 
 struct Dependencies
