@@ -28,6 +28,7 @@ int		command_join(Message &message, Dependencies &deps)
 			{
 				channel.add(message.peer);
 				channel.users[message.peer.getUsername()].setStatus(CHANNEL_USER);
+				message.peer.sendMessage(JoinMessage(message.peer, base_channel, true));
 				channel.sendMessage(JoinMessage(message.peer, base_channel));
 			}
 		}

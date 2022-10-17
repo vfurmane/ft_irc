@@ -146,13 +146,15 @@ void	Channel::remove(const User &user)
 void    Channel::sendMessage(const Message &message) const
 {
 #ifndef NDEBUG
-	std::cerr << message.peer.generatePrefix() << "= " << this->stringify() << " => " << message.input << std::endl;
+	std::cerr << "Sending message to channel " << this->stringify() << std::endl;
 #endif
 	Message	prefixed_message = message;
 	prefixed_message.updatePrefixFromPeer();
 	prefixed_message.updateInputFromFields();
 	for (UserManager::const_iterator it = users.begin(); it != users.end(); ++it)
 	{
-		send(it->second.peer.getFd(), (prefixed_message.input + CRLF).c_str(), (prefixed_message.input + CRLF).length(), 0);
+		if (it->second.peer.getFd() == message.peer.getFd())
+			continue ;
+		it->second.peer.sendMessage(prefixed_message);
 	}
 }
