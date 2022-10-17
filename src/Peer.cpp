@@ -85,8 +85,9 @@ bool	Peer::isRegistered(void) const
 	return this->_registered;
 }
 
-int	Peer::registration(const std::string &password)
+int	Peer::registration(void)
 {
+	const std::string &password = this->server.config.getPassword();
 	if (!password.empty() && this->getPassword() != password)
 	{
 		this->sendMessage(ErrorMessage(*this, "Access denied by configuration"));

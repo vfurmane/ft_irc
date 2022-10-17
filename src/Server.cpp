@@ -2,7 +2,7 @@
 
 static bool	g_is_listening = false;
 
-Server::Server(Configuration &config) : channels(), peers(*this), _config(config), _sockfd(-1), _epollfd(-1)
+Server::Server(Configuration &config) : channels(), config(config), peers(*this), _sockfd(-1), _epollfd(-1)
 {
 #ifndef NDEBUG
 	std::cerr << "Creating a server..." << std::endl;
@@ -134,7 +134,7 @@ int	Server::_handle_message(epoll_event &event)
 #endif
 			try
 			{
-				Dependencies deps = {this->_config, this->peers, this->channels};
+				Dependencies deps = {this->config, this->peers, this->channels};
 				if (message.execute(deps) <= 0)
 					return 0;
 			}
