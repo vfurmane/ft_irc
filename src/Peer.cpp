@@ -147,8 +147,8 @@ void	Peer::leaveAllChannels(void)
 {
 	for (ChannelManager::iterator it = this->server.channels.begin(); it != this->server.channels.end(); ++it)
 	{
-		if (it->second.users.has(this->getUsername()))
-			it->second.users.remove(this->getUsername());
+		if (it->second.users.has(this->getFd()))
+			it->second.users.remove(this->getFd());
 	}
 }
 
