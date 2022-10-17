@@ -29,7 +29,7 @@ class ERR_NOSUCHCHANNEL : public AIRCError
 		const std::string	_str;
 
 	public:
-		ERR_NOSUCHCHANNEL(const std::string &command) : _str("403 " + command + " :No such channel") {}
+		ERR_NOSUCHCHANNEL(const std::string &channel) : _str("403 " + channel + " :No such channel") {}
 		~ERR_NOSUCHCHANNEL(void) throw() {}
 		virtual const char* what() const throw()
 		{
