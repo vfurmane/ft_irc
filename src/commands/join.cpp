@@ -2,7 +2,7 @@
 
 int		command_join(Message &message, Dependencies &deps)
 {
-	if (message.argCount < 1)
+	if (message.argCount < 1 || message.arguments[0].empty() || message.arguments[1].empty())
 		throw ERR_NEEDMOREPARAMS("JOIN");
 
 	if (message.arguments[0] == "0")
