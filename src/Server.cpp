@@ -169,7 +169,7 @@ void	Server::_handleReadyFds(int event_count, struct epoll_event *events)
 		else
 		{
 #ifndef NDEBUG
-			std::cerr << this->peers.get(events[i].data.fd).generatePrefix() << "< Received new message from peer..." << std::endl;
+			std::cerr << "Received new message from " << this->peers.get(events[i].data.fd).generatePrefix() << std::endl;
 #endif
 			if (this->_handle_message(events[i]) == -1)
 			{
