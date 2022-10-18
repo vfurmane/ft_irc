@@ -52,11 +52,79 @@ TEST_CASE("INVITE")
 		message.arguments[0] = "test_user2";
 		message.arguments[1] = "#channel2";
 		message.argCount = 2;
-		for (auto it = g_send_arg_buf.begin(); it != g_send_arg_buf.end(); ++it)
-		{
-			std::cout << *it << std::endl;
-		}
-		command_invite(message, deps);
-		REQUIRE(std::find(g_send_arg_buf.begin(), g_send_arg_buf.end(), ERR_NOTONCHANNEL("#channel2").what() + std::string(CRLF)) != g_send_arg_buf.end());
+		REQUIRE_THROWS_AS(command_invite(message, deps), ERR_NOTONCHANNEL);
+	}
+	SECTION("if nickname does not exist")
+	{
+		Channel	channel(channels, "channel");
+		peer._nickname = "test_user";
+		peer.createChannel(channel);
+		message.arguments[0] = "test_user2";
+		message.arguments[1] = "#channel";
+		message.argCount = 2;
+		REQUIRE_THROWS_AS( command_invite(message, deps), ERR_NOSUCHNICK );
+	}
+	SECTION("if user already on channel")
+	{
+		peer._nickname = "test_user";
+		Channel	&channel = peer.createChannel(std::string("channel"));
+		Peer &peer2 = peers.add(4, addr);
+		Message peer2message(peer2, std::string());
+		peer2._nickname = "test_user2";
+		channel.add(peer2);
+		REQUIRE(channel.users.hasByNickname(std::string("test_user2")));
+		message.arguments[0] = "test_user2";
+		message.arguments[1] = "#channel";
+		message.argCount = 2;
+		REQUIRE_THROWS_AS( command_invite(message, deps), ERR_USERONCHANNEL );
+	}
+	SECTION("if channel is invite only and peer is not operator")
+	{
+		peer._nickname = "test_user";
+		Peer &peer2 = peers.add(4, addr);
+		peer2._nickname = "test_user2";
+		Peer &peer3 = peers.add(5, addr);
+		peer3._nickname = "test_user3";
+		Channel &channel = peer.createChannel(std::string("channel"));
+		channel.add(peer2);
+		channel.setFlag(FLAG_INVITE);
+		Message message2(peer2, std::string());
+		REQUIRE((channel.getFlags() & FLAG_INVITE) == FLAG_INVITE);
+		message2.arguments[0] = "test_user3";
+		message2.arguments[1] = "#channel";
+		message2.argCount = 2;
+		REQUIRE_THROWS_AS( command_invite(message2, deps), ERR_CHANOPRIVSNEEDED );
+	}
+	SECTION("user already on channel")
+	{
+		peer._nickname = "test_user";
+		Peer &peer2 = peers.add(4, addr);
+		peer2._nickname = "test_user2";
+		Peer &peer3 = peers.add(5, addr);
+		peer3._nickname = "test_user3";
+		Channel &channel = peer.createChannel(std::string("channel"));
+		channel.add(peer2);
+		channel.setFlag(FLAG_INVITE);
+		REQUIRE((channel.getFlags() & FLAG_INVITE) == FLAG_INVITE);
+		message.arguments[0] = "test_user2";
+		message.arguments[1] = "#channel";
+		message.argCount = 2;
+		REQUIRE_THROWS_AS( command_invite(message, deps), ERR_USERONCHANNEL);
+	}
+	SECTION("should invite correctly")
+	{
+		peer._nickname = "test_user";
+		Peer &peer2 = peers.add(4, addr);
+		peer2._nickname = "test_user2";
+		Peer &peer3 = peers.add(5, addr);
+		peer3._nickname = "test_user3";
+		Channel &channel = peer.createChannel(std::string("channel"));
+		channel.add(peer2);
+		channel.setFlag(FLAG_INVITE);
+		REQUIRE((channel.getFlags() & FLAG_INVITE) == FLAG_INVITE);
+		message.arguments[0] = "test_user3";
+		message.arguments[1] = "#channel";
+		message.argCount = 2;
+		REQUIRE_NOTHROW( command_invite(message, deps) );
 	}
 }
