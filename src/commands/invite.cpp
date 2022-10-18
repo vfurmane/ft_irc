@@ -30,7 +30,7 @@ int	command_invite(Message &message, Dependencies &deps)
 			throw ERR_NOTONCHANNEL(message.arguments[1]);
 		if ((target_channel.getFlags() & FLAG_INVITE) == FLAG_INVITE)
 		{
-			if (target_channel.users.getByNickname(message.peer.getNickname()).getStatus() == 0)
+			if (target_channel.users.getByNickname(message.peer.getNickname()).getStatus() == CHANNEL_USER)
 				throw ERR_CHANOPRIVSNEEDED(message.arguments[1]);
 			add_invitation(message, target_channel);
 		}
