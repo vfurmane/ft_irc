@@ -173,7 +173,9 @@ void	Server::_handleReadyFds(int event_count, struct epoll_event *events)
 #endif
 			if (this->_handle_message(events[i]) == -1)
 			{
-				this->peers.closeConnection(events[i].data.fd);
+				Peer	&peer = this->peers[events[i].data.fd];
+				this->sendMessage(QuitMessage(peer, "Lost terminal"));
+				this->peers.closeConnection(peer);
 			}
 		}
 	}
