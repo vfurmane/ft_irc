@@ -1,7 +1,5 @@
 #include "commands.hpp"
 
-// INVITE <nickname> <channel>
-
 static void	add_invitation(Message &message, Channel &target_channel)
 {
 	if (target_channel.users.hasByNickname(message.arguments[0]))
@@ -24,15 +22,12 @@ int	command_invite(Message &message, Dependencies &deps)
 	if (deps.channels.has(base_channel))
 	{
 		if (!deps.peers.hasByNickname(message.arguments[0]))
-		{
-			message.peer.sendMessage(ERR_NOSUCHNICK(message.arguments[0]));
-			return 1;
-		}
+			throw ERR_NOSUCHNICK(message.arguments[0]);
 
 		Channel target_channel(deps.channels.get(base_channel));
 
 		if (!target_channel.users.hasByNickname(message.peer.getNickname()))
-			message.peer.sendMessage(ERR_NOTONCHANNEL(message.arguments[1]));
+			throw ERR_NOTONCHANNEL(message.arguments[1]);
 		else
 		{
 			if ((target_channel.getFlags() & FLAG_INVITE) == FLAG_INVITE)
@@ -40,7 +35,7 @@ int	command_invite(Message &message, Dependencies &deps)
 				if (target_channel.users.getByNickname(message.peer.getNickname()).getStatus() > 0)
 					add_invitation(message, target_channel);
 				else
-					message.peer.sendMessage(ERR_CHANOPRIVSNEEDED(message.arguments[1]));
+					throw ERR_CHANOPRIVSNEEDED(message.arguments[1]);
 			}
 			else
 				add_invitation(message, target_channel);
