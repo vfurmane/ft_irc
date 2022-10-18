@@ -245,3 +245,12 @@ int	Server::getSocketFd(void) const
 {
 	return this->_sockfd;
 }
+
+void	Server::sendMessage(const Message &message) const
+{
+	for (ChannelManager::const_iterator it = this->channels.begin(); it != this->channels.end(); ++it)
+	{
+		if (it->second.users.has(message.peer.getFd()))
+			it->second.sendMessage(message);
+	}
+}
