@@ -51,6 +51,16 @@ NickMessage::NickMessage(Peer &peer, const std::string &new_nick, bool include_p
 	this->input = this->updateInputFromFields();
 }
 
+QuitMessage::QuitMessage(Peer &peer, const std::string &quit_message, bool include_prefix) : Message(peer, std::string())
+{
+	this->command = "QUIT";
+	this->arguments[0] = "Quit: " + quit_message;
+	this->argCount = 1;
+	if (include_prefix)
+		this->prefix = this->updatePrefixFromPeer();
+	this->input = this->updateInputFromFields();
+}
+
 std::vector<std::string>	parseList(const std::string &list)
 {
 	if (list.empty())
