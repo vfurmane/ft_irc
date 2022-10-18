@@ -6,9 +6,9 @@
 
 typedef enum	e_user_status
 {
-	 CHANNEL_USER,
-	 CHANNEL_OPERATOR,
-	 CHANNEL_CREATOR
+	CHANNEL_USER,
+	CHANNEL_OPERATOR,
+	CHANNEL_CREATOR
 }				t_user_status;
 
 class Channel;

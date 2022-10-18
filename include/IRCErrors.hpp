@@ -137,6 +137,20 @@ class ERR_NOTONCHANNEL : public AIRCError
 		}
 };
 
+class ERR_USERONCHANNEL : public AIRCError
+{
+	private:
+		const std::string _str;
+
+	public:
+		ERR_USERONCHANNEL(const std::string &user, const std::string &channel) : _str("443 " + user + " " + channel + " :is already on channel") {}
+		~ERR_USERONCHANNEL(void) throw() {}
+		virtual const char* what() const throw()
+		{
+			return this->_str.c_str();
+		}
+};
+
 class ERR_NEEDMOREPARAMS : public AIRCError
 {
 	private:
