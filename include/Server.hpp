@@ -42,6 +42,7 @@ class Server
 
 		int			getEpollFd(void) const; // DELETE
 		int			getSocketFd(void) const; // DELETE
+		void		sendMessage(const Message &message) const;
 
 		struct noBindableAddress : public std::exception {
 			virtual const char* what() const throw()
