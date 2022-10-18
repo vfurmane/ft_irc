@@ -18,25 +18,30 @@ int		command_join(Message &message, Dependencies &deps)
 	std::vector<std::string>::const_iterator	key_it = keys.begin();
 	while (chan_it != channels.end())
 	{
-		_base_channel base_channel = Channel::parse(*chan_it);
-		try
+		if (_base_channel::isValidName(*chan_it))
 		{
-			Channel	&channel = deps.channels[base_channel.getName()];
-			if (key_it != keys.end() && !channel.compareKey(*key_it))
-				message.peer.sendMessage(ERR_BADCHANNELKEY(*chan_it));
-			else
+			_base_channel base_channel = Channel::parse(*chan_it);
+			try
 			{
-				channel.add(message.peer);
-				channel.users[message.peer.getUsername()].setStatus(CHANNEL_USER);
+				Channel	&channel = deps.channels[base_channel.getName()];
+				if (key_it != keys.end() && !channel.compareKey(*key_it))
+					message.peer.sendMessage(ERR_BADCHANNELKEY(*chan_it));
+				else
+				{
+					channel.add(message.peer);
+					channel.users[message.peer.getUsername()].setStatus(CHANNEL_USER);
+					message.peer.sendMessage(JoinMessage(message.peer, base_channel, true));
+					channel.sendMessage(JoinMessage(message.peer, base_channel));
+				}
+			}
+			catch (std::out_of_range &)
+			{
+				message.peer.createChannel(base_channel);
 				message.peer.sendMessage(JoinMessage(message.peer, base_channel, true));
-				channel.sendMessage(JoinMessage(message.peer, base_channel));
 			}
 		}
-		catch (std::out_of_range &)
-		{
-			message.peer.createChannel(base_channel);
-			message.peer.sendMessage(JoinMessage(message.peer, base_channel, true));
-		}
+		else
+			message.peer.sendMessage(ERR_NOSUCHCHANNEL(*chan_it));
 		++chan_it;
 		if (key_it != keys.end())
 			++key_it;
