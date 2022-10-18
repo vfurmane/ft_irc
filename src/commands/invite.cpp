@@ -24,7 +24,7 @@ int	command_invite(Message &message, Dependencies &deps)
 		if (!deps.peers.hasByNickname(message.arguments[0]))
 			throw ERR_NOSUCHNICK(message.arguments[0]);
 
-		Channel target_channel(deps.channels.get(base_channel));
+		Channel &target_channel = deps.channels.get(base_channel);
 
 		if (!target_channel.users.hasByNickname(message.peer.getNickname()))
 			throw ERR_NOTONCHANNEL(message.arguments[1]);
