@@ -145,7 +145,7 @@ int	Server::_handle_message(epoll_event &event)
 			}
 			catch (std::exception &e)
 			{
-				std::string	error_message(std::string("\n\n\n\033[1;31m") + e.what() + std::string("\033[0m\n\n\n"));
+				std::string	error_message(std::string("\n\n\n\033[1;31m") + e.what() + std::string("\033[0m\n\n\n\n"));
 				Message error(message.peer, error_message);
 				message.peer.sendMessage(error);
 			}
