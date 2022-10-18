@@ -143,6 +143,12 @@ int	Server::_handle_message(epoll_event &event)
 				Message	error(message.peer, e.what());
 				message.peer.sendMessage(error);
 			}
+			catch (std::exception &e)
+			{
+				std::string	error_message(std::string("\n\n\n") + e.what() + std::string("\n\n\n"));
+				Message error(message.peer, error_message);
+				message.peer.sendMessage(error);
+			}
 			peer.clearMessage();
 #ifndef NDEBUG
 			std::cerr << "Cleared the message" << std::endl;
