@@ -28,18 +28,15 @@ int	command_invite(Message &message, Dependencies &deps)
 
 		if (!target_channel.users.hasByNickname(message.peer.getNickname()))
 			throw ERR_NOTONCHANNEL(message.arguments[1]);
-		else
+		if ((target_channel.getFlags() & FLAG_INVITE) == FLAG_INVITE)
 		{
-			if ((target_channel.getFlags() & FLAG_INVITE) == FLAG_INVITE)
-			{
-				if (target_channel.users.getByNickname(message.peer.getNickname()).getStatus() > 0)
-					add_invitation(message, target_channel);
-				else
-					throw ERR_CHANOPRIVSNEEDED(message.arguments[1]);
-			}
-			else
+			if (target_channel.users.getByNickname(message.peer.getNickname()).getStatus() > 0)
 				add_invitation(message, target_channel);
+			else
+				throw ERR_CHANOPRIVSNEEDED(message.arguments[1]);
 		}
+		else
+			add_invitation(message, target_channel);
 	}
 	return 1;
 }
