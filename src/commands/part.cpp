@@ -6,7 +6,7 @@
 
 int command_part(Message &message, Dependencies &deps)
 {
-	if (message.argCount < 1)
+	if (message.argCount < 1 || message.arguments[0].empty())
 		throw ERR_NEEDMOREPARAMS("PART");
 
 	std::vector<std::string> channels = parseList(message.arguments[0]);
