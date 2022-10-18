@@ -89,6 +89,11 @@ void	PeerManager::closeConnection(Peer &peer)
 #endif
 	if (peer.close() == -1)
 		throw sysCallError("close", strerror(errno));
+	for (ChannelManager::iterator it = this->_server.channels.begin(); it != this->_server.channels.end(); ++it)
+	{
+		if (it->second.users.has(peer.getFd()))
+			it->second.remove(peer);
+	}
 	this->remove(peer.getFd());
 }
 
