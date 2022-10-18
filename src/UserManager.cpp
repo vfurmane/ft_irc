@@ -20,17 +20,17 @@ UserManager::~UserManager(void)
 
 User	&UserManager::add(const User &user)
 {
-	return Manager::add(user.peer.getUsername(), user);
+	return Manager::add(user.peer.getFd(), user);
 }
 
-void	UserManager::remove(const std::string &username)
+void	UserManager::remove(const int fd)
 {
-	Manager::remove(username); 
+	Manager::remove(fd); 
 }
 
 void UserManager::remove(const User &user)
 {
-	this->remove(user.peer.getUsername());
+	this->remove(user.peer.getFd());
 }
 
 User	&UserManager::getByNickname(const std::string &nick)

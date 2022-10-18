@@ -24,9 +24,9 @@ int command_part(Message &message, Dependencies &deps)
 			else 
 			{
 				Channel &channel = deps.channels[base_channel.getName()];
-				if (channel.users.has(message.peer.getUsername()))
+				if (channel.users.has(message.peer.getFd()))
 				{
-					channel.remove(channel.users[message.peer.getUsername()]);
+					channel.remove(channel.users[message.peer.getFd()]);
 					if (!message.arguments[1].empty())
 					{
 						Message reply(message.peer, message.arguments[1]);

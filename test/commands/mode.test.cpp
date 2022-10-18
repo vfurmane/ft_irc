@@ -152,8 +152,8 @@ TEST_CASE("MODE")
 		ChannelManager	&channels = server.channels;
 		Dependencies	deps = {config, peermanager, channels};
 
-		peer1._username = "john_doe";
-		peer2._username = "wruce_bayne";
+		peer1._nickname = "john_doe";
+		peer2._nickname = "wruce_bayne";
 		Channel &channel = channels.add("general");
 		User &user1 = channel.add(peer1);
 		User &user2 = channel.add(peer2);

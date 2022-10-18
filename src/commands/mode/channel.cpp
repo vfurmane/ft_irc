@@ -12,9 +12,9 @@ void	command_mode_channel(Message &message, Dependencies &deps, const _base_chan
 	if (!deps.channels.has(base_channel))
 		return;
 	Channel	&channel = deps.channels.get(base_channel.getName());
-	if (!channel.users.has(message.peer.getUsername()))
+	if (!channel.users.has(message.peer.getFd()))
 		return;
-	User	&author = channel.users[message.peer.getUsername()];
+	User	&author = channel.users[message.peer.getFd()];
 	std::string::const_iterator	it;
 	size_t	k;
 	bool	add_flag;

@@ -9,7 +9,7 @@
 class Peer;
 class User;
 
-class UserManager : public Manager<std::string, User>
+class UserManager : public Manager<int, User>
 {
 	public:
 		UserManager(void);
@@ -18,7 +18,7 @@ class UserManager : public Manager<std::string, User>
 		~UserManager(void);
 
 		User	&add(const User &user);
-		void	remove(const std::string &username);
+		void	remove(const int fd);
 		void	remove(const User &user);
 		User	&getByNickname(const std::string &nick);
 		bool	hasByNickname(const std::string &nick);
