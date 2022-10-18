@@ -28,9 +28,9 @@ void	UserManager::remove(const int fd)
 	Manager::remove(fd); 
 }
 
-void UserManager::remove(const User &user)
+void UserManager::remove(const Peer &peer)
 {
-	this->remove(user.peer.getFd());
+	this->remove(peer.getFd());
 }
 
 User	&UserManager::getByNickname(const std::string &nick)

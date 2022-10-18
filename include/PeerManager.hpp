@@ -23,6 +23,7 @@ class PeerManager : public Manager<int, Peer>
 		Peer	&add(int fd, struct sockaddr &addr);
 		bool	containsNickname(const std::string &nick) const;
 		int		acceptConnection(void);
+		void	closeConnection(Peer &peer);
 		void	closeConnection(int fd);
 
 		Peer	&getByNickname(const std::string &nick);

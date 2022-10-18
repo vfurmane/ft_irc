@@ -19,7 +19,7 @@ class UserManager : public Manager<int, User>
 
 		User	&add(const User &user);
 		void	remove(const int fd);
-		void	remove(const User &user);
+		void	remove(const Peer &peer);
 		User	&getByNickname(const std::string &nick);
 		bool	hasByNickname(const std::string &nick);
 };
