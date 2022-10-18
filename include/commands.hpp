@@ -37,6 +37,10 @@ struct NickMessage : public Message
 struct PartMessage : public Message
 {
 	PartMessage(Peer &peer, const _base_channel &channel, const std::string &part_message, bool include_prefix = false);
+
+struct KickMessage : public Message
+{
+	KickMessage(Peer &peer, const std::string &target, const _base_channel &channel, const std::string &author, const std::string &reason, bool include_prefix = false);
 };
 
 struct PongMessage : public Message

@@ -51,6 +51,16 @@ PartMessage::PartMessage(Peer &peer, const _base_channel &channel, const std::st
 	if (include_prefix)
 		this->prefix = this->updatePrefixFromPeer();
 	this->input = this->updateInputFromFields();
+};
+
+KickMessage::KickMessage(Peer &peer, const std::string &target, const _base_channel &channel, const std::string &author, const std::string &reason, bool include_prefix) : Message(peer, std::string())
+{
+	this->command = "KICK";
+	this->arguments[0] = target + " was kicked from " + channel.stringify() + " by " + author + " [" + reason + "]";
+	this->argCount = 1;
+	if (include_prefix)
+		this->prefix = this->updatePrefixFromPeer();
+	this->input = this->updateInputFromFields();
 }
 
 PongMessage::PongMessage(Peer &peer, const std::string &server_name, bool include_prefix) : Message(peer, std::string())
