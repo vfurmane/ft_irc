@@ -129,12 +129,12 @@ void	Channel::setCreator(User &user)
 	user.setStatus(CHANNEL_CREATOR);
 }
 
-void	Channel::addInvitation(const std::string nickname)
+void	Channel::addInvitation(const std::string &nickname)
 {
 	this->_invitations.push_back(nickname);
 }
 
-bool	Channel::isInvited(const std::string nickname) const
+bool	Channel::isInvited(const std::string &nickname) const
 {
 	return std::find(this->_invitations.begin(), this->_invitations.end(), nickname) != this->_invitations.end();
 }
