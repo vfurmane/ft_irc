@@ -57,8 +57,8 @@ class Channel : public _base_channel
 		void	unsetKey(void);
 		bool	compareKey(const std::string &key) const;
 		void	setCreator(User &user);
-		void	addInvitation(std::string nickname);
-		bool	isInvited(std::string nickname);
+		void	addInvitation(const std::string nickname);
+		bool	isInvited(const std::string nickname) const;
 
 		User	&add(Peer &peer);
 		void	remove(const Peer &peer);
