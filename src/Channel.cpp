@@ -137,16 +137,21 @@ User	&Channel::add(Peer &peer)
 	return this->users.add(User(peer, *this));
 }
 
-void	Channel::remove(const User &user)
+void	Channel::remove(const Peer &peer)
 {
-	if (this->_creator != NULL && &this->_creator->peer == &user.peer)
+	if (this->_creator != NULL && &this->_creator->peer == &peer)
 		this->_creator = NULL;
-	this->users.remove(user);
+	this->users.remove(peer);
 	if (this->manager.empty())
 		manager.remove(this->getName());
 #ifndef NDEBUG
-	std::cerr << user.peer.generatePrefix() << " has left " << this->stringify() << std::endl;
+	std::cerr << peer.generatePrefix() << " has left " << this->stringify() << std::endl;
 #endif
+}
+
+void	Channel::remove(const User &user)
+{
+	this->remove(user.peer);
 }
 
 void    Channel::sendMessage(const Message &message) const

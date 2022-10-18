@@ -58,6 +58,7 @@ class Channel : public _base_channel
 		void	setCreator(User &user);
 
 		User	&add(Peer &peer);
+		void	remove(const Peer &peer);
 		void	remove(const User &user);
 		void	sendMessage(const Message &message) const;
 

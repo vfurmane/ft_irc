@@ -81,16 +81,21 @@ int	PeerManager::acceptConnection(void)
 	return new_fd;
 }
 
-void	PeerManager::closeConnection(int fd)
+void	PeerManager::closeConnection(Peer &peer)
 {
-	Peer	&peer = (*this)[fd];
 #ifndef NDEBUG
-	std::cerr << "Closing connection on fd no " << fd << "..." << std::endl;
+	std::cerr << "Closing connection on fd no " << peer.getFd() << "..." << std::endl;
 	std::cerr << "Client -> " << peer.generatePrefix() << std::endl;
 #endif
 	if (peer.close() == -1)
 		throw sysCallError("close", strerror(errno));
-	this->remove(fd);
+	this->remove(peer.getFd());
+}
+
+void	PeerManager::closeConnection(int fd)
+{
+	Peer	&peer = (*this)[fd];
+	this->closeConnection(peer);
 }
 
 void	PeerManager::clear(void)
