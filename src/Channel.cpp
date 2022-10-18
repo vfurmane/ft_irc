@@ -136,7 +136,7 @@ User	&Channel::add(Peer &peer)
 
 void	Channel::remove(const User &user)
 {
-	if (&this->_creator->peer == &user.peer)
+	if (this->_creator != NULL && &this->_creator->peer == &user.peer)
 		this->_creator = NULL;
 	this->users.remove(user);
 	if (this->manager.empty())
