@@ -24,7 +24,7 @@ int		command_join(Message &message, Dependencies &deps)
 			try
 			{
 				Channel	&channel = deps.channels[base_channel.getName()];
-				if (channel.hasFlag(FLAG_INVITE) && !channel.isInvited(message.peer.getNickname()))
+				if (channel.hasFlag(FLAG_INVITE) && !channel.isInvited(message.peer.getFd()))
 					throw ERR_INVITEONLYCHAN(message.peer.getNickname(), base_channel.stringify());
 				else if (key_it != keys.end() && !channel.compareKey(*key_it))
 					message.peer.sendMessage(ERR_BADCHANNELKEY(*chan_it));
