@@ -1,4 +1,3 @@
-#include "Channel.hpp"
 #include "commands.hpp"
 
 int command_privmsg(Message &message, Dependencies &deps)
