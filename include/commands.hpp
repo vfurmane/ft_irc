@@ -33,6 +33,11 @@ struct JoinMessage : public Message
 	JoinMessage(Peer &peer, const _base_channel &channel, bool include_prefix = false);
 };
 
+struct PartMessage : public Message
+{
+	PartMessage(Peer &peer, const _base_channel &channel, const std::string &part_message, bool include_prefix = false);
+};
+
 struct PongMessage : public Message
 {
 	PongMessage(Peer &peer, const std::string &server_name, bool include_prefix = false);
