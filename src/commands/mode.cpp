@@ -1,7 +1,4 @@
-#include "Channel.hpp"
-#include "User.hpp"
 #include "commands.hpp"
-#include "IRCErrors.hpp"
 
 int	command_mode(Message &message, Dependencies &deps)
 {

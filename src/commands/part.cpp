@@ -1,8 +1,4 @@
 #include "commands.hpp"
-#include "Channel.hpp"
-#include "ChannelManager.hpp"
-#include <algorithm>
-#include <vector>
 
 int command_part(Message &message, Dependencies &deps)
 {
