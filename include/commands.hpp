@@ -7,6 +7,7 @@
 # include "Peer.hpp"
 # include <stdexcept>
 # include <vector>
+# include <algorithm>
 
 class	_base_channel;
 class	Channel;

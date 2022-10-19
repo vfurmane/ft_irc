@@ -1,4 +1,3 @@
-#include "IRCErrors.hpp"
 #include "commands.hpp"
 
 int	command_pass(Message &message, Dependencies &deps)

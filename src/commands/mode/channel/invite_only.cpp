@@ -1,7 +1,4 @@
-#include "Channel.hpp"
-#include "User.hpp"
 #include "commands.hpp"
-#include "IRCErrors.hpp"
 
 void	flag_invite_only(bool add_flag, User &author, Channel &channel, const std::string &argument)
 {
