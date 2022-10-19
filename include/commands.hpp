@@ -19,19 +19,19 @@ struct ErrorMessage : public Message
 	ErrorMessage(Peer &peer, const std::string &message, bool include_prefix = false);
 };
 
-struct NickMessage : public Message
-{
-	NickMessage(Peer &peer, const std::string &new_nick, bool include_prefix = false);
-};
-
-struct QuitMessage : public Message
-{
-	QuitMessage(Peer &peer, const std::string &quit_message, bool include_prefix = false);
-};
-
 struct JoinMessage : public Message
 {
 	JoinMessage(Peer &peer, const _base_channel &channel, bool include_prefix = false);
+};
+
+struct	ModeMessage : public Message
+{
+	ModeMessage(Peer &peer, const _base_channel &channel, const std::string flag, const std::string argument, bool include_prefix = false);
+};
+
+struct NickMessage : public Message
+{
+	NickMessage(Peer &peer, const std::string &new_nick, bool include_prefix = false);
 };
 
 struct PartMessage : public Message
@@ -47,6 +47,11 @@ struct PongMessage : public Message
 struct PrivmsgMessage : public Message
 {
 	PrivmsgMessage(Peer &peer, const std::string &target, const std::string &text_to_send, bool include_prefix = false);
+};
+
+struct QuitMessage : public Message
+{
+	QuitMessage(Peer &peer, const std::string &quit_message, bool include_prefix = false);
 };
 
 struct Dependencies
