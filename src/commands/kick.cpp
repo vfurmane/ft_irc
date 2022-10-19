@@ -6,7 +6,8 @@ static void	kick_user(Message &message, _base_channel &base_channel, Channel &ch
 		throw ERR_CHANOPRIVSNEEDED(channel.getName());
 	if (author.getStatus() < target.getStatus())
 		return ;
-	channel.sendMessage(KickMessage(message.peer, target.peer.getNickname(), base_channel, author.peer.getNickname(), message.arguments[2]));
+	message.peer.sendMessage(KickMessage(message.peer, base_channel, target.peer.getNickname(), message.arguments[2], true));
+	channel.sendMessage(KickMessage(message.peer, base_channel, target.peer.getNickname(), message.arguments[2]));
 	channel.remove(target);
 }
 

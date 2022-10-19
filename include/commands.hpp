@@ -40,7 +40,7 @@ struct PartMessage : public Message
 
 struct KickMessage : public Message
 {
-	KickMessage(Peer &peer, const std::string &target, const _base_channel &channel, const std::string &author, const std::string &reason, bool include_prefix = false);
+	KickMessage(Peer &peer, const _base_channel &channel, const std::string target_nickname, const std::string reason, bool include_prefix = false);
 };
 
 struct PongMessage : public Message
@@ -71,6 +71,7 @@ std::vector<std::string>	parseList(const std::string &list);
 int	command_cap(Message &message, Dependencies &deps);
 int	command_invite(Message &message, Dependencies &deps);
 int	command_join(Message &message, Dependencies &deps);
+int	command_kick(Message &message, Dependencies &deps);
 int	command_mode(Message &message, Dependencies &deps);
 int	command_nick(Message &message, Dependencies &deps);
 int	command_part(Message &message, Dependencies &deps);
