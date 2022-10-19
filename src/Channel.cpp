@@ -134,14 +134,14 @@ void	Channel::setCreator(User &user)
 	user.setStatus(CHANNEL_CREATOR);
 }
 
-void	Channel::addInvitation(const int fd)
+void	Channel::addInvitation(const Peer &peer)
 {
-	this->_invitations.push_back(fd);
+	this->_invitations.push_back(peer.getFd());
 }
 
-bool	Channel::isInvited(const int fd) const
+bool	Channel::isInvited(const Peer &peer) const
 {
-	return std::find(this->_invitations.begin(), this->_invitations.end(), fd) != this->_invitations.end();
+	return std::find(this->_invitations.begin(), this->_invitations.end(), peer.getFd()) != this->_invitations.end();
 }
 
 User	&Channel::add(Peer &peer)

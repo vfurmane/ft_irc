@@ -6,7 +6,7 @@ static void	add_invitation(Message &message, Channel &target_channel)
 		throw ERR_USERONCHANNEL(message.arguments[0], message.arguments[1]);
 	else
 	{
-		target_channel.addInvitation(message.peer.getFd());
+		target_channel.addInvitation(message.peer);
 		message.peer.sendMessage(RPL_INVITING(message.peer, message.arguments[1], message.arguments[0], false));
 	}
 }
