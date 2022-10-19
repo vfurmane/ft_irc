@@ -91,6 +91,11 @@ Channel::~Channel(void)
 {
 }
 
+bool	Channel::hasFlag(t_channel_flag flag) const
+{
+	return (this->getFlags() & flag) != 0;
+}
+
 uint32_t	Channel::getFlags(void) const
 {
 	return this->_flags;
