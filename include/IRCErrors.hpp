@@ -216,6 +216,20 @@ class ERR_UNKNOWNMODE : public AIRCError
 		}
 };
 
+class ERR_INVITEONLYCHAN : public AIRCError
+{
+	private:
+		const std::string	_str;
+
+	public:
+		ERR_INVITEONLYCHAN(const std::string &channel) : _str("473 " + channel + " :Cannot join channel (+i)") {}
+		~ERR_INVITEONLYCHAN(void) throw() {}
+		virtual const char* what() const throw()
+		{
+			return this->_str.c_str();
+		}
+};
+
 class ERR_CHANOPRIVSNEEDED : public AIRCError
 {
 	private:
