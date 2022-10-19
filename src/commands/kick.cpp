@@ -1,6 +1,4 @@
 #include "commands.hpp"
-#include "Channel.hpp"
-#include "ChannelManager.hpp"
 
 static void	kick_user(Message &message, _base_channel &base_channel, Channel &channel, User &author, User &target)
 {
