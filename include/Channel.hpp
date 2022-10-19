@@ -58,8 +58,8 @@ class Channel : public _base_channel
 		void	unsetKey(void);
 		bool	compareKey(const std::string &key) const;
 		void	setCreator(User &user);
-		void	addInvitation(const std::string &nickname);
-		bool	isInvited(const std::string &nickname) const;
+		void	addInvitation(const Peer &peer);
+		bool	isInvited(const Peer &peer) const;
 
 		User	&add(Peer &peer);
 		void	remove(const Peer &peer);
@@ -72,7 +72,7 @@ class Channel : public _base_channel
 		std::string			_key;
 		uint32_t			_flags;
 		User				*_creator;
-		std::vector<std::string>	_invitations;
+		std::vector<int>	_invitations;
 };
 
 #include "Message.hpp"

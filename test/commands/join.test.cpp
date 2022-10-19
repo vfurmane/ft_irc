@@ -60,7 +60,7 @@ TEST_CASE("JOIN")
 		Peer	&peer1 = peers.add(4, addr);
 		peer1._nickname = "nick1";
 		Message	peer1_message(peer1, std::string());
-		channel.addInvitation(peer1._nickname);
+		channel.addInvitation(peer1);
 		peer1_message.arguments[0] = "#general";
 		peer1_message.argCount = 1;
 		command_join(peer1_message, deps);
