@@ -140,8 +140,7 @@ int	Server::_handle_message(epoll_event &event)
 			}
 			catch (AIRCError &e)
 			{
-				Message	error(message.peer, e.what());
-				message.peer.sendMessage(error);
+				message.peer.sendMessage(e);
 			}
 			catch (std::exception &e)
 			{
