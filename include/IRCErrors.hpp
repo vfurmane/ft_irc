@@ -222,7 +222,7 @@ class ERR_INVITEONLYCHAN : public AIRCError
 		const std::string	_str;
 
 	public:
-		ERR_INVITEONLYCHAN(const std::string &channel) : _str("473 " + channel + " :Cannot join channel (+i)") {}
+		ERR_INVITEONLYCHAN(const std::string &nickname, const std::string &channel) : _str("473 " + nickname + " " + channel + " :Cannot join channel (+i)") {}
 		~ERR_INVITEONLYCHAN(void) throw() {}
 		virtual const char* what() const throw()
 		{
