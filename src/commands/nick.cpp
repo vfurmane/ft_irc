@@ -45,13 +45,13 @@ int		command_nick(Message &message, Dependencies &deps)
 		throw ERR_NICKNAMEINUSE(nick);
 	if (!isValidNickname(nick))
 		throw ERR_ERRONEUSNICKNAME(nick);
-	message.peer.setNickname(nick);
 	if (message.peer.isRegistered())
 	{
 		for (PeerManager::const_iterator it = deps.peers.begin(); it != deps.peers.end(); ++it)
-			it->second.sendMessage(NickMessage(message.peer, nick));
+			it->second.sendMessage(NickMessage(message.peer, nick, true));
 	}
-	else if (message.peer.hasAllFields())
+	message.peer.setNickname(nick);
+	if (!message.peer.isRegistered() && message.peer.hasAllFields())
 	{
 		if (message.peer.registration() == 0)
 			return 0;
