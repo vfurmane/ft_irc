@@ -3,7 +3,7 @@
 static void	kick_user(Message &message, _base_channel &base_channel, Channel &channel, User &author, User &target)
 {
 	if (author.getStatus() == CHANNEL_USER)
-		throw ERR_CHANOPRIVSNEEDED(channel.getName());
+		throw ERR_CHANOPRIVSNEEDED(channel.stringify());
 	if (author.getStatus() < target.getStatus())
 		return ;
 	message.peer.sendMessage(KickMessage(message.peer, base_channel, target.peer.getNickname(), message.arguments[2], true));

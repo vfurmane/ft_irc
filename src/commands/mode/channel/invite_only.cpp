@@ -4,7 +4,7 @@ void	flag_invite_only(bool add_flag, User &author, Channel &channel, const std::
 {
 	(void)argument;
 	if (author.getStatus() == CHANNEL_USER)
-		throw ERR_CHANOPRIVSNEEDED(channel.getName());
+		throw ERR_CHANOPRIVSNEEDED(channel.stringify());
 	if (add_flag == true)
 		channel.setFlag(FLAG_INVITE);
 	else

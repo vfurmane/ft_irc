@@ -3,7 +3,7 @@
 void	flag_operator(bool add_flag, User &author, Channel &channel, const std::string &argument)
 {
 	if (author.getStatus() == CHANNEL_USER)
-		throw ERR_CHANOPRIVSNEEDED(channel.getName());
+		throw ERR_CHANOPRIVSNEEDED(channel.stringify());
 	if (!channel.users.hasByNickname(argument))
 		return ;
 	User	&target = channel.users.getByNickname(argument);
