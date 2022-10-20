@@ -18,6 +18,8 @@ void	command_mode_channel(Message &message, Dependencies &deps, const _base_chan
 	std::string::const_iterator	it;
 	size_t	k;
 	bool	add_flag;
+	std::string	flags;
+	std::string arguments;
 	for (size_t i = 1; i < message.argCount; i += 2)
 	{
 		if (message.arguments[i].size() < 2)
@@ -28,6 +30,7 @@ void	command_mode_channel(Message &message, Dependencies &deps, const _base_chan
 			continue;
 		if (*it == '+')
 			add_flag = true;
+		flags += *it;
 		++it;
 		while (it < message.arguments[i].end())
 		{
@@ -43,7 +46,11 @@ void	command_mode_channel(Message &message, Dependencies &deps, const _base_chan
 			}
 			if (k == mode_count)
 				throw ERR_UNKNOWNMODE(std::string(1, *it), message.arguments[0]);
+			flags += *it;
 			++it;
 		}
+		arguments += message.arguments[i + 1];
 	}
+	message.peer.sendMessage(ModeMessage(message.peer, base_channel, flags, arguments, true));
+	channel.sendMessage(ModeMessage(message.peer, base_channel, flags, arguments));
 }
