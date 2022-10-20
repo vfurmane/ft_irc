@@ -14,6 +14,7 @@ TEST_CASE("JOIN")
 	Server			server(config);
 	struct sockaddr	addr;
 	Peer			peer(server, 3, addr);
+	Peer			peer2(server, 4, addr);	
 	Message			message(peer, std::string());
 	PeerManager		&peers = server.peers;
 	ChannelManager	&channels = server.channels;
@@ -28,7 +29,7 @@ TEST_CASE("JOIN")
 	};
 	SECTION("when the channel name's case is different")
 	{
-		peer.createChannel(std::string("g[en]ERAL"));
+		peer2.createChannel(std::string("g[en]ERAL"));
 		message.arguments[0] = "#G[En}erAL";
 		message.argCount = 1;
 		command_join(message, deps);
@@ -36,7 +37,7 @@ TEST_CASE("JOIN")
 	};
 	SECTION("when the channel exists and no key is provided")
 	{
-		peer.createChannel(std::string("general"));
+		peer2.createChannel(std::string("general"));
 		message.arguments[0] = "#general";
 		message.argCount = 1;
 		command_join(message, deps);
@@ -51,12 +52,14 @@ TEST_CASE("JOIN")
 		Message	peer1_message(peer1, std::string());
 		peer1_message.arguments[0] = "#general";
 		peer1_message.argCount = 1;
-		REQUIRE_THROWS_AS( command_join(peer1_message, deps), ERR_INVITEONLYCHAN );
+		command_join(peer1_message, deps);
+		REQUIRE( !channels["general"].users.has(peer1._fd) );
 	};
 	SECTION("when the channel exists and the peer is invited, but no key was provided")
 	{
-		Channel	&channel = peer.createChannel(std::string("general"));
+		Channel	&channel = peer2.createChannel(std::string("general"));
 		channel.addInvitation(peer);
+		channel.setFlag(FLAG_KEY);
 		channel.setKey("password");
 		Peer	&peer1 = peers.add(4, addr);
 		peer1._nickname = "nick1";
@@ -69,7 +72,7 @@ TEST_CASE("JOIN")
 	};
 	SECTION("when the channel exists and the peer is invited")
 	{
-		Channel	&channel = peer.createChannel(std::string("general"));
+		Channel	&channel = peer2.createChannel(std::string("general"));
 		channel.setFlag(FLAG_INVITE);
 		Peer	&peer1 = peers.add(4, addr);
 		peer1._nickname = "nick1";
@@ -82,7 +85,8 @@ TEST_CASE("JOIN")
 	};
 	SECTION("when the channel exists and a valid key is provided")
 	{
-		Channel	&channel = peer.createChannel(std::string("general"));
+		Channel	&channel = peer2.createChannel(std::string("general"));
+		channel.setFlag(FLAG_KEY);
 		channel.setKey("password");
 		message.arguments[0] = "#general";
 		message.arguments[1] = "password";
@@ -92,16 +96,18 @@ TEST_CASE("JOIN")
 	};
 	SECTION("when the channel exists and no key was provided (but one is needed)")
 	{
-		Channel &channel = peer.createChannel(std::string("general"));
+		Channel &channel = peer2.createChannel(std::string("general"));
+		channel.setFlag(FLAG_KEY);
 		channel.setKey("password");
 		message.arguments[0] = "#general";
 		message.argCount = 1;
 		command_join(message, deps);
-		REQUIRE( channels["general"].users.has(peer._fd) );
+		REQUIRE( !channels["general"].users.has(peer._fd) );
 	};
 	SECTION("when the channel exists and an invalid key is provided")
 	{
-		Channel	&channel = peer.createChannel(std::string("general"));
+		Channel	&channel = peer2.createChannel(std::string("general"));
+		channel.setFlag(FLAG_KEY);
 		channel.setKey("password");
 		message.arguments[0] = "#general";
 		message.arguments[1] = "secret";
@@ -119,8 +125,10 @@ TEST_CASE("JOIN")
 	};
 	SECTION("with list as parameters")
 	{
-		Channel	&general_channel = peer.createChannel(std::string("general"));
-		Channel	&ft_irc_channel = peer.createChannel(std::string("ft_irc"));
+		Channel	&general_channel = peer2.createChannel(std::string("general"));
+		Channel	&ft_irc_channel = peer2.createChannel(std::string("ft_irc"));
+		general_channel.setFlag(FLAG_KEY);
+		ft_irc_channel.setFlag(FLAG_KEY);
 		general_channel.setKey("password");
 		ft_irc_channel.setKey("secret");
 		message.arguments[0] = "#general,#ft_irc";
@@ -130,10 +138,12 @@ TEST_CASE("JOIN")
 		REQUIRE( channels["general"].users.has(peer._fd) );
 		REQUIRE( channels["ft_irc"].users.has(peer._fd) );
 	};
-	SECTION("with differing channels and keys length")
+	SECTION("with differing channels and keys length, only one key input")
 	{
-		Channel	&general_channel = peer.createChannel(std::string("general"));
-		Channel	&ft_irc_channel = peer.createChannel(std::string("ft_irc"));
+		Channel	&general_channel = peer2.createChannel(std::string("general"));
+		Channel	&ft_irc_channel = peer2.createChannel(std::string("ft_irc"));
+		general_channel.setFlag(FLAG_KEY);
+		ft_irc_channel.setFlag(FLAG_KEY);
 		general_channel.setKey("password");
 		ft_irc_channel.setKey("secret");
 		message.arguments[0] = "#general,#ft_irc";
@@ -141,12 +151,42 @@ TEST_CASE("JOIN")
 		message.argCount = 2;
 		command_join(message, deps);
 		REQUIRE( channels["general"].users.has(peer._fd) );
+		REQUIRE( !channels["ft_irc"].users.has(peer._fd) );
+	};
+	SECTION("with differing channels and keys length, one key correct one wrong")
+	{
+		Channel	&general_channel = peer2.createChannel(std::string("general"));
+		Channel	&ft_irc_channel = peer2.createChannel(std::string("ft_irc"));
+		general_channel.setFlag(FLAG_KEY);
+		ft_irc_channel.setFlag(FLAG_KEY);
+		general_channel.setKey("password");
+		ft_irc_channel.setKey("secret");
+		message.arguments[0] = "#general,#ft_irc";
+		message.arguments[1] = "password,pass";
+		message.argCount = 2;
+		command_join(message, deps);
+		REQUIRE( channels["general"].users.has(peer._fd) );
+		REQUIRE( !channels["ft_irc"].users.has(peer._fd) );
+	};
+	SECTION("with differing channels and keys length, both correct")
+	{
+		Channel	&general_channel = peer2.createChannel(std::string("general"));
+		Channel	&ft_irc_channel = peer2.createChannel(std::string("ft_irc"));
+		general_channel.setFlag(FLAG_KEY);
+		ft_irc_channel.setFlag(FLAG_KEY);
+		general_channel.setKey("password");
+		ft_irc_channel.setKey("secret");
+		message.arguments[0] = "#general,#ft_irc";
+		message.arguments[1] = "password,secret";
+		message.argCount = 2;
+		command_join(message, deps);
+		REQUIRE( channels["general"].users.has(peer._fd) );
 		REQUIRE( channels["ft_irc"].users.has(peer._fd) );
 	};
 	SECTION("JOIN 0")
 	{
-		Channel	&channel1 = peer.createChannel(std::string("general"));
-		Channel	&channel2 = peer.createChannel(std::string("random"));
+		Channel	&channel1 = peer2.createChannel(std::string("general"));
+		Channel	&channel2 = peer2.createChannel(std::string("random"));
 		channel1.add(peer);
 		channel2.add(peer);
 		message.arguments[0] = "0";
