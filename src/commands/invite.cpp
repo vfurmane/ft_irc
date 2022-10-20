@@ -1,12 +1,12 @@
 #include "commands.hpp"
 
-static void	add_invitation(Message &message, Channel &target_channel)
+static void	add_invitation(Message &message, Peer &target_peer, Channel &target_channel)
 {
 	if (target_channel.users.hasByNickname(message.arguments[0]))
 		throw ERR_USERONCHANNEL(message.arguments[0], message.arguments[1]);
 	else
 	{
-		target_channel.addInvitation(message.peer);
+		target_channel.addInvitation(target_peer);
 		message.peer.sendMessage(RPL_INVITING(message.peer, message.arguments[1], message.arguments[0], false));
 	}
 }
@@ -25,17 +25,14 @@ int	command_invite(Message &message, Dependencies &deps)
 			throw ERR_NOSUCHNICK(message.arguments[0]);
 
 		Channel &target_channel = deps.channels.get(base_channel);
+		Peer	&target_peer = deps.peers.getByNickname(message.arguments[0]);
 
 		if (!target_channel.users.hasByNickname(message.peer.getNickname()))
 			throw ERR_NOTONCHANNEL(message.arguments[1]);
-		if ((target_channel.getFlags() & FLAG_INVITE) == FLAG_INVITE)
-		{
-			if (target_channel.users.getByNickname(message.peer.getNickname()).getStatus() == CHANNEL_USER)
-				throw ERR_CHANOPRIVSNEEDED(message.arguments[1]);
-			add_invitation(message, target_channel);
-		}
-		else
-			add_invitation(message, target_channel);
+		if ((target_channel.getFlags() & FLAG_INVITE) == FLAG_INVITE &&
+				target_channel.users.getByNickname(message.peer.getNickname()).getStatus() == CHANNEL_USER)
+			throw ERR_CHANOPRIVSNEEDED(message.arguments[1]);
+		add_invitation(message, target_peer, target_channel);
 	}
 	return 1;
 }
