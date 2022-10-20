@@ -147,7 +147,7 @@ bool	Channel::isInvited(const Peer &peer) const
 void	Channel::removeInvitation(const Peer &peer)
 {
 	std::vector<int>::iterator it;
-	it = std::find(this->_invitations.begin(), this->_invitations.end(), peer);
+	it = std::find(this->_invitations.begin(), this->_invitations.end(), peer.getFd());
 	if (it != this->_invitations.end())
 		this->_invitations.erase(it);
 }
