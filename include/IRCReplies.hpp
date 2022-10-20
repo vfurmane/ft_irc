@@ -26,7 +26,7 @@ struct RPL_MYINFO : public Message
 
 struct RPL_INVITING : public Message
 {
-	RPL_INVITING(Peer &peer, const std::string &channel, const std::string &nickname, bool include_prefix = false);
+	RPL_INVITING(Peer &peer, const std::string &author_nick, const std::string &target_nick, Channel &channel, bool include_prefix = false);
 };
 
 # include "Peer.hpp"

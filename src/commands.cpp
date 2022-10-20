@@ -10,6 +10,18 @@ ErrorMessage::ErrorMessage(Peer &peer, const std::string &message, bool include_
 	this->input = this->updateInputFromFields();
 }
 
+InviteMessage::InviteMessage(Peer &peer, const std::string target_nick, const Channel &channel, bool include_prefix) : Message(peer, std::string())
+{
+	this->command = "INVITE";
+	this->arguments[0] = target_nick;
+	this->arguments[1] = ":" + channel.stringify();
+	this->argCount= 2;
+	if (include_prefix)
+		this->prefix = this->updatePrefixFromPeer();
+	this->input = this->updateInputFromFields();
+
+}
+
 JoinMessage::JoinMessage(Peer &peer, const _base_channel &channel, bool include_prefix) : Message(peer, std::string())
 {
 	this->command = "JOIN";
