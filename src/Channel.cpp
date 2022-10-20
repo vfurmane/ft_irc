@@ -144,6 +144,14 @@ bool	Channel::isInvited(const Peer &peer) const
 	return std::find(this->_invitations.begin(), this->_invitations.end(), peer.getFd()) != this->_invitations.end();
 }
 
+void	Channel::removeInvitation(const Peer &peer)
+{
+	std::vector<int>::iterator it;
+	it = std::find(this->_invitations.begin(), this->_invitations.end(), peer.getFd());
+	if (it != this->_invitations.end())
+		this->_invitations.erase(it);
+}
+
 User	&Channel::add(Peer &peer)
 {
 #ifndef NDEBUG
@@ -159,6 +167,8 @@ void	Channel::remove(const Peer &peer)
 	this->users.remove(peer);
 	if (this->manager.empty())
 		manager.remove(this->getName());
+	if (this->isInvited(peer))
+		this->removeInvitation(peer);
 #ifndef NDEBUG
 	std::cerr << peer.generatePrefix() << " has left " << this->stringify() << std::endl;
 #endif

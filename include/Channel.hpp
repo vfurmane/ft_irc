@@ -60,6 +60,7 @@ class Channel : public _base_channel
 		void	setCreator(User &user);
 		void	addInvitation(const Peer &peer);
 		bool	isInvited(const Peer &peer) const;
+		void	removeInvitation(const Peer &peer);
 
 		User	&add(Peer &peer);
 		void	remove(const Peer &peer);
