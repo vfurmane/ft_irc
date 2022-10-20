@@ -8,7 +8,6 @@ static void	kick_user(Message &message, _base_channel &base_channel, Channel &ch
 		return ;
 	message.peer.sendMessage(KickMessage(message.peer, base_channel, target.peer.getNickname(), message.arguments[2], true));
 	channel.sendMessage(KickMessage(message.peer, base_channel, target.peer.getNickname(), message.arguments[2]));
-	channel.removeInvitation(target.peer);
 	channel.remove(target);
 }
 

@@ -167,6 +167,8 @@ void	Channel::remove(const Peer &peer)
 	this->users.remove(peer);
 	if (this->manager.empty())
 		manager.remove(this->getName());
+	if (this->isInvited(peer))
+		this->removeInvitation(peer);
 #ifndef NDEBUG
 	std::cerr << peer.generatePrefix() << " has left " << this->stringify() << std::endl;
 #endif
