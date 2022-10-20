@@ -125,6 +125,7 @@ TEST_CASE("INVITE")
 		message.arguments[0] = "test_user3";
 		message.arguments[1] = "#channel";
 		message.argCount = 2;
-		REQUIRE_NOTHROW( command_invite(message, deps) );
+		command_invite(message, deps);
+		REQUIRE( std::find(channel._invitations.begin(), channel._invitations.end(), 5) != channel._invitations.end() );
 	}
 }
