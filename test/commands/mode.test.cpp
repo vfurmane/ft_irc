@@ -64,28 +64,7 @@ TEST_CASE("MODE")
 		message.arguments[0] = "#general";
 		message.arguments[1] = "+z";
 
-		REQUIRE_THROWS_AS( command_mode(message, deps), ERR_UNKNOWNMODE );
-	};
-	SECTION("should throw an error if there are multiple _status and at least one if incorrect")
-	{
-		struct sockaddr	addr;
-		Configuration	config;
-		Server			server(config);
-		Peer			peer(server, 3, addr);
-		Message			message(peer, std::string());
-		PeerManager		&peermanager = server.peers;
-		ChannelManager	&channels = server.channels;
-		Dependencies	deps = {config, peermanager, channels};
-
-		peer._username = "john_doe";
-		Channel &channel = channels.add("general");
-		User &user = channel.add(peer);
-		user._status = CHANNEL_OPERATOR;
-		message.argCount = 2;
-		message.arguments[0] = "#general";
-		message.arguments[1] = "+ioz";
-
-		REQUIRE_THROWS_AS( command_mode(message, deps), ERR_UNKNOWNMODE );
+		REQUIRE( command_mode(message, deps) == 1 );
 	};
 	SECTION("should throw an error if the user is not operator or creator and try to change _status")
 	{	
