@@ -2,9 +2,10 @@
 
 RPL_WELCOME::RPL_WELCOME(Peer &peer, bool include_prefix) : Message(peer, std::string())
 {
+	Configuration	&config = peer.server.config;
 	this->command = "001";
 	this->arguments[0] = peer.getNickname();
-	this->arguments[1] = "Welcome to the " NETWORK_NAME " Network " + peer.generatePrefix();
+	this->arguments[1] = "Welcome to the " + config.getNetworkName() + " Network " + peer.generatePrefix();
 	this->argCount = 2;
 	if (include_prefix)
 		this->prefix = this->updatePrefixFromPeer();
@@ -13,9 +14,10 @@ RPL_WELCOME::RPL_WELCOME(Peer &peer, bool include_prefix) : Message(peer, std::s
 
 RPL_YOURHOST::RPL_YOURHOST(Peer &peer, bool include_prefix) : Message(peer, std::string())
 {
+	Configuration	&config = peer.server.config;
 	this->command = "002";
 	this->arguments[0] = peer.getNickname();
-	this->arguments[1] = "Your host is " SERVER_NAME ", running version " SERVER_VERSION;
+	this->arguments[1] = "Your host is " + config.getServerName() + ", running version " + config.getServerVersion();
 	this->argCount = 2;
 	if (include_prefix)
 		this->prefix = this->updatePrefixFromPeer();
@@ -24,9 +26,10 @@ RPL_YOURHOST::RPL_YOURHOST(Peer &peer, bool include_prefix) : Message(peer, std:
 
 RPL_CREATED::RPL_CREATED(Peer &peer, bool include_prefix) : Message(peer, std::string())
 {
+	Configuration	&config = peer.server.config;
 	this->command = "003";
 	this->arguments[0] = peer.getNickname();
-	this->arguments[1] = "This server was created " SERVER_CREATION_DATE;
+	this->arguments[1] = "This server was created " + config.getServerCreationDate();
 	this->argCount = 2;
 	if (include_prefix)
 		this->prefix = this->updatePrefixFromPeer();
@@ -35,9 +38,10 @@ RPL_CREATED::RPL_CREATED(Peer &peer, bool include_prefix) : Message(peer, std::s
 
 RPL_MYINFO::RPL_MYINFO(Peer &peer, bool include_prefix) : Message(peer, std::string())
 {
+	Configuration	&config = peer.server.config;
 	this->command = "004";
 	this->arguments[0] = peer.getNickname();
-	this->arguments[1] = "" SERVER_NAME " " SERVER_VERSION " " AVAILABLE_USER_MODES " " AVAILABLE_CHANNEL_MODES;
+	this->arguments[1] = "" + config.getServerName() + " " + config.getServerVersion() + " " + config.getUserModes() + " " + config.getChannelModes();
 	this->argCount = 2;
 	if (include_prefix)
 		this->prefix = this->updatePrefixFromPeer();

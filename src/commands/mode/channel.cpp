@@ -4,8 +4,7 @@
 #include "IRCErrors.hpp"
 
 static const size_t mode_count = 3;
-static const char mode_name[mode_count] = {'o', 'i', 'k'};
-void (*const manageFlags[mode_count])(bool, User&, Channel&, const std::string&) = {flag_operator, flag_invite_only, flag_key};
+void (*const manageFlags[mode_count])(bool, User&, Channel&, const std::string&) = {flag_invite_only, flag_key, flag_operator};
 
 void	command_mode_channel(Message &message, Dependencies &deps, const _base_channel &base_channel)
 {
@@ -35,9 +34,9 @@ void	command_mode_channel(Message &message, Dependencies &deps, const _base_chan
 		while (it < message.arguments[i].end())
 		{
 			k = 0;
-			while (k < mode_count)
+			while (k < deps.config.getChannelModes().length())
 			{
-				if (*it == mode_name[k])
+				if (*it == deps.config.getChannelModes()[k])
 				{
 					manageFlags[k](add_flag, author, channel, message.arguments[i + 1]);
 					break ;

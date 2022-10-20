@@ -1,10 +1,10 @@
 #include "Configuration.hpp"
 
-Configuration::Configuration() : _parsed(false), _port(), _password()
+Configuration::Configuration() : _network_name("ft_copains"), _server_name("localhost"), _server_version(SERVER_VERSION), _server_creation_date("00:00:00 Jan 01 1970"), _user_modes(""), _channel_modes("iko"), _parsed(false), _port(), _password()
 {
 }
 
-Configuration::Configuration(const Configuration &obj)
+Configuration::Configuration(const Configuration &obj) : _network_name("ft_copains"), _server_name("localhost"), _server_version(SERVER_VERSION), _server_creation_date("00:00:00 Jan 01 1970"), _user_modes(""), _channel_modes("iko"), _parsed(false), _port(), _password()
 {
 	*this = obj;
 }
@@ -58,6 +58,35 @@ void	Configuration::parse_arguments(int argc, char **argv)
 	_password = argv[2];
 }
 
+const std::string		&Configuration::getNetworkName(void) const
+{
+	return this->_network_name;
+}
+
+const std::string		&Configuration::getServerName(void) const
+{
+	return this->_server_name;
+}
+
+const std::string		&Configuration::getServerVersion(void) const
+{
+	return this->_server_version;
+}
+
+const std::string		&Configuration::getServerCreationDate(void) const
+{
+	return this->_server_creation_date;
+}
+
+const std::string		&Configuration::getUserModes(void) const
+{
+	return this->_user_modes;
+}
+
+const std::string		&Configuration::getChannelModes(void) const
+{
+	return this->_channel_modes;
+}
 
 uint16_t		Configuration::getPort(void) const
 {
