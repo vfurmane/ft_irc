@@ -54,17 +54,6 @@ NickMessage::NickMessage(Peer &peer, const std::string &new_nick, bool include_p
 	this->input = this->updateInputFromFields();
 }
 
-NoticeMessage::NoticeMessage(Peer &peer, const std::string &target, const std::string &text_to_send, bool include_prefix) : Message(peer, std::string())
-{
-	this->command = "NOTICE";
-	this->arguments[0] = target;
-	this->arguments[1] = text_to_send;
-	this->argCount = 2;
-	if (include_prefix)
-		this->prefix = this->updatePrefixFromPeer();
-	this->input = this->updateInputFromFields();
-}
-
 PartMessage::PartMessage(Peer &peer, const _base_channel &channel, const std::string &part_message, bool include_prefix): Message(peer, std::string())
 {
 	this->command = "PART";
