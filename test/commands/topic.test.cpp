@@ -70,7 +70,6 @@ TEST_CASE("TOPIC")
 			{
 				channel._creator->setStatus(CHANNEL_OPERATOR);
 				command_topic(message, deps);
-				std::cerr << g_send_arg_buf.size() << std::endl;
 				REQUIRE( channel.getTopic() == message.arguments[1] );
 				REQUIRE( static_cast<UserManager::size_type>(std::count(g_send_arg_buf.begin(), g_send_arg_buf.end(), TopicMessage(peer, channel, true).input + std::string(CRLF))) == channel.users.size() );
 			};
