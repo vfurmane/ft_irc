@@ -192,8 +192,14 @@ void	Channel::remove(const Peer &peer)
 	if (this->_creator != NULL && &this->_creator->peer == &peer)
 		this->_creator = NULL;
 	this->users.remove(peer);
-	if (this->manager.empty())
+	if (this->users.empty())
+	{
+#ifndef NDEBUG
+		std:: cerr << "Last peer left, dropping channel " << this->stringify() << "..." << std::endl;
+#endif
 		manager.remove(this->getName());
+		return ;
+	}
 	if (this->isInvited(peer))
 		this->removeInvitation(peer);
 #ifndef NDEBUG
