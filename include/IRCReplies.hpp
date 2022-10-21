@@ -49,16 +49,6 @@ struct RPL_INVITING : public Message
 	RPL_INVITING(Peer &peer, const std::string &author_nick, const std::string &target_nick, Channel &channel, bool include_prefix = false);
 };
 
-struct RPL_NAMEREPLY : public Message
-{
-	RPL_NAMEREPLY(Peer &peer, const std::string &prefix, const std::string &channel, const std::string &users, bool include_prefix = false);
-};
-
-struct RPL_ENDOFNAMES : public Message
-{
-	RPL_ENDOFNAMES(Peer &peer, const std::string &channel, bool include_prefix = false);
-};
-
 # include "Peer.hpp"
 
 #endif
