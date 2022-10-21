@@ -27,7 +27,7 @@ TEST_CASE("PART")
 		message.arguments[0] = "#secret";
 		message.argCount = 1;
 		command_part(message, deps);
-		REQUIRE(std::find(g_send_arg_buf.begin(), g_send_arg_buf.end(), ERR_NOSUCHCHANNEL("#secret").what() + std::string(CRLF)) != g_send_arg_buf.end());
+		REQUIRE(std::find(g_send_arg_buf.begin(), g_send_arg_buf.end(), ERR_NOSUCHCHANNEL(peer._nickname, "#secret").what() + std::string(CRLF)) != g_send_arg_buf.end());
 	}
 	SECTION("should work with complex channel name #1")
 	{
@@ -60,7 +60,7 @@ TEST_CASE("PART")
 		message.argCount = 1;
 		REQUIRE_NOTHROW( command_part(message, deps) );
 		command_part(message, deps);
-		REQUIRE(std::find(g_send_arg_buf.begin(), g_send_arg_buf.end(), ERR_NOTONCHANNEL("#channel").what() + std::string(CRLF)) != g_send_arg_buf.end());
+		REQUIRE(std::find(g_send_arg_buf.begin(), g_send_arg_buf.end(), ERR_NOTONCHANNEL(peer._nickname, "#channel").what() + std::string(CRLF)) != g_send_arg_buf.end());
 	}
 	SECTION("user not on channel")
 	{
@@ -72,7 +72,7 @@ TEST_CASE("PART")
 		message.arguments[0] = "#channel";
 		message.argCount = 1;
 		command_part(message, deps);
-		REQUIRE(std::find(g_send_arg_buf.begin(), g_send_arg_buf.end(), ERR_NOTONCHANNEL("#channel").what() + std::string(CRLF)) != g_send_arg_buf.end());
+		REQUIRE(std::find(g_send_arg_buf.begin(), g_send_arg_buf.end(), ERR_NOTONCHANNEL(peer._nickname, "#channel").what() + std::string(CRLF)) != g_send_arg_buf.end());
 	}
 	SECTION("user on channel")
 	{
@@ -102,15 +102,15 @@ TEST_CASE("PART")
 		REQUIRE_NOTHROW( command_part(message, deps) );
 		message.arguments[0] = "#channel1";
 		command_part(message,deps);
-		REQUIRE(std::find(g_send_arg_buf.begin(), g_send_arg_buf.end(), ERR_NOTONCHANNEL("#channel1").what() + std::string(CRLF)) != g_send_arg_buf.end());
+		REQUIRE(std::find(g_send_arg_buf.begin(), g_send_arg_buf.end(), ERR_NOTONCHANNEL(peer._nickname, "#channel1").what() + std::string(CRLF)) != g_send_arg_buf.end());
 		message.arguments[0] = "#channel2";
 		command_part(message,deps);
-		REQUIRE(std::find(g_send_arg_buf.begin(), g_send_arg_buf.end(), ERR_NOTONCHANNEL("#channel2").what() + std::string(CRLF)) != g_send_arg_buf.end());
+		REQUIRE(std::find(g_send_arg_buf.begin(), g_send_arg_buf.end(), ERR_NOTONCHANNEL(peer._nickname, "#channel2").what() + std::string(CRLF)) != g_send_arg_buf.end());
 		message.arguments[0] = "#channel3";
 		command_part(message,deps);
-		REQUIRE(std::find(g_send_arg_buf.begin(), g_send_arg_buf.end(), ERR_NOTONCHANNEL("#channel3").what() + std::string(CRLF)) != g_send_arg_buf.end());
+		REQUIRE(std::find(g_send_arg_buf.begin(), g_send_arg_buf.end(), ERR_NOTONCHANNEL(peer._nickname, "#channel3").what() + std::string(CRLF)) != g_send_arg_buf.end());
 		message.arguments[0] = "#channel4";
 		command_part(message,deps);
-		REQUIRE(std::find(g_send_arg_buf.begin(), g_send_arg_buf.end(), ERR_NOTONCHANNEL("#channel4").what() + std::string(CRLF)) != g_send_arg_buf.end());
+		REQUIRE(std::find(g_send_arg_buf.begin(), g_send_arg_buf.end(), ERR_NOTONCHANNEL(peer._nickname, "#channel4").what() + std::string(CRLF)) != g_send_arg_buf.end());
 	}
 }

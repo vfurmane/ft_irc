@@ -3,7 +3,7 @@
 int command_notice(Message &message, Dependencies &deps)
 {
 	if (message.argCount < 2 || message.arguments[1].empty())
-		throw ERR_NEEDMOREPARAMS(message.command);
+		throw ERR_NEEDMOREPARAMS(message.peer.getNickname(), message.command);
 
 	const std::vector<std::string>	targets = parseList(message.arguments[0]);
 	const std::string				&text_to_send = message.arguments[1];

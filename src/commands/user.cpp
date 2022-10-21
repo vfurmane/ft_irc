@@ -16,9 +16,9 @@ int	command_user(Message &message, Dependencies &deps)
 {
 	(void)deps;
 	if (message.argCount < 4)
-		throw ERR_NEEDMOREPARAMS(message.command);
+		throw ERR_NEEDMOREPARAMS(message.peer.getNickname(), message.command);
 	if (message.peer.isRegistered())
-		throw ERR_ALREADYREGISTRED();
+		throw ERR_ALREADYREGISTRED(message.peer.getNickname());
 	if (forbidden_user_char(message.arguments[0]) == true)
 		return (1);
 	message.peer.setUsername(message.arguments[0]);

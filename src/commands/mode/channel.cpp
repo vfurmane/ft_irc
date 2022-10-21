@@ -44,7 +44,7 @@ void	command_mode_channel(Message &message, Dependencies &deps, const _base_chan
 				k++;
 			}
 			if (k == mode_count)
-				message.peer.sendMessage(ERR_UNKNOWNMODE(std::string(1, *it), message.arguments[0]));
+				message.peer.sendMessage(ERR_UNKNOWNMODE(message.peer.getNickname(), std::string(1, *it), message.arguments[0]));
 			else
 				flags += *it;
 			++it;

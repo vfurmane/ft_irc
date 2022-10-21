@@ -42,9 +42,9 @@ int		command_nick(Message &message, Dependencies &deps)
 	if (message.argCount < 1 || nick.empty())
 		throw ERR_NONICKNAMEGIVEN();
 	if (deps.peers.containsNickname(nick))
-		throw ERR_NICKNAMEINUSE(nick);
+		throw ERR_NICKNAMEINUSE(message.peer.getNickname(), nick);
 	if (!isValidNickname(nick))
-		throw ERR_ERRONEUSNICKNAME(nick);
+		throw ERR_ERRONEUSNICKNAME(message.peer.getNickname(), nick);
 	if (message.peer.isRegistered())
 		message.peer.server.sendMessage(NickMessage(message.peer, nick, true));
 	message.peer.setNickname(nick);

@@ -21,7 +21,7 @@ TEST_CASE("PRIVMSG - channel")
 	SECTION("when the channel does not exist")
 	{
 		command_privmsg_channel(deps, peer, base_channel, "hello world");
-		REQUIRE( std::find(g_send_arg_buf.begin(), g_send_arg_buf.end(), ERR_NOSUCHCHANNEL(base_channel.getName()).what() + std::string(CRLF)) != g_send_arg_buf.end() );
+		REQUIRE( std::find(g_send_arg_buf.begin(), g_send_arg_buf.end(), ERR_NOSUCHCHANNEL(peer._nickname, base_channel.getName()).what() + std::string(CRLF)) != g_send_arg_buf.end() );
 	};
 	SECTION("when the channel exists")
 	{

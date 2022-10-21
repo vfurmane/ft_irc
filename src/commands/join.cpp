@@ -3,7 +3,7 @@
 int		command_join(Message &message, Dependencies &deps)
 {
 	if (message.argCount < 1 || message.arguments[0].empty() || (message.argCount >= 2 && message.arguments[1].empty()))
-		throw ERR_NEEDMOREPARAMS("JOIN");
+		throw ERR_NEEDMOREPARAMS(message.peer.getNickname(), "JOIN");
 
 	if (message.arguments[0] == "0")
 	{
@@ -31,7 +31,7 @@ int		command_join(Message &message, Dependencies &deps)
 				if (channel.hasFlag(FLAG_INVITE) && !channel.isInvited(message.peer))
 					message.peer.sendMessage(ERR_INVITEONLYCHAN(message.peer.getNickname(), base_channel.stringify()));
 				else if (!channel.isInvited(message.peer) && channel.hasFlag(FLAG_KEY) && (key_it == keys.end() || !channel.compareKey(*key_it)))
-					message.peer.sendMessage(ERR_BADCHANNELKEY(*chan_it));
+					message.peer.sendMessage(ERR_BADCHANNELKEY(message.peer.getNickname(), *chan_it));
 				else
 				{
 					channel.add(message.peer);
@@ -58,7 +58,7 @@ int		command_join(Message &message, Dependencies &deps)
 			}
 		}
 		else
-			message.peer.sendMessage(ERR_NOSUCHCHANNEL(*chan_it));
+			message.peer.sendMessage(ERR_NOSUCHCHANNEL(message.peer.getNickname(), *chan_it));
 		++chan_it;
 		if (key_it != keys.end())
 			++key_it;

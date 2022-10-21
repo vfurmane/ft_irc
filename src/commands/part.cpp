@@ -3,7 +3,7 @@
 int command_part(Message &message, Dependencies &deps)
 {
 	if (message.argCount < 1 || message.arguments[0].empty())
-		throw ERR_NEEDMOREPARAMS("PART");
+		throw ERR_NEEDMOREPARAMS(message.peer.getNickname(), "PART");
 
 	std::vector<std::string> channels = parseList(message.arguments[0]);
 	std::vector<std::string>::const_iterator channel_it = channels.begin();
@@ -16,7 +16,7 @@ int command_part(Message &message, Dependencies &deps)
 		{
 			_base_channel base_channel = Channel::parse(*channel_it);
 			if (!channel_manager.has(base_channel.getName()))
-				message.peer.sendMessage(ERR_NOSUCHCHANNEL(*channel_it));
+				message.peer.sendMessage(ERR_NOSUCHCHANNEL(message.peer.getNickname(), *channel_it));
 			else 
 			{
 				Channel &channel = deps.channels[base_channel.getName()];
@@ -27,11 +27,11 @@ int command_part(Message &message, Dependencies &deps)
 					channel.remove(channel.users[message.peer.getFd()]);
 				}
 				else
-					message.peer.sendMessage(ERR_NOTONCHANNEL(*channel_it));
+					message.peer.sendMessage(ERR_NOTONCHANNEL(message.peer.getNickname(), *channel_it));
 			}
 		}
 		else
-			message.peer.sendMessage(ERR_NOSUCHCHANNEL(*channel_it));
+			message.peer.sendMessage(ERR_NOSUCHCHANNEL(message.peer.getNickname(), *channel_it));
 		++channel_it;
 	}
 	return 1;
