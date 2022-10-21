@@ -1,7 +1,7 @@
 #include "Message.hpp"
 
-static const size_t commands_count = 14;
-const std::string Message::commands_name[commands_count] = {"CAP", "INVITE", "JOIN", "KICK", "MODE", "NICK", "NOTICE", "PART", "PASS", "PING", "PRIVMSG", "QUIT", "USER", "WHOIS"};
+static const size_t commands_count = 15;
+const std::string Message::commands_name[commands_count] = {"CAP", "INVITE", "JOIN", "KICK", "MODE", "NAMES", "NICK", "NOTICE", "PART", "PASS", "PING", "PRIVMSG", "QUIT", "USER", "WHOIS"};
 int (*const Message::commands[commands_count])(Message&, Dependencies&) = {command_cap, command_invite, command_join, command_kick, command_mode, command_nick, command_part, command_pass, command_ping, command_privmsg, command_quit, command_user, command_whois};
 
 Message::Message(Peer &peer, const std::string &input): peer(peer), input(input), prefix(NULL), command(), arguments(), argCount(0)
