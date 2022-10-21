@@ -160,6 +160,11 @@ char	*Peer::getStrAddr(void) const
 	return inet_ntoa(((struct sockaddr_in *)(&this->_addr))->sin_addr);
 }
 
+const std::string	&Peer::getRealname(void) const
+{
+	return this->_realname;
+}
+
 const std::string	&Peer::getUsername(void) const
 {
 	return this->_username;

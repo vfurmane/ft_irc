@@ -43,6 +43,7 @@ class Peer
 
 		char				*getStrAddr(void) const;
 		int					getFd(void) const;
+		const std::string	&getRealname(void) const;
 		const std::string	&getUsername(void) const;
 		const std::string	&getNickname(void) const;
 		const std::string	&getPassword(void) const;

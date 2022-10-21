@@ -24,6 +24,26 @@ struct RPL_MYINFO : public Message
 	RPL_MYINFO(Peer &peer, bool include_prefix = false);
 };
 
+struct RPL_WHOISUSER : public Message
+{
+	RPL_WHOISUSER(Peer &peer, const Peer &target, bool include_prefix = false);
+};
+
+struct RPL_WHOISSERVER : public Message
+{
+	RPL_WHOISSERVER(Peer &peer, const Peer &target, Configuration &config, bool include_prefix = false);
+};
+
+struct RPL_ENDOFWHOIS : public Message
+{
+	RPL_ENDOFWHOIS(Peer &peer, const Peer &target, bool include_prefix = false);
+};
+
+struct RPL_WHOISCHANNELS : public Message
+{
+	RPL_WHOISCHANNELS(Peer &peer, const Peer &target, const std::string &list_of_channels, bool include_prefix = false);
+};
+
 struct RPL_INVITING : public Message
 {
 	RPL_INVITING(Peer &peer, const std::string &author_nick, const std::string &target_nick, Channel &channel, bool include_prefix = false);

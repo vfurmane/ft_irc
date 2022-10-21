@@ -1,5 +1,5 @@
 NAME = test.out
-SRCS = main.cpp Channel.test.cpp ChannelManager.test.cpp commands.test.cpp utils.test.cpp Configuration.test.cpp IRCReplies.test.cpp Manager.test.cpp Message.test.cpp PeerManager.test.cpp Peer.test.cpp Server.test.cpp User.test.cpp UserManager.test.cpp $(addprefix commands/, cap.test.cpp invite.test.cpp join.test.cpp kick.test.cpp mode.test.cpp nick.test.cpp part.test.cpp pass.test.cpp ping.test.cpp $(addprefix privmsg/, channel.test.cpp nickname.test.cpp) privmsg.test.cpp quit.test.cpp user.test.cpp $(addprefix mode/, channel.test.cpp $(addprefix channel/, invite_only.test.cpp key.test.cpp operator.test.cpp)))
+SRCS = main.cpp Channel.test.cpp ChannelManager.test.cpp commands.test.cpp utils.test.cpp Configuration.test.cpp IRCReplies.test.cpp Manager.test.cpp Message.test.cpp PeerManager.test.cpp Peer.test.cpp Server.test.cpp User.test.cpp UserManager.test.cpp $(addprefix commands/, cap.test.cpp invite.test.cpp join.test.cpp kick.test.cpp mode.test.cpp nick.test.cpp part.test.cpp pass.test.cpp ping.test.cpp whois.test.cpp $(addprefix privmsg/, channel.test.cpp nickname.test.cpp) privmsg.test.cpp quit.test.cpp user.test.cpp $(addprefix mode/, channel.test.cpp $(addprefix channel/, invite_only.test.cpp key.test.cpp operator.test.cpp)))
 OBJS = $(SRCS:.cpp=.o)
 DEPS = $(SRCS:.cpp=.d)
 INCLDIR = include
