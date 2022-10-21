@@ -13,7 +13,7 @@ static void	kick_user(Message &message, _base_channel &base_channel, Channel &ch
 
 int	command_kick(Message &message, Dependencies &deps)
 {
-	if (message.argCount < 2)
+	if (message.argCount < 2 || message.arguments[0].empty() || message.arguments[1].empty())
 		throw ERR_NEEDMOREPARAMS("KICK");
 
 	if (!_base_channel::isValidName(message.arguments[0]))

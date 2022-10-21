@@ -14,7 +14,7 @@ static void	add_invitation(Message &message, Peer &target_peer, Channel &target_
 
 int	command_invite(Message &message, Dependencies &deps)
 {
-	if (message.argCount < 2)
+	if (message.argCount < 2 || message.arguments[0].empty() || message.arguments[1].empty())
 		throw ERR_NEEDMOREPARAMS("INVITE");
 
 	if (!_base_channel::isValidName(message.arguments[1]))
