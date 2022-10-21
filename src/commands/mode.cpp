@@ -6,7 +6,7 @@ int	command_mode(Message &message, Dependencies &deps)
 		throw ERR_NEEDMOREPARAMS(message.command);
 	if (!_base_channel::isValidName(message.arguments[0]))
 	{
-		message.peer.sendMessage(ModeUserMessage(message.peer, message.arguments[0], message.arguments[1]));
+		message.peer.sendMessage(ModeUserMessage(message.peer, message.arguments[0], message.arguments[1], true));
 		if (!deps.peers.hasByNickname(message.arguments[0]))
 			throw ERR_NOSUCHNICK(message.arguments[0]);
 		if (message.peer.getNickname() != message.arguments[0])
