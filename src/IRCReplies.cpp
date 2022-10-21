@@ -118,7 +118,7 @@ RPL_NAMEREPLY::RPL_NAMEREPLY(Peer &peer, const std::string &prefix, const std::s
 	this->arguments[0] = peer.getNickname();
 	this->arguments[1] = prefix;
 	this->arguments[2] = channel;
-	this->arguments[3] = ":" + users;
+	this->arguments[3] = users;
 	this->argCount = 4;
 	if (include_prefix)
 		this->prefix = this->updatePrefixFromPeer();
