@@ -1,4 +1,4 @@
-[![Compilation](https://github.com/vfurmane/ft_irc/actions/workflows/compilation.yml/badge.svg)](https://github.com/vfurmane/ft_irc/actions/workflows/compilation.yml) [![Tests](https://github.com/vfurmane/ft_irc/actions/workflows/tests.yml/badge.svg)](https://github.com/vfurmane/ft_irc/actions/workflows/tests.yml) ![License](https://img.shields.io/github/license/vfurmane/ft_irc) ![Version](https://img.shields.io/github/v/release/vfurmane/ft_irc?display_name=tag&sort=semver)
+[![Compilation](https://github.com/vfurmane/ft_irc/actions/workflows/compilation.yml/badge.svg)](https://github.com/vfurmane/ft_irc/actions/workflows/compilation.yml) [![Tests](https://github.com/vfurmane/ft_irc/actions/workflows/tests.yml/badge.svg)](https://github.com/vfurmane/ft_irc/actions/workflows/tests.yml) ![License](https://img.shields.io/github/license/vfurmane/ft_irc) ![Version](https://img.shields.io/github/v/release/vfurmane/ft_irc?display_name=tag&sort=semver) ![Irssi](https://img.shields.io/badge/irssi-v1.2.3--1ubuntu4-blue)
 
 # ft_irc
 
@@ -28,6 +28,10 @@ To debug the network exchanges, you can use the `tcpdump.Dockerfile` (after foll
 docker build -t irc_tcpdump -f tcpdump.Dockerfile .
 docker run -it -v $PWD:$PWD --workdir $PWD -p 6667:6667 irc_tcpdump ./ircserv 6667 password
 ```
+
+## Usage
+
+Our IRC server was designed to comply with `irssi 1.2.3-1ubuntu4 (20210409 0011)`.
 
 ## Contributors
 
