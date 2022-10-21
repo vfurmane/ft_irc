@@ -29,14 +29,9 @@ struct JoinMessage : public Message
 	JoinMessage(Peer &peer, const _base_channel &channel, bool include_prefix = false);
 };
 
-struct	ModeMessage : public Message
+struct ModeMessage : public Message
 {
 	ModeMessage(Peer &peer, const _base_channel &channel, const std::string flag, const std::string argument, bool include_prefix = false);
-};
-
-struct NoticeMessage : public Message
-{
-	NoticeMessage(Peer &peer, const std::string &target, const std::string &text_to_send, bool include_prefix = false);
 };
 
 struct NickMessage : public Message
@@ -84,6 +79,7 @@ int	command_invite(Message &message, Dependencies &deps);
 int	command_join(Message &message, Dependencies &deps);
 int	command_kick(Message &message, Dependencies &deps);
 int	command_mode(Message &message, Dependencies &deps);
+int	command_names(Message &message, Dependencies &deps);
 int	command_nick(Message &message, Dependencies &deps);
 int	command_notice(Message &message, Dependencies &deps);
 int	command_part(Message &message, Dependencies &deps);
