@@ -25,10 +25,7 @@ int	command_list(Message &message, Dependencies &deps)
 				if (deps.channels.has(base_channel.getName()))
 				{
 					Channel &channel = deps.channels[base_channel.getName()];
-					if (channel.getTopic().empty())
-						message.peer.sendMessage(RPL_LIST(message.peer, channel.stringify(), ""));
-					else
-						message.peer.sendMessage(RPL_LIST(message.peer, channel.stringify(), channel.getTopic()));
+					message.peer.sendMessage(RPL_LIST(message.peer, channel.stringify(), channel.getTopic()));
 				}
 			}
 			++channel_it;
