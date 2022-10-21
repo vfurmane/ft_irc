@@ -32,7 +32,7 @@ JoinMessage::JoinMessage(Peer &peer, const _base_channel &channel, bool include_
 	this->input = this->updateInputFromFields();
 }
 
-ModeMessage::ModeMessage(Peer &peer, const _base_channel &channel, const std::string flag, const std::string argument, bool include_prefix) : Message(peer, std::string())
+ModeChannelMessage::ModeChannelMessage(Peer &peer, const _base_channel &channel, const std::string flag, const std::string argument, bool include_prefix) : Message(peer, std::string())
 {
 	this->command = "MODE";
 	this->arguments[0] = channel.stringify();

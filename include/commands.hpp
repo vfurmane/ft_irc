@@ -29,9 +29,9 @@ struct JoinMessage : public Message
 	JoinMessage(Peer &peer, const _base_channel &channel, bool include_prefix = false);
 };
 
-struct ModeMessage : public Message
+struct	ModeChannelMessage : public Message
 {
-	ModeMessage(Peer &peer, const _base_channel &channel, const std::string flag, const std::string argument, bool include_prefix = false);
+	ModeChannelMessage(Peer &peer, const _base_channel &channel, const std::string flag, const std::string argument, bool include_prefix = false);
 };
 
 struct NoticeMessage : public Message
