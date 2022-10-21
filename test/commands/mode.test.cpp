@@ -29,7 +29,7 @@ TEST_CASE("MODE")
 		message.argCount = 1;
 		REQUIRE_THROWS_AS( command_mode(message, deps), ERR_NEEDMOREPARAMS );
 	};
-	SECTION("should return immediately if the channel prefix is different from : #&!")
+	SECTION("should treat the arg[0] as user if the channel prefix is different from : #&!")
 	{
 		struct sockaddr	addr;
 		Configuration	config;
@@ -44,7 +44,7 @@ TEST_CASE("MODE")
 		message.arguments[0] = "general";
 		message.arguments[1] = "+z";
 
-		REQUIRE( command_mode(message, deps) == 1 );
+		REQUIRE_THROWS_AS( command_mode(message, deps), ERR_NOSUCHNICK);
 	};
 	SECTION("should throw an error if the flag sent is not recognized")
 	{

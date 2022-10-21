@@ -3,8 +3,8 @@
 #include "commands.hpp"
 #include "IRCErrors.hpp"
 
-static const size_t mode_count = 3;
-void (*const manageFlags[mode_count])(bool, User&, Channel&, const std::string&) = {flag_invite_only, flag_key, flag_operator};
+static const size_t mode_count = 4;
+void (*const manageFlags[mode_count])(bool, User&, Channel&, const std::string&) = {flag_invite_only, flag_key, flag_operator, flag_topic};
 
 void	command_mode_channel(Message &message, Dependencies &deps, const _base_channel &base_channel)
 {
@@ -51,6 +51,6 @@ void	command_mode_channel(Message &message, Dependencies &deps, const _base_chan
 		}
 		arguments += message.arguments[i + 1];
 	}
-	message.peer.sendMessage(ModeMessage(message.peer, base_channel, flags, arguments, true));
-	channel.sendMessage(ModeMessage(message.peer, base_channel, flags, arguments));
+	message.peer.sendMessage(ModeChannelMessage(message.peer, base_channel, flags, arguments, true));
+	channel.sendMessage(ModeChannelMessage(message.peer, base_channel, flags, arguments));
 }

@@ -29,14 +29,19 @@ struct JoinMessage : public Message
 	JoinMessage(Peer &peer, const _base_channel &channel, bool include_prefix = false);
 };
 
-struct ModeMessage : public Message
+struct	ModeChannelMessage : public Message
 {
-	ModeMessage(Peer &peer, const _base_channel &channel, const std::string flag, const std::string argument, bool include_prefix = false);
+	ModeChannelMessage(Peer &peer, const _base_channel &channel, const std::string flag, const std::string argument, bool include_prefix = false);
 };
 
 struct NoticeMessage : public Message
 {
 	NoticeMessage(Peer &peer, const std::string &target, const std::string &text_to_send, bool include_prefix = false);
+};
+
+struct ModeUserMessage : public Message
+{
+	ModeUserMessage(Peer &peer, const std::string &target, const std::string &flags, bool include_prefix = false);
 };
 
 struct NickMessage : public Message
@@ -96,9 +101,10 @@ int	command_user(Message &message, Dependencies &deps);
 int	command_whois(Message &message, Dependencies &deps);
 
 void	command_mode_channel(Message &message, Dependencies &deps, const _base_channel &base_channel);
-void	flag_operator(bool add_flag, User &author, Channel &channel, const std::string &argument);
 void	flag_invite_only(bool add_flag, User &author, Channel &channel, const std::string &argument);
 void	flag_key(bool add_flag, User &author, Channel &channel, const std::string &argument);
+void	flag_operator(bool add_flag, User &author, Channel &channel, const std::string &argument);
+void	flag_topic(bool add_flag, User &author, Channel &channel, const std::string &argument);
 
 void	command_privmsg_channel(Dependencies &deps, Peer &peer, const _base_channel &base_channel, const std::string text_to_send);
 void	command_privmsg_nickname(Dependencies &deps, Peer &peer, const std::string &nickname, const std::string text_to_send);

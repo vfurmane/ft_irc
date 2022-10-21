@@ -18,7 +18,8 @@ typedef enum	e_channel_namespace
 typedef enum	e_channel_flag
 {
 	FLAG_INVITE = 1,
-	FLAG_KEY	= 2
+	FLAG_KEY	= 2,
+	FLAG_TOPIC	= 4
 }				t_channel_flag;
 
 class _base_channel

@@ -32,13 +32,24 @@ JoinMessage::JoinMessage(Peer &peer, const _base_channel &channel, bool include_
 	this->input = this->updateInputFromFields();
 }
 
-ModeMessage::ModeMessage(Peer &peer, const _base_channel &channel, const std::string flag, const std::string argument, bool include_prefix) : Message(peer, std::string())
+ModeChannelMessage::ModeChannelMessage(Peer &peer, const _base_channel &channel, const std::string flag, const std::string argument, bool include_prefix) : Message(peer, std::string())
 {
 	this->command = "MODE";
 	this->arguments[0] = channel.stringify();
 	this->arguments[1] = flag;
 	this->arguments[2] = argument;
 	this->argCount = 3;
+	if (include_prefix)
+		this->prefix = this->updatePrefixFromPeer();
+	this->input = this->updateInputFromFields();
+}
+
+ModeUserMessage::ModeUserMessage(Peer &peer, const std::string &target, const std::string &flags, bool include_prefix) : Message(peer, std::string())
+{
+	this->command = "MODE";
+	this->arguments[0] = target;
+	this->arguments[1] = flags;
+	this->argCount = 2;
 	if (include_prefix)
 		this->prefix = this->updatePrefixFromPeer();
 	this->input = this->updateInputFromFields();
