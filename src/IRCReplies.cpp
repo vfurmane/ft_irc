@@ -100,6 +100,28 @@ RPL_WHOISCHANNELS::RPL_WHOISCHANNELS(Peer &peer, const Peer &target, const std::
 	this->input = this->updateInputFromFields();
 }
 
+RPL_LIST::RPL_LIST(Peer &peer, bool include_prefix) : Message(peer, std::string())
+{
+	this->command = "322";
+	this->arguments[0] = peer.getNickname();
+	this->arguments[1] = ":End of LIST";
+	this->argCount = 2;
+	if (include_prefix)
+		this->prefix = this->updatePrefixFromPeer();
+	this->input = this->updateInputFromFields();
+}
+
+RPL_LISTEND::RPL_LISTEND(Peer &peer, bool include_prefix) : Message(peer, std::string())
+{
+	this->command = "323";
+	this->arguments[0] = peer.getNickname();
+	this->arguments[1] = ":End of LIST";
+	this->argCount = 2;
+	if (include_prefix)
+		this->prefix = this->updatePrefixFromPeer();
+	this->input = this->updateInputFromFields();
+}
+
 RPL_NOTOPIC::RPL_NOTOPIC(Peer &peer, Channel &channel, bool include_prefix) : Message(peer, std::string())
 {
 	this->command = "331";

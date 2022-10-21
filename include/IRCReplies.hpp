@@ -54,6 +54,16 @@ struct RPL_TOPIC : public Message
 	RPL_TOPIC(Peer &peer, Channel &channel, bool include_prefix = false);
 };
 
+struct RPL_LIST : public Message
+{
+	RPL_LIST(Peer &peer, const std::string &channel, const std::string &topic, bool include_prefix = false);
+};
+
+struct RPL_LISTEND : public Message
+{
+	RPL_LISTEND(Peer &peer, bool include_prefix = false);
+};
+
 struct RPL_INVITING : public Message
 {
 	RPL_INVITING(Peer &peer, const std::string &author_nick, const std::string &target_nick, Channel &channel, bool include_prefix = false);
