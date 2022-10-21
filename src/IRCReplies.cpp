@@ -105,7 +105,7 @@ RPL_LIST::RPL_LIST(Peer &peer, const std::string &channel, const std::string &to
 	this->command = "322";
 	this->arguments[0] = peer.getNickname();
 	this->arguments[1] = channel;
-	this->arguments[2] = topic;
+	this->arguments[2] = ":" + topic;
 	this->argCount = 3;
 	if (include_prefix)
 		this->prefix = this->updatePrefixFromPeer();
@@ -116,7 +116,7 @@ RPL_LISTEND::RPL_LISTEND(Peer &peer, bool include_prefix) : Message(peer, std::s
 {
 	this->command = "323";
 	this->arguments[0] = peer.getNickname();
-	this->arguments[1] = ":End of LIST";
+	this->arguments[1] = "End of channel list.";
 	this->argCount = 2;
 	if (include_prefix)
 		this->prefix = this->updatePrefixFromPeer();

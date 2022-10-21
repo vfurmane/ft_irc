@@ -10,14 +10,14 @@ static void	list_all_channels(Message &message, Dependencies &deps)
 
 int	command_list(Message &message, Dependencies &deps)
 {
-	std::vector<std::string> channels = parseList(message.arguments[0]);
-	std::vector<std::string>::const_iterator channel_it = channels.begin();
-
 	if (message.argCount < 1 || message.arguments[0].empty())
 		list_all_channels(message, deps);
 	else
 	{
-		while (channel_it != channels.begin())
+		std::vector<std::string> channels = parseList(message.arguments[0]);
+		std::vector<std::string>::const_iterator channel_it = channels.begin();
+
+		while (channel_it != channels.end())
 		{
 			if (_base_channel::isValidName(*channel_it))
 			{
@@ -25,7 +25,10 @@ int	command_list(Message &message, Dependencies &deps)
 				if (deps.channels.has(base_channel.getName()))
 				{
 					Channel &channel = deps.channels[base_channel.getName()];
-					message.peer.sendMessage(RPL_LIST(message.peer, channel.stringify(), channel.getTopic()));
+					if (channel.getTopic().empty())
+						message.peer.sendMessage(RPL_LIST(message.peer, channel.stringify(), ""));
+					else
+						message.peer.sendMessage(RPL_LIST(message.peer, channel.stringify(), channel.getTopic()));
 				}
 			}
 			++channel_it;
