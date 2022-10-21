@@ -44,6 +44,17 @@ ModeMessage::ModeMessage(Peer &peer, const _base_channel &channel, const std::st
 	this->input = this->updateInputFromFields();
 }
 
+ModeUserMessage::ModeUserMessage(Peer &peer, const std::string &target, const std::string &flags, bool include_prefix) : Message(peer, std::string())
+{
+	this->command = "MODE";
+	this->arguments[0] = target;
+	this->arguments[1] = flags;
+	this->argCount = 2;
+	if (include_prefix)
+		this->prefix = this->updatePrefixFromPeer();
+	this->input = this->updateInputFromFields();
+}
+
 NickMessage::NickMessage(Peer &peer, const std::string &new_nick, bool include_prefix) : Message(peer, std::string())
 {
 	this->command = "NICK";

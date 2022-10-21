@@ -165,20 +165,6 @@ class ERR_NEEDMOREPARAMS : public AIRCError
 	}
 };
 
-class ERR_BADCHANNELKEY : public AIRCError
-{
-	private:
-		const std::string	_str;
-
-	public:
-		ERR_BADCHANNELKEY(const std::string &channel) : _str("475 " + channel + " :Cannot join channel (+k)") {}
-		~ERR_BADCHANNELKEY(void) throw() {}
-		virtual const char* what() const throw()
-	{
-		return this->_str.c_str();
-	}
-};
-
 struct ERR_ALREADYREGISTRED : public AIRCError
 {
 	virtual const char* what() const throw()
@@ -230,6 +216,20 @@ class ERR_INVITEONLYCHAN : public AIRCError
 		}
 };
 
+class ERR_BADCHANNELKEY : public AIRCError
+{
+	private:
+		const std::string	_str;
+
+	public:
+		ERR_BADCHANNELKEY(const std::string &channel) : _str("475 " + channel + " :Cannot join channel (+k)") {}
+		~ERR_BADCHANNELKEY(void) throw() {}
+		virtual const char* what() const throw()
+	{
+		return this->_str.c_str();
+	}
+};
+
 class ERR_CHANOPRIVSNEEDED : public AIRCError
 {
 	private:
@@ -249,6 +249,14 @@ struct ERR_UMODEUNKNOWNFLAG : public AIRCError
 	virtual const char* what() const throw()
 	{
 		return "501 :Unknown MODE flag";
+	}
+};
+
+struct ERR_USERSDONTMATCH : public AIRCError
+{
+	virtual const char* what() const throw()
+	{
+		return "502 :Cannot change mode for other users";
 	}
 };
 

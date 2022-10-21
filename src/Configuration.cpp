@@ -1,10 +1,10 @@
 #include "Configuration.hpp"
 
-Configuration::Configuration() : _network_name("ft_copains"), _server_name("localhost"), _server_version(SERVER_VERSION), _server_creation_date("00:00:00 Jan 01 1970"), _user_modes(""), _channel_modes("iko"), _parsed(false), _port(), _password()
+Configuration::Configuration() : _network_name("ft_copains"), _server_name("localhost"), _server_version(SERVER_VERSION), _server_creation_date("00:00:00 Jan 01 1970"), _user_modes("i"), _channel_modes("ikot"), _parsed(false), _port(), _password()
 {
 }
 
-Configuration::Configuration(const Configuration &obj) : _network_name("ft_copains"), _server_name("localhost"), _server_version(SERVER_VERSION), _server_creation_date("00:00:00 Jan 01 1970"), _user_modes(""), _channel_modes("iko"), _parsed(false), _port(), _password()
+Configuration::Configuration(const Configuration &obj) : _network_name("ft_copains"), _server_name("localhost"), _server_version(SERVER_VERSION), _server_creation_date("00:00:00 Jan 01 1970"), _user_modes("i"), _channel_modes("ikot"), _parsed(false), _port(), _password()
 {
 	*this = obj;
 }
