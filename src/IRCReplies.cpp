@@ -105,7 +105,7 @@ RPL_LIST::RPL_LIST(Peer &peer, const std::string &channel, const std::string &to
 	this->command = "322";
 	this->arguments[0] = peer.getNickname();
 	this->arguments[1] = channel;
-	this->arguments[2] = ":" + topic;
+	this->arguments[2] = topic;
 	this->argCount = 3;
 	if (include_prefix)
 		this->prefix = this->updatePrefixFromPeer();
