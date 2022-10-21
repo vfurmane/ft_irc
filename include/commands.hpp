@@ -36,7 +36,7 @@ struct ModeMessage : public Message
 
 struct NoticeMessage : public Message
 {
-	NoticeMessage(Peer &peer, const std::string &target, const std::string &test_to_send, bool include_prefix = false);
+	NoticeMessage(Peer &peer, const std::string &target, const std::string &text_to_send, bool include_prefix = false);
 };
 
 struct NickMessage : public Message
