@@ -9,10 +9,10 @@ void (*const manageFlags[mode_count])(bool, User&, Channel&, const std::string&)
 void	command_mode_channel(Message &message, Dependencies &deps, const _base_channel &base_channel)
 {
 	if (!deps.channels.has(base_channel))
-		throw ERR_NOSUCHCHANNEL(message.arguments[0]);
+		throw ERR_NOSUCHCHANNEL(message.peer.getNickname(), message.arguments[0]);
 	Channel	&channel = deps.channels.get(base_channel.getName());
 	if (!channel.users.has(message.peer.getFd()))
-		throw ERR_NOTONCHANNEL(message.arguments[0]);
+		throw ERR_NOTONCHANNEL(message.peer.getNickname(), message.arguments[0]);
 	User	&author = channel.users[message.peer.getFd()];
 	std::string::const_iterator	it;
 	size_t	k;
