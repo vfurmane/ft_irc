@@ -26,7 +26,7 @@ int	command_kick(Message &message, Dependencies &deps)
 		throw ERR_NOTONCHANNEL(channel.getName());
 	User	&author = channel.users.getByNickname(message.peer.getNickname());
 	if (!channel.users.hasByNickname(message.arguments[1]))
-		throw ERR_USERNOTINCHANNEL(message.arguments[1], channel.getName());
+		throw ERR_USERNOTINCHANNEL(message.arguments[1], channel.stringify());
 	User	&target = channel.users.getByNickname(message.arguments[1]);
 	kick_user(message, base_channel, channel, author, target);
 	return (1);
