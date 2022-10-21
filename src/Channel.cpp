@@ -162,6 +162,23 @@ void	Channel::removeInvitation(const Peer &peer)
 		this->_invitations.erase(it);
 }
 
+std::string	Channel::generateUsersList(void) const
+{
+	std::string	ret;
+	UserManager::const_iterator	user_it = this->users.begin();
+
+	while (user_it != this->users.end())
+	{
+		if (user_it->second.getStatus() == CHANNEL_CREATOR)
+			ret += "@";
+		ret += user_it->second.peer.getNickname();
+		++user_it;
+		if (user_it != this->users.end())
+			ret += " ";
+	}
+	return ret;
+}
+
 User	&Channel::add(Peer &peer)
 {
 #ifndef NDEBUG

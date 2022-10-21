@@ -20,6 +20,7 @@ int		command_join(Message &message, Dependencies &deps)
 	{
 		if (_base_channel::isValidName(*chan_it))
 		{
+			std::string	users_list;
 			_base_channel base_channel = Channel::parse(*chan_it);
 			try
 			{
@@ -36,12 +37,18 @@ int		command_join(Message &message, Dependencies &deps)
 					if (!channel.getTopic().empty())
 						message.peer.sendMessage(RPL_TOPIC(message.peer, channel));
 					channel.sendMessage(JoinMessage(message.peer, base_channel));
+					users_list = channel.generateUsersList();
+					message.peer.sendMessage(RPL_NAMEREPLY(message.peer, "=", channel.stringify(), users_list, false));
+					message.peer.sendMessage(RPL_ENDOFNAMES(message.peer, *chan_it, false));
 				}
 			}
 			catch (std::out_of_range &)
 			{
-				message.peer.createChannel(base_channel);
+				Channel &channel = message.peer.createChannel(base_channel);
 				message.peer.sendMessage(JoinMessage(message.peer, base_channel, true));
+				users_list = channel.generateUsersList();
+				message.peer.sendMessage(RPL_NAMEREPLY(message.peer, "=", channel.stringify(), users_list, false));
+				message.peer.sendMessage(RPL_ENDOFNAMES(message.peer, *chan_it, false));
 			}
 		}
 		else

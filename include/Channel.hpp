@@ -64,6 +64,7 @@ class Channel : public _base_channel
 		void				addInvitation(const Peer &peer);
 		bool				isInvited(const Peer &peer) const;
 		void				removeInvitation(const Peer &peer);
+		std::string			generateUsersList(void) const;
 
 		User				&add(Peer &peer);
 		void				remove(const Peer &peer);
