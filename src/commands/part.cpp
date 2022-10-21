@@ -22,9 +22,9 @@ int command_part(Message &message, Dependencies &deps)
 				Channel &channel = deps.channels[base_channel.getName()];
 				if (channel.users.has(message.peer.getFd()))
 				{
-					channel.remove(channel.users[message.peer.getFd()]);
 					message.peer.sendMessage(PartMessage(message.peer, channel, message.arguments[1], true));
 					channel.sendMessage(PartMessage(message.peer, channel, message.arguments[1], false));
+					channel.remove(channel.users[message.peer.getFd()]);
 				}
 				else
 					message.peer.sendMessage(ERR_NOTONCHANNEL(*channel_it));

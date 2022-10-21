@@ -25,6 +25,9 @@ int		command_join(Message &message, Dependencies &deps)
 			try
 			{
 				Channel	&channel = deps.channels[base_channel.getName()];
+#ifndef NDEBUG
+				std::cerr << "Found channel " << base_channel.stringify() << "!" << std::endl;
+#endif
 				if (channel.hasFlag(FLAG_INVITE) && !channel.isInvited(message.peer))
 					message.peer.sendMessage(ERR_INVITEONLYCHAN(message.peer.getNickname(), base_channel.stringify()));
 				else if (!channel.isInvited(message.peer) && channel.hasFlag(FLAG_KEY) && (key_it == keys.end() || !channel.compareKey(*key_it)))
@@ -44,6 +47,9 @@ int		command_join(Message &message, Dependencies &deps)
 			}
 			catch (std::out_of_range &)
 			{
+#ifndef NDEBUG
+				std::cerr << "Creating channel " << base_channel.stringify() << "..." << std::endl;
+#endif
 				Channel &channel = message.peer.createChannel(base_channel);
 				message.peer.sendMessage(JoinMessage(message.peer, base_channel, true));
 				users_list = channel.generateUsersList();
