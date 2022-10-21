@@ -111,6 +111,16 @@ void	Channel::unsetFlag(t_channel_flag flag)
 	this->_flags &= ~flag;
 }
 
+void	Channel::setTopic(const std::string &topic)
+{
+	this->_topic = topic;
+}
+
+const std::string	&Channel::getTopic(void) const
+{
+	return this->_topic;
+}
+
 void	Channel::setKey(const std::string &key)
 {
 	this->_key = key;
@@ -179,7 +189,7 @@ void	Channel::remove(const User &user)
 	this->remove(user.peer);
 }
 
-void	Channel::sendMessage(const Message &message) const
+void	Channel::sendMessage(const Message &message, bool include_peer) const
 {
 #ifndef NDEBUG
 	std::cerr << "Sending message to channel " << this->stringify() << std::endl;
@@ -189,7 +199,7 @@ void	Channel::sendMessage(const Message &message) const
 	prefixed_message.updateInputFromFields();
 	for (UserManager::const_iterator it = users.begin(); it != users.end(); ++it)
 	{
-		if (it->second.peer.getFd() == message.peer.getFd())
+		if (!include_peer && it->second.peer.getFd() == message.peer.getFd())
 			continue ;
 		it->second.peer.sendMessage(prefixed_message);
 	}

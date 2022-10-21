@@ -44,6 +44,16 @@ struct RPL_WHOISCHANNELS : public Message
 	RPL_WHOISCHANNELS(Peer &peer, const Peer &target, const std::string &list_of_channels, bool include_prefix = false);
 };
 
+struct RPL_NOTOPIC : public Message
+{
+	RPL_NOTOPIC(Peer &peer, Channel &channel, bool include_prefix = false);
+};
+
+struct RPL_TOPIC : public Message
+{
+	RPL_TOPIC(Peer &peer, Channel &channel, bool include_prefix = false);
+};
+
 struct RPL_INVITING : public Message
 {
 	RPL_INVITING(Peer &peer, const std::string &author_nick, const std::string &target_nick, Channel &channel, bool include_prefix = false);

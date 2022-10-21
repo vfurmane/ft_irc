@@ -33,6 +33,8 @@ int		command_join(Message &message, Dependencies &deps)
 					channel.add(message.peer);
 					channel.users[message.peer.getFd()].setStatus(CHANNEL_USER);
 					message.peer.sendMessage(JoinMessage(message.peer, base_channel, true));
+					if (!channel.getTopic().empty())
+						message.peer.sendMessage(RPL_TOPIC(message.peer, channel));
 					channel.sendMessage(JoinMessage(message.peer, base_channel));
 				}
 			}

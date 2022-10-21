@@ -183,6 +183,24 @@ TEST_CASE("JOIN")
 		REQUIRE( channels["general"].users.has(peer._fd) );
 		REQUIRE( channels["ft_irc"].users.has(peer._fd) );
 	};
+	SECTION("should send the topic")
+	{
+		Channel	&general_channel = peer2.createChannel(std::string("general"));
+		Channel	&ft_irc_channel = peer2.createChannel(std::string("ft_irc"));
+		general_channel.setFlag(FLAG_KEY);
+		general_channel.setTopic("this is the topic");
+		ft_irc_channel.setFlag(FLAG_KEY);
+		general_channel.setKey("password");
+		ft_irc_channel.setKey("secret");
+		message.arguments[0] = "#general,#ft_irc";
+		message.arguments[1] = "password,secret";
+		message.argCount = 2;
+		command_join(message, deps);
+		REQUIRE( channels["general"].users.has(peer._fd) );
+		REQUIRE( std::find(g_send_arg_buf.begin(), g_send_arg_buf.end(), RPL_TOPIC(message.peer, general_channel).input + std::string(CRLF)) != g_send_arg_buf.end() );
+		REQUIRE( channels["ft_irc"].users.has(peer._fd) );
+		REQUIRE( std::find(g_send_arg_buf.begin(), g_send_arg_buf.end(), RPL_TOPIC(message.peer, ft_irc_channel).input + std::string(CRLF)) == g_send_arg_buf.end() );
+	};
 	SECTION("JOIN 0")
 	{
 		Channel	&channel1 = peer2.createChannel(std::string("general"));
