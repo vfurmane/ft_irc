@@ -19,18 +19,8 @@ int	command_names(Message &message, Dependencies &deps)
 			if (deps.channels.has(base_channel.getName()))
 			{
 				Channel &channel = deps.channels[base_channel.getName()];
-				UserManager::iterator	user_it = channel.users.begin();
-				while (user_it != channel.users.end())
-				{
-					if (user_it->second.getStatus() == CHANNEL_CREATOR)
-						users_list += "@";
-					users_list += user_it->second.peer.getNickname();
-					++user_it;
-					if (user_it != channel.users.end())
-						users_list += " ";
-				}
+				users_list = channel.generateUsersList();
 				message.peer.sendMessage(RPL_NAMEREPLY(message.peer, "=", channel.stringify(), users_list, false));
-				users_list.clear();
 			}
 		}
 		message.peer.sendMessage(RPL_ENDOFNAMES(message.peer, *chan_it, false));
