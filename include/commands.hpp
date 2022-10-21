@@ -85,7 +85,7 @@ int	command_join(Message &message, Dependencies &deps);
 int	command_kick(Message &message, Dependencies &deps);
 int	command_mode(Message &message, Dependencies &deps);
 int	command_nick(Message &message, Dependencies &deps);
-int command_notice(Message &message, Dependencies &deps);
+int	command_notice(Message &message, Dependencies &deps);
 int	command_part(Message &message, Dependencies &deps);
 int	command_pass(Message &message, Dependencies &deps);
 int	command_ping(Message &message, Dependencies &deps);
