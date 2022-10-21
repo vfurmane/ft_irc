@@ -151,6 +151,20 @@ class ERR_USERONCHANNEL : public AIRCError
 		}
 };
 
+class ERR_NOTREGISTERED : public AIRCError
+{
+	private:
+		const std::string _str;
+
+	public:
+		ERR_NOTREGISTERED(const std::string &command) : _str("451 * " + command + " :You have not registered") {}
+		~ERR_NOTREGISTERED(void) throw() {}
+		virtual const char* what() const throw()
+		{
+			return this->_str.c_str();
+		}
+};
+
 class ERR_NEEDMOREPARAMS : public AIRCError
 {
 	private:

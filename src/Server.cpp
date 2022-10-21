@@ -134,6 +134,8 @@ int	Server::_handle_message(epoll_event &event)
 #endif
 			try
 			{
+				if (!peer.isRegistered() && message.command != "PASS" && message.command != "NICK" && message.command != "USER" && message.command != "CAP" && message.command != "QUIT")
+					throw ERR_NOTREGISTERED(message.command);
 				Dependencies deps = {this->config, this->peers, this->channels};
 				if (message.execute(deps) <= 0)
 					return 0;
