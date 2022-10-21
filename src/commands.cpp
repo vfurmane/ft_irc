@@ -44,15 +44,6 @@ ModeMessage::ModeMessage(Peer &peer, const _base_channel &channel, const std::st
 	this->input = this->updateInputFromFields();
 }
 
-NamesMessage::NamesMessage(Peer &peer, bool include_prefix) : Message(peer, std::string())
-{
-	this->command = "NAMES";
-	this->arguments[0] = "";
-	if (include_prefix)
-		this->prefix = this->updatePrefixFromPeer();
-	this->input = this->updateInputFromFields();
-}
-
 NickMessage::NickMessage(Peer &peer, const std::string &new_nick, bool include_prefix) : Message(peer, std::string())
 {
 	this->command = "NICK";
