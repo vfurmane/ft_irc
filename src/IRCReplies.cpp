@@ -105,7 +105,7 @@ RPL_NOTOPIC::RPL_NOTOPIC(Peer &peer, Channel &channel, bool include_prefix) : Me
 	this->command = "331";
 	this->arguments[0] = peer.getNickname();
 	this->arguments[1] = channel.stringify();
-	this->arguments[2] = "No topic set";
+	this->arguments[2] = "No topic is set";
 	this->argCount = 3;
 	if (include_prefix)
 		this->prefix = this->updatePrefixFromPeer();
