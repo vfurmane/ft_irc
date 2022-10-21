@@ -111,28 +111,3 @@ RPL_INVITING::RPL_INVITING(Peer &peer, const std::string &author_nick, const std
 		this->prefix = this->updatePrefixFromPeer();
 	this->input = this->updateInputFromFields();
 }
-
-RPL_NAMEREPLY::RPL_NAMEREPLY(Peer &peer, const std::string &prefix, const std::string &channel ,const std::string &users, bool include_prefix) : Message(peer, std::string())
-{
-	this->command = "353";
-	this->arguments[0] = peer.getNickname();
-	this->arguments[1] = prefix;
-	this->arguments[2] = channel;
-	this->arguments[3] = ":" + users;
-	this->argCount = 4;
-	if (include_prefix)
-		this->prefix = this->updatePrefixFromPeer();
-	this->input = this->updateInputFromFields();
-}
-
-RPL_ENDOFNAMES::RPL_ENDOFNAMES(Peer &peer, const std::string &channel, bool include_prefix) : Message(peer, std::string())
-{
-	this->command = "366";
-	this->arguments[0] = peer.getNickname();
-	this->arguments[1] = channel;
-	this->arguments[2] = "End of /NAMES list";
-	this->argCount = 3;
-	if (include_prefix)
-		this->prefix = this->updatePrefixFromPeer();
-	this->input = this->updateInputFromFields();
-}
