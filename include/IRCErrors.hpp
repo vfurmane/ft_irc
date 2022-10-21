@@ -101,7 +101,7 @@ struct ERR_NICKNAMEINUSE : public AIRCError
 		const std::string	_str;
 
 	public:
-		ERR_NICKNAMEINUSE(const std::string &author_nick, const std::string &nick) : _str("433 * " + author_nick + " " + nick + " :Nickname is already in use") {}
+		ERR_NICKNAMEINUSE(const std::string &author_nick, const std::string &nick) : _str("433 " + author_nick + " " + nick + " :Nickname is already in use") {}
 		~ERR_NICKNAMEINUSE(void) throw() {}
 		virtual const char* what() const throw()
 		{
