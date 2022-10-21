@@ -2,7 +2,7 @@
 
 static void	list_all_channels(Message &message, Dependencies &deps)
 {
-	for (std::map<std::string, Channel>::iterator chan_it = deps.channels.begin(); chan_it != deps.channels.end(); ++chan_it)
+	for (ChannelManager::iterator chan_it = deps.channels.begin(); chan_it != deps.channels.end(); ++chan_it)
 	{
 		message.peer.sendMessage(RPL_LIST(message.peer, chan_it->second.stringify(), chan_it->second.getTopic()));
 	}
