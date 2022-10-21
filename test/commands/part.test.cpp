@@ -52,9 +52,10 @@ TEST_CASE("PART")
 	SECTION("should remove the user from channel")
 	{
 		ChannelManager	channels;
-		Channel			channel(channels, "channel");
 		peer._username = "test_user";
-		peer.createChannel(channel);
+		Channel &channel = peer.createChannel(_base_channel("channel"));
+		Peer	peer1(server, 4, addr);
+		channel.add(peer1);
 		message.arguments[0] = "#channel";
 		message.argCount = 1;
 		REQUIRE_NOTHROW( command_part(message, deps) );
@@ -86,15 +87,16 @@ TEST_CASE("PART")
 	SECTION("should part from a list of channel")
 	{
 		ChannelManager	channels;
-		Channel			channel1(channels, "channel1");
-		Channel			channel2(channels, "channel2");
-		Channel			channel3(channels, "channel3");
-		Channel			channel4(channels, "channel4");
 		peer._username = "test_user";
-		peer.createChannel(channel1);
-		peer.createChannel(channel2);
-		peer.createChannel(channel3);
-		peer.createChannel(channel4);
+		Channel &channel1 = peer.createChannel(_base_channel("channel1"));
+		Channel &channel2 = peer.createChannel(_base_channel("channel2"));
+		Channel &channel3 = peer.createChannel(_base_channel("channel3"));
+		Channel &channel4 = peer.createChannel(_base_channel("channel4"));
+		Peer	peer1(server, 4, addr);
+		channel1.add(peer1);
+		channel2.add(peer1);
+		channel3.add(peer1);
+		channel4.add(peer1);
 		message.arguments[0] = "#channel1,#channel2,#channel4,#channel3";
 		message.argCount = 1;
 		REQUIRE_NOTHROW( command_part(message, deps) );
