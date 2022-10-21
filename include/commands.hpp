@@ -34,6 +34,11 @@ struct ModeMessage : public Message
 	ModeMessage(Peer &peer, const _base_channel &channel, const std::string flag, const std::string argument, bool include_prefix = false);
 };
 
+struct NoticeMessage : public Message
+{
+	NoticeMessage(Peer &peer, const std::string &target, const std::string &test_to_send, bool include_prefix = false);
+};
+
 struct NickMessage : public Message
 {
 	NickMessage(Peer &peer, const std::string &new_nick, bool include_prefix = false);
