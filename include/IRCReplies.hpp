@@ -36,7 +36,7 @@ struct RPL_WHOISSERVER : public Message
 
 struct RPL_ENDOFWHOIS : public Message
 {
-	RPL_ENDOFWHOIS(Peer &peer, const Peer &target, bool include_prefix = false);
+	RPL_ENDOFWHOIS(Peer &peer, const std::string &target, bool include_prefix = false);
 };
 
 struct RPL_WHOISCHANNELS : public Message
