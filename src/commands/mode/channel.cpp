@@ -51,7 +51,7 @@ void	command_mode_channel(Message &message, Dependencies &deps, const _base_chan
 		}
 		arguments += message.arguments[i + 1];
 	}
-	if (!(flags.length() == 1))
+	if (flags.length() != 1)
 	{
 		message.peer.sendMessage(ModeChannelMessage(message.peer, base_channel, flags, arguments, true));
 		channel.sendMessage(ModeChannelMessage(message.peer, base_channel, flags, arguments));
