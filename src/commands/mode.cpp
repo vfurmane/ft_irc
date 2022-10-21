@@ -2,7 +2,7 @@
 
 int	command_mode(Message &message, Dependencies &deps)
 {
-	if (message.argCount < 2)
+	if (message.argCount < 2 || message.arguments[0].empty() || message.arguments[1].empty())
 		throw ERR_NEEDMOREPARAMS(message.command);
 	if (!_base_channel::isValidName(message.arguments[0]))
 		return (1);
