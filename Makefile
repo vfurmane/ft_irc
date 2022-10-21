@@ -1,5 +1,5 @@
 NAME = ircserv
-SRCS = $(addprefix src/, main.cpp ChannelManager.cpp Channel.cpp commands.cpp utils.cpp Configuration.cpp IRCReplies.cpp Peer.cpp PeerManager.cpp Message.cpp Server.cpp User.cpp UserManager.cpp $(addprefix commands/, cap.cpp invite.cpp join.cpp kick.cpp mode.cpp names.cpp notice.cpp nick.cpp part.cpp pass.cpp ping.cpp quit.cpp topic.cpp user.cpp whois.cpp $(addprefix notice/, channel.cpp nickname.cpp) $(addprefix privmsg/, channel.cpp nickname.cpp) privmsg.cpp $(addprefix mode/, channel.cpp $(addprefix channel/, invite_only.cpp key.cpp operator.cpp topic.cpp))))
+SRCS = $(addprefix src/, main.cpp ChannelManager.cpp Channel.cpp commands.cpp utils.cpp Configuration.cpp IRCReplies.cpp Peer.cpp PeerManager.cpp Message.cpp Server.cpp User.cpp UserManager.cpp $(addprefix commands/, cap.cpp invite.cpp join.cpp kick.cpp list.cpp mode.cpp names.cpp notice.cpp nick.cpp part.cpp pass.cpp ping.cpp quit.cpp topic.cpp user.cpp whois.cpp $(addprefix notice/, channel.cpp nickname.cpp) $(addprefix privmsg/, channel.cpp nickname.cpp) privmsg.cpp $(addprefix mode/, channel.cpp $(addprefix channel/, invite_only.cpp key.cpp operator.cpp topic.cpp))))
 OBJS = $(SRCS:.cpp=.o)
 DEPS = $(SRCS:.cpp=.d)
 INCLDIR = include

@@ -93,6 +93,7 @@ int	command_cap(Message &message, Dependencies &deps);
 int	command_invite(Message &message, Dependencies &deps);
 int	command_join(Message &message, Dependencies &deps);
 int	command_kick(Message &message, Dependencies &deps);
+int	command_list(Message &message, Dependencies &deps);
 int	command_mode(Message &message, Dependencies &deps);
 int	command_names(Message &message, Dependencies &deps);
 int	command_nick(Message &message, Dependencies &deps);
