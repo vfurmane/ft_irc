@@ -19,6 +19,11 @@ struct ErrorMessage : public Message
 	ErrorMessage(Peer &peer, const std::string &message, bool include_prefix = false);
 };
 
+struct	InviteMessage : public Message
+{
+	InviteMessage(Peer &peer, const std::string target_nick, const Channel &channel, bool include_prefix = false);
+};
+
 struct JoinMessage : public Message
 {
 	JoinMessage(Peer &peer, const _base_channel &channel, bool include_prefix = false);

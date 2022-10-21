@@ -48,11 +48,13 @@ RPL_MYINFO::RPL_MYINFO(Peer &peer, bool include_prefix) : Message(peer, std::str
 	this->input = this->updateInputFromFields();
 }
 
-RPL_INVITING::RPL_INVITING(Peer &peer, const std::string &channel, const std::string &nickname, bool include_prefix) : Message(peer, std::string())
+RPL_INVITING::RPL_INVITING(Peer &peer, const std::string &author_nick, const std::string &target_nick, Channel &channel, bool include_prefix) : Message(peer, std::string())
 {
 	this->command = "341";
-	this->arguments[0] = channel + " " + nickname;
-	this->argCount = 1;
+	this->arguments[0] = author_nick;
+	this->arguments[1] = target_nick;
+	this->arguments[2] = channel.stringify();
+	this->argCount = 3;
 	if (include_prefix)
 		this->prefix = this->updatePrefixFromPeer();
 	this->input = this->updateInputFromFields();

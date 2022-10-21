@@ -7,7 +7,8 @@ static void	add_invitation(Message &message, Peer &target_peer, Channel &target_
 	else
 	{
 		target_channel.addInvitation(target_peer);
-		message.peer.sendMessage(RPL_INVITING(message.peer, message.arguments[1], message.arguments[0], false));
+		message.peer.sendMessage(RPL_INVITING(message.peer, message.peer.getNickname(),target_peer.getNickname(), target_channel));
+		target_peer.sendMessage(InviteMessage(message.peer, target_peer.getNickname(), target_channel, true));
 	}
 }
 
