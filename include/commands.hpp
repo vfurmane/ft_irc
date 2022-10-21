@@ -86,6 +86,7 @@ int	command_ping(Message &message, Dependencies &deps);
 int	command_privmsg(Message &message, Dependencies &deps);
 int	command_quit(Message &message, Dependencies &deps);
 int	command_user(Message &message, Dependencies &deps);
+int	command_whois(Message &message, Dependencies &deps);
 
 void	command_mode_channel(Message &message, Dependencies &deps, const _base_channel &base_channel);
 void	flag_operator(bool add_flag, User &author, Channel &channel, const std::string &argument);
