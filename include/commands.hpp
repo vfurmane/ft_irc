@@ -96,9 +96,10 @@ int	command_user(Message &message, Dependencies &deps);
 int	command_whois(Message &message, Dependencies &deps);
 
 void	command_mode_channel(Message &message, Dependencies &deps, const _base_channel &base_channel);
-void	flag_operator(bool add_flag, User &author, Channel &channel, const std::string &argument);
 void	flag_invite_only(bool add_flag, User &author, Channel &channel, const std::string &argument);
 void	flag_key(bool add_flag, User &author, Channel &channel, const std::string &argument);
+void	flag_operator(bool add_flag, User &author, Channel &channel, const std::string &argument);
+void	flag_topic(bool add_flag, User &author, Channel &channel, const std::string &argument);
 
 void	command_privmsg_channel(Dependencies &deps, Peer &peer, const _base_channel &base_channel, const std::string text_to_send);
 void	command_privmsg_nickname(Dependencies &deps, Peer &peer, const std::string &nickname, const std::string text_to_send);
