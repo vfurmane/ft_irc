@@ -175,7 +175,7 @@ class ERR_ALREADYREGISTRED : public AIRCError
 		~ERR_ALREADYREGISTRED(void) throw() {}
 		virtual const char* what() const throw()
 		{
-			return "462 :Unauthorized command (already registered)";
+			return this->_str.c_str();
 		}
 };
 
@@ -268,7 +268,7 @@ class ERR_USERSDONTMATCH : public AIRCError
 		~ERR_USERSDONTMATCH(void) throw() {}
 		virtual const char* what() const throw()
 		{
-			return "502 :Cannot change mode for other users";
+			return this->_str.c_str();
 		}
 };
 
