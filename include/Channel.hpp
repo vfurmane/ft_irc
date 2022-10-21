@@ -51,27 +51,30 @@ class Channel : public _base_channel
 		Channel &operator=(const Channel &rhs);
 		~Channel(void);
 
-		bool	hasFlag(t_channel_flag flag) const;
-		uint32_t	getFlags(void) const;
-		void	setFlag(t_channel_flag flag);
-		void	unsetFlag(t_channel_flag flag);
-		void	setKey(const std::string &key);
-		void	unsetKey(void);
-		bool	compareKey(const std::string &key) const;
-		void	setCreator(User &user);
-		void	addInvitation(const Peer &peer);
-		bool	isInvited(const Peer &peer) const;
-		void	removeInvitation(const Peer &peer);
+		bool				hasFlag(t_channel_flag flag) const;
+		uint32_t			getFlags(void) const;
+		void				setFlag(t_channel_flag flag);
+		void				unsetFlag(t_channel_flag flag);
+		void				setTopic(const std::string &topic);
+		const std::string	&getTopic(void) const;
+		void				setKey(const std::string &key);
+		void				unsetKey(void);
+		bool				compareKey(const std::string &key) const;
+		void				setCreator(User &user);
+		void				addInvitation(const Peer &peer);
+		bool				isInvited(const Peer &peer) const;
+		void				removeInvitation(const Peer &peer);
 
-		User	&add(Peer &peer);
-		void	remove(const Peer &peer);
-		void	remove(const User &user);
-		void	sendMessage(const Message &message) const;
+		User				&add(Peer &peer);
+		void				remove(const Peer &peer);
+		void				remove(const User &user);
+		void				sendMessage(const Message &message, bool include_peer = false) const;
 
 		UserManager			users;
 		ChannelManager		&manager;
 	private:
 		std::string			_key;
+		std::string			_topic;
 		uint32_t			_flags;
 		User				*_creator;
 		std::vector<int>	_invitations;

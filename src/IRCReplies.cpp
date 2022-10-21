@@ -100,6 +100,30 @@ RPL_WHOISCHANNELS::RPL_WHOISCHANNELS(Peer &peer, const Peer &target, const std::
 	this->input = this->updateInputFromFields();
 }
 
+RPL_NOTOPIC::RPL_NOTOPIC(Peer &peer, Channel &channel, bool include_prefix) : Message(peer, std::string())
+{
+	this->command = "331";
+	this->arguments[0] = peer.getNickname();
+	this->arguments[1] = channel.stringify();
+	this->arguments[2] = "No topic set";
+	this->argCount = 3;
+	if (include_prefix)
+		this->prefix = this->updatePrefixFromPeer();
+	this->input = this->updateInputFromFields();
+}
+
+RPL_TOPIC::RPL_TOPIC(Peer &peer, Channel &channel, bool include_prefix) : Message(peer, std::string())
+{
+	this->command = "332";
+	this->arguments[0] = peer.getNickname();
+	this->arguments[1] = channel.stringify();
+	this->arguments[2] = channel.getTopic();
+	this->argCount = 3;
+	if (include_prefix)
+		this->prefix = this->updatePrefixFromPeer();
+	this->input = this->updateInputFromFields();
+}
+
 RPL_INVITING::RPL_INVITING(Peer &peer, const std::string &author_nick, const std::string &target_nick, Channel &channel, bool include_prefix) : Message(peer, std::string())
 {
 	this->command = "341";

@@ -130,6 +130,17 @@ QuitMessage::QuitMessage(Peer &peer, const std::string &quit_message, bool inclu
 	this->input = this->updateInputFromFields();
 }
 
+TopicMessage::TopicMessage(Peer &peer, const Channel &channel, bool include_prefix) : Message(peer, std::string())
+{
+	this->command = "TOPIC";
+	this->arguments[0] = channel.stringify();
+	this->arguments[1] = channel.getTopic();
+	this->argCount = 2;
+	if (include_prefix)
+		this->prefix = this->updatePrefixFromPeer();
+	this->input = this->updateInputFromFields();
+}
+
 std::vector<std::string>	parseList(const std::string &list)
 {
 	if (list.empty())

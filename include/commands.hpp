@@ -74,6 +74,11 @@ struct QuitMessage : public Message
 	QuitMessage(Peer &peer, const std::string &quit_message, bool include_prefix = false);
 };
 
+struct TopicMessage : public Message
+{
+	TopicMessage(Peer &peer, const Channel &channel, bool include_prefix = false);
+};
+
 struct Dependencies
 {
 	Configuration	&config;
@@ -97,6 +102,7 @@ int	command_pass(Message &message, Dependencies &deps);
 int	command_ping(Message &message, Dependencies &deps);
 int	command_privmsg(Message &message, Dependencies &deps);
 int	command_quit(Message &message, Dependencies &deps);
+int	command_topic(Message &message, Dependencies &deps);
 int	command_user(Message &message, Dependencies &deps);
 int	command_whois(Message &message, Dependencies &deps);
 
