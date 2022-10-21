@@ -76,11 +76,11 @@ RPL_WHOISSERVER::RPL_WHOISSERVER(Peer &peer, const Peer &target, Configuration &
 	this->input = this->updateInputFromFields();
 }
 
-RPL_ENDOFWHOIS::RPL_ENDOFWHOIS(Peer &peer, const Peer &target, bool include_prefix) : Message(peer, std::string())
+RPL_ENDOFWHOIS::RPL_ENDOFWHOIS(Peer &peer, const std::string &target, bool include_prefix) : Message(peer, std::string())
 {
 	this->command = "318";
 	this->arguments[0] = peer.getNickname();
-	this->arguments[1] = target.getNickname();
+	this->arguments[1] = target;
 	this->arguments[2] = "End of WHOIS list";
 	this->argCount = 3;
 	if (include_prefix)
