@@ -148,7 +148,10 @@ void	Peer::leaveAllChannels(void)
 	for (ChannelManager::iterator it = this->server.channels.begin(); it != this->server.channels.end(); ++it)
 	{
 		if (it->second.users.has(this->getFd()))
+		{
 			it->second.users.remove(this->getFd());
+			this->sendMessage(PartMessage(*this, it->second, std::string(), true));
+		}
 	}
 }
 
