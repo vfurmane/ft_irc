@@ -69,7 +69,7 @@ RPL_WHOISSERVER::RPL_WHOISSERVER(Peer &peer, const Peer &target, Configuration &
 	this->arguments[0] = peer.getNickname();
 	this->arguments[1] = target.getNickname();
 	this->arguments[2] = config.getServerName();
-	this->arguments[3] = ":" + config.getNetworkName();
+	this->arguments[3] = config.getNetworkName();
 	this->argCount = 4;
 	if (include_prefix)
 		this->prefix = this->updatePrefixFromPeer();
@@ -81,7 +81,7 @@ RPL_ENDOFWHOIS::RPL_ENDOFWHOIS(Peer &peer, const Peer &target, bool include_pref
 	this->command = "318";
 	this->arguments[0] = peer.getNickname();
 	this->arguments[1] = target.getNickname();
-	this->arguments[2] = ":End of WHOIS list";
+	this->arguments[2] = "End of WHOIS list";
 	this->argCount = 3;
 	if (include_prefix)
 		this->prefix = this->updatePrefixFromPeer();
