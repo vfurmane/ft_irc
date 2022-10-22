@@ -16,7 +16,7 @@ Message::Message(const Message &obj): peer(obj.peer), input(obj.input), prefix(N
 Message &Message::operator=(const Message &rhs)
 {
 	this->input = rhs.input;
-	this->prefix = rhs.prefix;
+	this->prefix = new std::string(*rhs.prefix);
 	this->command = rhs.command;
 	for (int i = 0; i < 15; i++)
 		this->arguments[i] = rhs.arguments[i];
