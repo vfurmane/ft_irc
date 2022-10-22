@@ -146,10 +146,6 @@ int	Server::_handle_message(epoll_event &event)
 			}
 			catch (std::exception &e)
 			{
-				std::string	error_message(std::string("\n\n\n\033[1;31m") + e.what() + std::string("\033[0m\n\n\n"));
-#ifndef NDEBUG
-				std::cout << error_message << std::endl;
-#endif
 			}
 			peer.clearMessage();
 #ifndef NDEBUG
