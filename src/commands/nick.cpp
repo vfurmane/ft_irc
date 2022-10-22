@@ -46,7 +46,10 @@ int		command_nick(Message &message, Dependencies &deps)
 	if (!isValidNickname(nick))
 		throw ERR_ERRONEUSNICKNAME(message.peer.getNickname(), nick);
 	if (message.peer.isRegistered())
+	{
 		message.peer.server.sendMessage(NickMessage(message.peer, nick, true));
+		message.peer.sendMessage(NickMessage(message.peer, nick));
+	}
 	message.peer.setNickname(nick);
 	if (!message.peer.isRegistered() && message.peer.hasAllFields())
 	{
