@@ -30,7 +30,7 @@ const t_channel_namespace	&_base_channel::getNamespace(void) const
 
 bool	_base_channel::isValidName(const std::string &channel)
 {
-	if (channel.empty() || channel.size() > 50)
+	if (channel.size() <= 1 || channel.size() > 50)
 		return false;
 
 	std::string::const_iterator	it = channel.begin();
@@ -47,7 +47,7 @@ bool	_base_channel::isValidName(const std::string &channel)
 
 _base_channel	_base_channel::parse(const std::string &channel)
 {
-	if (channel.empty() || channel.size() > 50)
+	if (channel.size() <= 1 || channel.size() > 50)
 		throw InvalidChannelName();
 
 	std::string::const_iterator	it = channel.begin();
