@@ -40,8 +40,8 @@ class Server
 		void		listen(void);
 		void		closeAllConnections(void);
 
-		int			getEpollFd(void) const; // DELETE
-		int			getSocketFd(void) const; // DELETE
+		int			getEpollFd(void) const;
+		int			getSocketFd(void) const;
 		void		sendMessage(const Message &message) const;
 
 		struct noBindableAddress : public std::exception {
