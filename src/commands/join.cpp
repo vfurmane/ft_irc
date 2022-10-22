@@ -28,21 +28,24 @@ int		command_join(Message &message, Dependencies &deps)
 #ifndef NDEBUG
 				std::cerr << "Found channel " << base_channel.stringify() << "!" << std::endl;
 #endif
-				if (channel.hasFlag(FLAG_INVITE) && !channel.isInvited(message.peer))
-					message.peer.sendMessage(ERR_INVITEONLYCHAN(message.peer.getNickname(), base_channel.stringify()));
-				else if (!channel.isInvited(message.peer) && channel.hasFlag(FLAG_KEY) && (key_it == keys.end() || !channel.compareKey(*key_it)))
-					message.peer.sendMessage(ERR_BADCHANNELKEY(message.peer.getNickname(), *chan_it));
-				else
+				if (!channel.users.has(message.peer.getFd()))
 				{
-					channel.add(message.peer);
-					channel.users[message.peer.getFd()].setStatus(CHANNEL_USER);
-					message.peer.sendMessage(JoinMessage(message.peer, base_channel, true));
-					if (!channel.getTopic().empty())
-						message.peer.sendMessage(RPL_TOPIC(message.peer, channel));
-					channel.sendMessage(JoinMessage(message.peer, base_channel));
-					users_list = channel.generateUsersList();
-					message.peer.sendMessage(RPL_NAMEREPLY(message.peer, "=", channel.stringify(), users_list, false));
-					message.peer.sendMessage(RPL_ENDOFNAMES(message.peer, *chan_it, false));
+					if (channel.hasFlag(FLAG_INVITE) && !channel.isInvited(message.peer))
+						message.peer.sendMessage(ERR_INVITEONLYCHAN(message.peer.getNickname(), base_channel.stringify()));
+					else if (!channel.isInvited(message.peer) && channel.hasFlag(FLAG_KEY) && (key_it == keys.end() || !channel.compareKey(*key_it)))
+						message.peer.sendMessage(ERR_BADCHANNELKEY(message.peer.getNickname(), *chan_it));
+					else
+					{
+						channel.add(message.peer);
+						channel.users[message.peer.getFd()].setStatus(CHANNEL_USER);
+						message.peer.sendMessage(JoinMessage(message.peer, base_channel, true));
+						if (!channel.getTopic().empty())
+							message.peer.sendMessage(RPL_TOPIC(message.peer, channel));
+						channel.sendMessage(JoinMessage(message.peer, base_channel));
+						users_list = channel.generateUsersList();
+						message.peer.sendMessage(RPL_NAMEREPLY(message.peer, "=", channel.stringify(), users_list, false));
+						message.peer.sendMessage(RPL_ENDOFNAMES(message.peer, *chan_it, false));
+					}
 				}
 			}
 			catch (std::out_of_range &)
