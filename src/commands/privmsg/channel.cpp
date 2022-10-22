@@ -4,7 +4,7 @@ void	command_privmsg_channel(Dependencies &deps, Peer &peer, const _base_channel
 {
 	if (!deps.channels.has(base_channel))
 	{
-		peer.sendMessage(ERR_NOSUCHCHANNEL(base_channel.getName()));
+		peer.sendMessage(ERR_NOSUCHCHANNEL(peer.getNickname(), base_channel.getName()));
 #ifndef NDEBUG
 		std::cerr << "The channel " << base_channel.stringify() << " was not found..." << std::endl;
 #endif

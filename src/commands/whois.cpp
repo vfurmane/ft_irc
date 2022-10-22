@@ -3,7 +3,7 @@
 int	command_whois(Message &message, Dependencies &deps)
 {
 	if (message.argCount < 1)
-		throw ERR_NEEDMOREPARAMS("WHOIS");
+		throw ERR_NEEDMOREPARAMS(message.peer.getNickname(), "WHOIS");
 	if (!deps.peers.hasByNickname(message.arguments[0]))
 		 message.peer.sendMessage(ERR_NOSUCHNICK(message.arguments[0]));
 	else

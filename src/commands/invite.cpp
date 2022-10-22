@@ -3,7 +3,7 @@
 static void	add_invitation(Message &message, Peer &target_peer, Channel &target_channel)
 {
 	if (target_channel.users.hasByNickname(message.arguments[0]))
-		throw ERR_USERONCHANNEL(message.arguments[0], message.arguments[1]);
+		throw ERR_USERONCHANNEL(message.peer.getNickname(), message.arguments[0], message.arguments[1]);
 	else
 	{
 		target_channel.addInvitation(target_peer);
@@ -15,7 +15,7 @@ static void	add_invitation(Message &message, Peer &target_peer, Channel &target_
 int	command_invite(Message &message, Dependencies &deps)
 {
 	if (message.argCount < 2 || message.arguments[0].empty() || message.arguments[1].empty())
-		throw ERR_NEEDMOREPARAMS("INVITE");
+		throw ERR_NEEDMOREPARAMS(message.peer.getNickname(), "INVITE");
 
 	if (!_base_channel::isValidName(message.arguments[1]))
 		return 1;
@@ -29,10 +29,10 @@ int	command_invite(Message &message, Dependencies &deps)
 		Peer	&target_peer = deps.peers.getByNickname(message.arguments[0]);
 
 		if (!target_channel.users.hasByNickname(message.peer.getNickname()))
-			throw ERR_NOTONCHANNEL(message.arguments[1]);
+			throw ERR_NOTONCHANNEL(message.peer.getNickname(), message.arguments[1]);
 		if ((target_channel.getFlags() & FLAG_INVITE) == FLAG_INVITE &&
 				target_channel.users.getByNickname(message.peer.getNickname()).getStatus() == CHANNEL_USER)
-			throw ERR_CHANOPRIVSNEEDED(message.arguments[1]);
+			throw ERR_CHANOPRIVSNEEDED(message.peer.getNickname(), message.arguments[1]);
 		add_invitation(message, target_peer, target_channel);
 	}
 	return 1;

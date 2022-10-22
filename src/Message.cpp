@@ -86,7 +86,7 @@ int	Message::execute(Dependencies &deps)
 	}
 	if (i == commands_count)
 	{
-		throw ERR_UNKNOWNCOMMAND(this->command);
+		throw ERR_UNKNOWNCOMMAND(this->peer.getNickname(), this->command);
 	}
 	return 1;
 }

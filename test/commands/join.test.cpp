@@ -113,7 +113,7 @@ TEST_CASE("JOIN")
 		message.arguments[1] = "secret";
 		message.argCount = 2;
 		command_join(message, deps);
-		REQUIRE( std::find(g_send_arg_buf.begin(), g_send_arg_buf.end(), ERR_BADCHANNELKEY("#general").what() + std::string(CRLF)) != g_send_arg_buf.end() );
+		REQUIRE( std::find(g_send_arg_buf.begin(), g_send_arg_buf.end(), ERR_BADCHANNELKEY(peer._nickname, "#general").what() + std::string(CRLF)) != g_send_arg_buf.end() );
 	};
 	SECTION("when the channel does not exist")
 	{
